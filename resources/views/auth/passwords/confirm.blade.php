@@ -1,4 +1,6 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app') --}}
+{{-- @mido_shriks --}}
+@extends('layouts.dashboard.material')
 
 @section('content')
 <div class="container">

@@ -1816,8 +1816,5 @@
             </div>
         </div>
     </div>
-    <div class="text-center">
-        <h1>{{ display('dashboard') }}</h1>
-        <h2>{{ display('mido') }}</h2>
-    </div>
+
 @endsection

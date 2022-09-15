@@ -12,11 +12,35 @@
         <div class="navbar-nav flex-row order-md-last">
             <div class="nav-item d-none d-md-flex me-3">
                 <div class="btn-list">
-                    <a href="https://github.com/tabler/tabler" class="btn" target="_blank" rel="noreferrer">
-                        demo
-                    </a>
+                    {{-- @mido_shriks function swetch lang () --}}
+                    <div class="mb-3">
+                        <div class="btn-group w-100">
+                            <div class="btn-group" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="{{ asset('dashboard/src/static/language.svg') }}" alt=""
+                                        srcset="">
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    {{-- <ul class="dropdown-menu dropdown-menu-end"> --}}
+                                    @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                        <li>
+                                            <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}"
+                                                href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                                {{ $properties['native'] }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                    {{-- </ul> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- @mido_shriks function swetch lang () --}}
                 </div>
             </div>
+
+
             <div class="d-none d-md-flex">
                 <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode"
                     data-bs-toggle="tooltip" data-bs-placement="bottom">

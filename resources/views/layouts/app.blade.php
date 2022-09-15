@@ -35,7 +35,7 @@
                     <ul class="navbar-nav mr-auto">
 
                     </ul>
-                    
+
                     {{-- @mido_shriks --}}
                     <ul class="navbar-nav ml-auto">
                         @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
@@ -90,5 +90,6 @@
             @yield('content')
         </main>
     </div>
+    @include('vendor.sweetalert.alert')
 </body>
 </html>

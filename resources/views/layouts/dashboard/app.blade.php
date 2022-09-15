@@ -5,6 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {{-- @mido_shriks use btn animation by sweetalert2 --}}
+    <!-- sweet alerts -->
+    <link href="{{ asset('dashboard/src/js/sweet-alert/sweet-alert.min.css') }}" rel="stylesheet">
+    {{-- @mido_shriks use btn animation by sweetalert2 --}}
+
 
     {{-- Style Dashboard --}}
     @if (app()->getLocale() == 'en')
@@ -40,18 +47,19 @@
     <div class="page">
         {{-- header --}}
         @include('layouts.dashboard.header')
-            {{-- Navbar --}}
-            @include('layouts.dashboard.navbar')
-            {{-- Body  --}}
-            <div class="page-wrapper">
-                @yield('content')
-            </div>
+        {{-- Navbar --}}
+        @include('layouts.dashboard.navbar')
+        {{-- Body --}}
+        <div class="page-wrapper">
+            @yield('content')
+        </div>
         {{-- Footer --}}
         @include('layouts.dashboard.footer')
     </div>
-
     {{-- Scripr File Js & Function --}}
     @include('layouts.dashboard.script')
+    {{-- Sweetalret2 install laravel --}}
+    @include('vendor.sweetalert.alert')
 </body>
 
 </html>

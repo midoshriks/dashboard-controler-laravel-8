@@ -113,7 +113,8 @@
                                                         </label>
                                                         {{-- form --}}
                                                         <form id="user-active-{{ $user->id }}" style="display: none"
-                                                            action="{{ route('dashboard.users.update', $user->id) }}"
+                                                            action="{{ route('dashboard.active', $user->id) }}"
+                                                            {{-- action="{{ route('dashboard.users.update', $user->id) }}" --}}
                                                             method="POST" style="display: inline-block;">
                                                             @csrf
                                                             @method('PUT')
@@ -145,7 +146,7 @@
                                                             </svg>
                                                         </a>
                                                         <div class="dropdown-menu dropdown-menu-end">
-                                                            <a href="#" class="dropdown-item">Edit</a>
+                                                            <a href="{{ route('dashboard.users.edit',$user->id)}}" class="dropdown-item">Edit</a>
                                                             {{-- <a href="#"  class="dropdown-item text-danger">Delete</a> --}}
 
                                                             <a href="javascript:;"

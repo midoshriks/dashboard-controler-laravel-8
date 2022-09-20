@@ -26,6 +26,7 @@ Route::group(
 
             // Users
             Route::resource('/users', 'UsersController');
+            Route::put('/active/{id}', 'UsersController@updatestatus')->name('active');
         });
     }
 );

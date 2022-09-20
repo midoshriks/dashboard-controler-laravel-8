@@ -35,7 +35,7 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'mo2men',
             'last_name' => 'd',
             'email' => 'mo2men@gmail.com',
-            'phone' => '01200-00002',
+            'phone' => '01200300002',
             'dob_date' => Carbon::parse('2022-09-20'),
             'gender' => 'male',
             'country_id' => '1',

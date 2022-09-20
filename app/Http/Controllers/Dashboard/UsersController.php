@@ -66,7 +66,6 @@ class UsersController extends Controller
         }
         // @mido_shrisk ++ code_membership
 
-
         $request_data['role_permissions'] = $request->role_permissions;
         if ($request_data['role_permissions'] == 'gaming') {
             // var_dump($request_data['role_permissions']);
@@ -75,7 +74,7 @@ class UsersController extends Controller
             $request_data['role_permissions']  = 'gaming';
             $user = User::create($request_data);
 
-            Alert::success('Success Title', 'Success Save  gaming ' .  $user->first_name);
+            Alert::success('Success Title', 'Success Save  gaming ' +  $user->first_name);
             return redirect()->route('dashboard.users.index');
         } else {
             // var_dump($request_data['role_permissions']);
@@ -124,7 +123,10 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $user = User::find($user->id);
+        $select_countries = country::all();
+        // dd($user);
+        return view('dashboard.users.edit', compact('user', 'select_countries'));
     }
 
     /**
@@ -136,6 +138,8 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        // dd($request->all());
+
         // $request->validate([
         //     'first_name' => 'required',
         //     'last_name' => 'required',
@@ -144,12 +148,28 @@ class UsersController extends Controller
         //     'permissions' => 'required|min:1'
         // ]);
 
-        $request_data = $request->except(['permissions']);
-        $user->update($request_data);
-        // $user->syncPermissions($request->permissions);
+        $request_data = $request->except(['permissions', 'role_permissions']);
+        $request_data['role_permissions'] = $request->role_permissions;
+        if ($request_data['role_permissions']  == 'gaming') {
+            // var_dump($request_data);
+            // var_dump($request_data['status']);
+            // exit;
+            # code...
+            $request_data['role_permissions']  = 'gaming';
+            $user->update($request_data);
 
-        Alert::toast('successfully user updated');
-        return redirect()->route('dashboard.users.index');
+            Alert::toast('Success Title', 'Success Update user gaming ' .  $user->first_name);
+            return redirect()->route('dashboard.users.index');
+        } else {
+            # code...
+            $user->syncPermissions($request->permissions);
+            $user->update($request_data);
+
+            // dd($request_data);
+
+            Alert::toast('Success Title', 'Success Updated ' . $user->role_permissions . ' ' .  $user->first_name);
+            return redirect()->route('dashboard.users.index');
+        }
     }
 
     /**
@@ -167,7 +187,6 @@ class UsersController extends Controller
 
         $user->delete();
 
-
         // Alert::question('Question Title', 'Question Message');
 
         // Alert::info('Info Title', 'deleted successfully');
@@ -175,4 +194,36 @@ class UsersController extends Controller
         Alert::toast('Toast Message', 'deleted successfully user');
         return redirect()->route('dashboard.users.index');
     }
+
+    // @mido_shriks function controller Update status user from 1 to 0 or 0 to 1
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function updatestatus(Request $request, User $user)
+    {
+        $status_user = User::find($request->id);
+        if ($status_user->status == 1) {
+            # code...
+            $status_user->status = $request->status;
+
+            $status_user->save();
+            // dd($status_user->status);
+            Alert::toast('Success user deacvtiv ' . $user->first_name);
+        } else {
+            # code...
+            $status_user->status = $request->status;
+
+            $status_user->save();
+            // dd($status_user->status);
+            Alert::toast('Success user acvtivit ' . $user->first_name);
+        }
+
+        return redirect()->route('dashboard.users.index');
+    }
+    // @mido_shriks function controller Update status user from 1 to 0 or 0 to 1
 }

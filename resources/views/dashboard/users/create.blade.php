@@ -6,103 +6,115 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Basic form</h3>
+                        <div class="card-header mr-lg-5">
+                            <h3 class="card-title">{{ display('form Admin end User ') }}</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-plus"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                                <path d="M16 11h6m-3 -3v6"></path>
+                            </svg>
                         </div>
                         <div class="card-body">
                             <form action="{{ route('dashboard.users.store') }}" method="post"
                                 enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 {{ method_field('post') }}
-                                <div class="form-group mb-3 col-md-9">
-                                    <label class="form-label required">first name</label>
-                                    <div>
-                                        <input type="text" class="form-control" name="first_name" value="ioioi"
-                                            placeholder="Enter First name">
-                                    </div>
-                                    <label class="form-label required">last name</label>
-                                    <div>
-                                        <input type="text" class="form-control" name="last_name" value="ytyt"
-                                            placeholder="Enter last name">
-                                    </div>
-                                </div>
 
-                                <div class="form-group mb-3 col-md-9">
-                                    <label class="form-label required">Phone user</label>
-                                    <div>
-                                        <input type="number" class="form-control" name="phone" value="898989"
-                                            placeholder="+020--- -- --">
-                                    </div>
-                                    <label class="form-label required">date of birth</label>
-                                    <input type="date" name="dob_date" id="" class="form-control">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Inline datepicker</label>
-                                    <div class="datepicker-inline" id="datepicker-inline"></div>
-                                </div>
-                                <div class="form-group mb-3 col-md-6">
-                                    <div>
-                                        <div class="mb-3">
-                                            <div class="form-label">Select Role</div>
-                                            <select class="form-select" name="role_permissions">
-                                                {{-- <option value="">chooes</option> --}}
-                                                <option value="gaming">Gaming</option>
-                                                <option value="admin">Admin</option>
-                                            </select>
+                                <div class="form-group mb-3 col-md-12 d-flex">
+                                    <div class="col-md-6">
+                                        <label class="form-label required">{{ display('first name') }}</label>
+                                        <div class="">
+                                            <input type="text" class="form-control" name="first_name" value="ioioi"
+                                                placeholder="Enter First name">
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label required">{{ display('last name') }}</label>
+                                        <div>
+                                            <input type="text" class="form-control" name="last_name" value="ytyt"
+                                                placeholder="Enter last name">
+                                        </div>
+                                    </div>
+                                </div>
 
-                                    <div>
+                                <div class="form-group mb-3 col-md-12 d-flex">
+                                    <div class="col-md-6">
+                                        <label class="form-label required">{{ display('Phone user') }}</label>
+                                        <div>
+                                            <input type="number" class="form-control" name="phone" value="898989"
+                                                placeholder="+020--- -- --">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label required">{{ display('date of birth') }}</label>
+                                        <input type="date" name="dob_date" id="" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-3 col-md-12 d-flex">
+                                    <div class="col-md-6">
+                                        <div>
+                                            <div class="mb-3">
+                                                <div class="form-label">{{ display('Select Role') }}</div>
+                                                <select class="form-select" name="role_permissions">
+                                                    {{-- <option value="">chooes</option> --}}
+                                                    <option value="gaming">{{ display('Gaming') }}</option>
+                                                    <option value="admin">{{ display('Admin') }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="mb-3">
-                                            <div class="form-label">Select gender</div>
+                                            <div class="form-label">{{ display('Select gender') }}</div>
                                             <select class="form-select" name="gender">
-                                                {{-- <option value="">chooes</option> --}}
-                                                <option value="male">male</option>
-                                                <option value="famle">famle</option>
+                                                <option value="">{{ display('chooes') }}</option>
+                                                <option value="male">{{ display('male') }}</option>
+                                                <option value="famle">{{ display('famle') }}</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div>
-                                        <div class="mb-3">
-                                            <div class="form-label">Select nation</div>
-                                            <select class="form-select" name="country_id">
-                                                <option value="">chooes</option>
-                                                @foreach ($select_countries as $select_country)
-                                                    <option value="{{ $select_country->id }}">
-                                                        {{ $select_country->name }}</option>
-                                                @endforeach
-                                            </select>
+                                </div>
 
-                                        </div>
+                                <div>
+                                    <div class="mb-3">
+                                        <div class="form-label">{{ display('Select nation') }}</div>
+                                        <select class="form-select" name="country_id">
+                                            <option value="">{{ display('chooes') }}</option>
+                                            @foreach ($select_countries as $select_country)
+                                                <option value="{{ $select_country->id }}">
+                                                    {{ $select_country->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group mb-3 ">
-                                    <label class="form-label required">Email address</label>
+                                    <label class="form-label required">{{ display('Email address') }}</label>
                                     <div>
                                         <input type="email" class="form-control" aria-describedby="emailHelp"
                                             name="email" placeholder="Enter email">
-                                        <small class="form-hint">We'll never share your email with anyone
-                                            else.</small>
+                                        <small
+                                            class="form-hint">{{ display("We'll never share your email with anyone else.") }}</small>
                                     </div>
                                 </div>
                                 <div class="form-group mb-3 ">
-                                    <label class="form-label required">Password</label>
+                                    <label class="form-label required">{{ display('Password') }}</label>
                                     <div>
                                         <input type="password" class="form-control" placeholder="Password"
                                             name="password">
                                         <small class="form-hint">
-                                            Your password must be 8-20 characters long, contain letters and numbers,
-                                            and must not contain
-                                            spaces, special characters, or emoji.
+                                            {{ display('Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.') }}
                                         </small>
                                     </div>
                                 </div>
 
                                 <div class="form-group mb-3 ">
-                                    <label class="form-label required">Re Password</label>
+                                    <label class="form-label required">{{ display('Re Password') }}</label>
                                     <div>
                                         <input type="password" class="form-control" placeholder="Retype Password"
                                             name="password_confirmation">
@@ -175,8 +187,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+                <button type="button" class="btn me-auto" data-bs-dismiss="modal">{{ display('Close') }}</button>
+                <button type="submit" class="btn btn-primary"
+                    data-bs-dismiss="modal">{{ display('Save') }}</button>
             </div>
             </form>
         </div>

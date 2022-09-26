@@ -1,5 +1,5 @@
-<!-- @mo2men -->
 <?php
+// <!-- @mo2men -->
 
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 

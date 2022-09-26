@@ -1,7 +1,10 @@
-<!-- // @mido_shriks -->
 <?php
+// <!-- // @mido_shriks -->
 
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\DeveloperController;
+use App\Http\Controllers\Dashboard\LanguagesController;
+use App\Http\Controllers\Dashboard\LevelsController;
 use App\Http\Controllers\Dashboard\UsersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -23,10 +26,18 @@ Route::group(
 
             // Dahsbboard
             Route::get('/index', 'DashboardController@index')->name('index');
+            // languages
+            Route::resource('/languages', 'LanguagesController')->except(['create','store','show']);
+            // developers
+            Route::resource('/developers', 'DeveloperController');
 
             // Users
             Route::resource('/users', 'UsersController');
             Route::put('/active/{id}', 'UsersController@updatestatus')->name('active');
+
+            // Levels
+            Route::resource('/levels', 'LevelsController');
         });
     }
 );
+

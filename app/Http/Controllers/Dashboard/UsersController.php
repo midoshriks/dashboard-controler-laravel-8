@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Role;
 use App\Models\User;
+use App\Models\country;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\country;
 use RealRashid\SweetAlert\Facades\Alert;
+use phpDocumentor\Reflection\Types\Null_;
 
 class UsersController extends Controller
 {
@@ -58,11 +60,16 @@ class UsersController extends Controller
         $request_data = $request->except(['password', 'password_confirmation', 'permissions', 'code_membership', 'role_permissions']);
         $request_data['password'] = bcrypt($request->password);
 
+
         // @mido_shrisk ++ code_membership
-        $count_user = User::all()->count();
-        if ($count_user <= $count_user) {
+        $request_data['code_membership'] = '' ;
+        if ($request_data['code_membership'] == null) {
             # code...
-            $request_data['code_membership'] =  'M-202201' . $count_user + 1;
+            $request_data['code_membership'] =  Str::random(2) . mt_rand(1000000,10000000);
+
+            // var_dump($request_data['code_membership']);
+            // exit;
+            // dd($request_data);
         }
         // @mido_shrisk ++ code_membership
 
@@ -74,7 +81,7 @@ class UsersController extends Controller
             $request_data['role_permissions']  = 'gaming';
             $user = User::create($request_data);
 
-            Alert::success('Success Title', 'Success Save  gaming ' +  $user->first_name);
+            Alert::success('Success Title', 'Success Save  gaming ' .  $user->first_name);
             return redirect()->route('dashboard.users.index');
         } else {
             // var_dump($request_data['role_permissions']);
@@ -112,7 +119,10 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $user = User::find($user->id);
+
+        // dd($user);
+        return view('dashboard.users.show',compact('user'));
     }
 
     /**

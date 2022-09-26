@@ -46,10 +46,37 @@
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            Users
+                            {{ display('Users') }}
                         </span>
                     </a>
                     </li>
+
+                    {{-- @mido_shriks --}}
+                    @if (app()->getLocale() == 'en')
+                        <li class="nav-item {{ Request::is('en/dashboard/levels*') ? 'active' : '' }}">
+                        @else
+                        <li class="nav-item {{ Request::is('ar/dashboard/levels*') ? 'active' : '' }}">
+                    @endif
+                    <a class="nav-link" href="{{ route('dashboard.levels.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-check"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M3.5 5.5l1.5 1.5l2.5 -2.5"></path>
+                                <path d="M3.5 11.5l1.5 1.5l2.5 -2.5"></path>
+                                <path d="M3.5 17.5l1.5 1.5l2.5 -2.5"></path>
+                                <line x1="11" y1="6" x2="20" y2="6"></line>
+                                <line x1="11" y1="12" x2="20" y2="12"></line>
+                                <line x1="11" y1="18" x2="20" y2="18"></line>
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            {{ display('levels') }}
+                        </span>
+                    </a>
+                    </li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                             data-bs-auto-close="outside" role="button" aria-expanded="false">
@@ -468,6 +495,36 @@
                                         d="M19.5 12.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
                                 </svg>
                                 Sponsor project!
+                            </a>
+                        </div>
+                    </li>
+                    @if (app()->getLocale() == 'en')
+                        <li class="nav-item dropdown {{ Request::is('en/dashboard/languages*') ||  Request::is('en/dashboard/developers*') ? 'active' : '' }}">
+                        @else
+                        <li class="nav-item dropdown {{ Request::is('ar/dashboard/languages*') ||  Request::is('ar/dashboard/developers*') ? 'active' : '' }}">
+                            {{-- <li class="nav-item dropdown "> --}}
+                    @endif
+                        <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside" role="button" aria-expanded="false">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-brand-visual-studio" width="24"
+                                    height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M4 8l2 -1l10 13l4 -2v-12l-4 -2l-10 13l-2 -1z"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-link-title">
+                                {{ display('developer') }}
+                            </span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ route('dashboard.languages.index') }}">
+                                {{ display('lang developer') }}
+                            </a>
+                            <a class="dropdown-item" href="{{ route('dashboard.developers.index')}}">
+                                {{ display('Route Api')}}
                             </a>
                         </div>
                     </li>

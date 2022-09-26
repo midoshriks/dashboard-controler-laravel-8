@@ -23,7 +23,7 @@ class TypesTableSeeder extends Seeder
         foreach ($models as $key => $model) {
             # code...
             $types = type::create([
-                'modal' => $model,
+                'model' => $model,
                 'name' => $model,
             ]);
         }

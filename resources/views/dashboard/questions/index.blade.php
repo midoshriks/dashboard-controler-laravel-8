@@ -15,17 +15,38 @@
                             {{ display('Overview') }}
                         </div>
                         <h2 class="page-title">
-                            {{ display('Dashboard') }} \ {{ display('languages') }}
+                            {{ display('Dashboard') }} \ {{ display('questions') }}
                         </h2>
                     </div>
                     <!-- Page title actions -->
                     <div class="col-12 col-md-auto ms-auto d-print-none">
                         <div class="btn-list">
-                            <span class="d-none d-sm-inline">
-                                <a href="#" class="btn btn-white">
-                                    New view
-                                </a>
-                            </span>
+                            <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
+                                data-bs-target="#modal-large">
+                                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                </svg>
+                                {{ display('Create new questions') }}
+                            </a>
+                            {{-- @mido_shriks --}}
+                                @include('dashboard.questions.create')
+                            {{-- @mido_shriks --}}
+                            <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
+                                data-bs-target="#modal-large">
+                                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                </svg>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -41,19 +62,18 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>{{ display('phrase') }}</th>
-                                            <th>{{ display('en') }}</th>
-                                            <th>{{ display('ar') }}</th>
+                                            <th>{{ display('name') }}</th>
+                                            <th>{{ display('type question') }}</th>
+                                            <th>{{ display('action') }}</th>
                                             <th class="w-1"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($languages as $index => $lang)
+                                        @foreach ($questions as $index => $question)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
-                                                <td>{{ $lang->phrase }}</td>
-                                                <td>{{ $lang->en }}</td>
-                                                <td>{{ $lang->ar }}</td>
+                                                <td>{{ $question->name }}</td>
+                                                <td>{{ display($question->type_question) }}</td>
                                                 <td>
                                                     <div class="col-auto">
                                                         <div class="dropdown">
@@ -71,32 +91,32 @@
                                                                 </svg>
                                                             </a>
                                                             <div class="dropdown-menu dropdown-menu-end">
-                                                                <a href="{{ route('dashboard.languages.edit', $lang->id) }}"
+                                                                <a href="{{ route('dashboard.questions.edit', $question->id) }}"
                                                                     class="dropdown-item">Edit</a>
 
                                                                 <a href="javascript:;"
                                                                     class="dropdown-item text-danger btn-delet"
-                                                                    data-form-id="lang-delete-{{ $lang->id }}"
-                                                                    data-name-item="{{ $lang->phrase }}">
-                                                                    Delete
+                                                                    data-form-id="question-delete-{{ $question->id }}"
+                                                                    data-name-item="{{ $question->name }}">
+                                                                    {{ display('Delete') }}
                                                                 </a>
 
-                                                                <form id="lang-delete-{{ $lang->id }}"
-                                                                    action="{{ route('dashboard.languages.destroy', $lang->id) }}"
+                                                                <form id="question-delete-{{ $question->id }}"
+                                                                    action="{{ route('dashboard.questions.destroy', $question->id) }}"
                                                                     method="POST" style="display: inline-block;">
                                                                     @csrf
                                                                     @method('DELETE')
                                                                 </form>
                                                             </div>
                                                         </div>
-                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+
                                 <div class="">
-                                    {{ $languages->links('pagination::bootstrap-4') }}
+                                    {{ $questions->links('pagination::bootstrap-4') }}
                                 </div>
                             </div>
                         </div>

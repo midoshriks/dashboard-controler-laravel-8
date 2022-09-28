@@ -5,6 +5,8 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\DeveloperController;
 use App\Http\Controllers\Dashboard\LanguagesController;
 use App\Http\Controllers\Dashboard\LevelsController;
+use App\Http\Controllers\Dashboard\ProductsController;
+use App\Http\Controllers\Dashboard\QuestionsController;
 use App\Http\Controllers\Dashboard\UsersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +39,12 @@ Route::group(
 
             // Levels
             Route::resource('/levels', 'LevelsController');
+
+            // Products
+            Route::resource('/products','ProductsController');
+
+            // Questions
+            Route::resource('/questions', 'QuestionsController');
         });
     }
 );

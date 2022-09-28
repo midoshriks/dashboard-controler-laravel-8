@@ -18,6 +18,7 @@ class TypesTableSeeder extends Seeder
             'users',
             'products',
             'levels',
+            'questions',
         ];
 
         foreach ($models as $key => $model) {

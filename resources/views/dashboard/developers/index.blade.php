@@ -66,10 +66,9 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>type</th>
-                                                <th>model</th>
-                                                <th>Route</th>
-                                                <th>action</th>
+                                                <th>{{ display('type') }}</th>
+                                                <th>{{ display('model') }}</th>
+                                                <th>{{ display('Route') }}</th>
                                                 <th class="w-1"></th>
                                             </tr>
                                         </thead>

@@ -67,9 +67,8 @@
                                     <thead >
                                         <tr>
                                             <th>#</th>
-                                            <th>Name</th>
-                                            <th>rewards</th>
-                                            <th>action</th>
+                                            <th>{{ display('Name') }}</th>
+                                            <th>{{ display('rewards') }}</th>
                                             <th class="w-1"></th>
                                         </tr>
                                     </thead>

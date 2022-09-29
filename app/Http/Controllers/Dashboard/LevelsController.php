@@ -41,7 +41,7 @@ class LevelsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name' => 'required|min:3|unique:levels,name,except,id',
+            'name' => 'required|min:3|unique:levels,name',
             'rewards' => 'required|max:1000',
         ]);
 

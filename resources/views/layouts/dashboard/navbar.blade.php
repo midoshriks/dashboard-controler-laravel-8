@@ -77,11 +77,13 @@
                     </a>
                     </li>
 
-                    {{-- @mido_shriks dropdowen = {products , developers} --}}
+                    {{-- @mido_shriks dropdowen = {products , helpers} --}}
                     @if (app()->getLocale() == 'en')
-                        <li class="nav-item dropdown {{ Request::is('en/dashboard/products*') ? 'active' : '' }}">
+                        <li
+                            class="nav-item dropdown {{ Request::is('en/dashboard/products*') || Request::is('en/dashboard/helpers*') ? 'active' : '' }}">
                         @else
-                        <li class="nav-item dropdown {{ Request::is('ar/dashboard/products*') ? 'active' : '' }}">
+                        <li
+                            class="nav-item dropdown {{ Request::is('ar/dashboard/products*') || Request::is('ar/dashboard/helpers*') ? 'active' : '' }}">
                             {{-- <li class="nav-item dropdown "> --}}
                     @endif
                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
@@ -107,40 +109,88 @@
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item" href="{{ route('dashboard.products.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <!-- Download SVG icon from http://tabler-icons.io/i/package -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
+                                            height="24" viewBox="0 0 24 24" stroke-width="2"
+                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3" />
+                                            <line x1="12" y1="12" x2="20" y2="7.5" />
+                                            <line x1="12" y1="12" x2="12" y2="21" />
+                                            <line x1="12" y1="12" x2="4" y2="7.5" />
+                                            <line x1="16" y1="5.25" x2="8" y2="9.75" />
+                                        </svg>
+                                    </span>
                                     {{ display('products') }}
+                                </a>
+                                <a class="dropdown-item" href="{{ route('dashboard.helpers.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="icon icon-tabler icon-tabler-help" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <circle cx="12" cy="12" r="9"></circle>
+                                            <line x1="12" y1="17" x2="12" y2="17.01">
+                                            </line>
+                                            <path d="M12 13.5a1.5 1.5 0 0 1 1 -1.5a2.6 2.6 0 1 0 -3 -4"></path>
+                                        </svg>
+                                    </span>
+                                    {{ display('helpers') }}
                                 </a>
                             </div>
                         </div>
                     </div>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
-                            data-bs-auto-close="outside" role="button" aria-expanded="false">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="icon icon-tabler icon-tabler-home-question" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path d="M20.136 11.136l-8.136 -8.136l-9 9h2v7a2 2 0 0 0 2 2h7"></path>
-                                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2c.467 0 .896 .16 1.236 .428"></path>
-                                    <path d="M19 22v.01"></path>
-                                    <path d="M19 19a2.003 2.003 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483"></path>
-                                </svg>
-                            </span>
-                            <span class="nav-link-title">
-                                {{ display('questions')}}
-                            </span>
-                        </a>
-                        <div class="dropdown-menu">
-                            <div class="dropdown-menu-columns">
-                                <div class="dropdown-menu-column">
-                                    <a class="dropdown-item" href="{{ route('dashboard.questions.index')}}">
-                                        {{ display('questions')}}
-                                    </a>
-                                </div>
+                    {{-- @mido_shriks dropdowen = {questions } --}}
+                    @if (app()->getLocale() == 'en')
+                        <li class="nav-item dropdown {{ Request::is('en/dashboard/questions*') ? 'active' : '' }}">
+                        @else
+                        <li class="nav-item dropdown {{ Request::is('ar/dashboard/questions*') ? 'active' : '' }}">
+                            {{-- <li class="nav-item dropdown "> --}}
+                    @endif
+                    <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
+                        data-bs-auto-close="outside" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home-question"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M20.136 11.136l-8.136 -8.136l-9 9h2v7a2 2 0 0 0 2 2h7"></path>
+                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2c.467 0 .896 .16 1.236 .428"></path>
+                                <path d="M19 22v.01"></path>
+                                <path d="M19 19a2.003 2.003 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483"></path>
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            {{ display('questions') }}
+                        </span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item" href="{{ route('dashboard.questions.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="icon icon-tabler icon-tabler-question-mark" width="24"
+                                            height="24" viewBox="0 0 24 24" stroke-width="2"
+                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path
+                                                d="M8 8a3.5 3 0 0 1 3.5 -3h1a3.5 3 0 0 1 3.5 3a3 3 0 0 1 -2 3a3 4 0 0 0 -2 4">
+                                            </path>
+                                            <line x1="12" y1="19" x2="12" y2="19.01">
+                                            </line>
+                                        </svg>
+                                    </span>
+                                    {{ display('questions') }}
+                                </a>
                             </div>
                         </div>
+                    </div>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"

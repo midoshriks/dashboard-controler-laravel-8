@@ -5,14 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Helper extends Model
 {
     use HasFactory;
 
     public $guarded = [];
-
-
-    public function helepr(){
-        return $this->belongsTo(Helper::class, 'helpers_id', 'id');
-    }
 }

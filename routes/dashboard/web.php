@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\DeveloperController;
+use App\Http\Controllers\Dashboard\HelpersController;
 use App\Http\Controllers\Dashboard\LanguagesController;
 use App\Http\Controllers\Dashboard\LevelsController;
 use App\Http\Controllers\Dashboard\ProductsController;
@@ -42,6 +43,10 @@ Route::group(
 
             // Products
             Route::resource('/products','ProductsController');
+
+            // Helpers
+            Route::resource('/helpers', 'HelpersController');
+            Route::put('/active/{id}', 'HelpersController@updatestatus')->name('active');
 
             // Questions
             Route::resource('/questions', 'QuestionsController');

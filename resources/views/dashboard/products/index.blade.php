@@ -65,6 +65,7 @@
                                             <th>{{ display('name') }}</th>
                                             <th>{{ display('quantity') }}</th>
                                             <th>{{ display('price') }}</th>
+                                            <th>{{ display('helpers') }}</th>
                                             <th class="w-1"></th>
                                         </tr>
                                     </thead>
@@ -77,6 +78,21 @@
                                                 <td>
                                                     $ {{ $product->price }}
                                                 </td>
+                                                {{-- @mido_shriks show hlepe acive only  --}}
+                                                <td>
+                                                    <div class="datagrid-item">
+                                                        <div class="datagrid-title">{{ display($product->helepr->name) }}</div>
+                                                        <div class="datagrid-content">
+                                                            @if ($product->helepr->status == 1)
+                                                                <span class="status status-green">{{ display('Active') }}</span>
+                                                            @else
+                                                                <span class="status status-red">{{ display('Non-Active') }}</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    {{-- {{$product->helepr->status == 1 ? $product->helepr->name : 'this helper non avtiv'}} --}}
+                                                </td>
+                                                {{-- @mido_shriks show hlepe acive only  --}}
                                                 <td>
                                                     <div class="col-auto">
                                                         <div class="dropdown">

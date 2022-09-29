@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Product;
+use App\Models\Helper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -17,7 +18,7 @@ class ProductsController extends Controller
     public function index()
     {
         $products = Product::orderby('id')->paginate(3);
-
+        
         return view('dashboard.products.index', compact('products'));
     }
 

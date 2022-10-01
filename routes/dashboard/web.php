@@ -1,6 +1,7 @@
 <?php
 // <!-- // @mido_shriks -->
 
+use App\Http\Controllers\Dashboard\AnswersController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\DeveloperController;
 use App\Http\Controllers\Dashboard\HelpersController;
@@ -50,6 +51,11 @@ Route::group(
 
             // Questions
             Route::resource('/questions', 'QuestionsController');
+
+            // Answers
+            Route::resource('/answers', 'AnswersController');
+            Route::get('/export','AnswersController@export')->name('export');
+            Route::post('/import','AnswersController@import')->name('import');
         });
     }
 );

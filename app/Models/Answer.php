@@ -9,5 +9,15 @@ class Answer extends Model
 {
     use HasFactory;
 
-    public $guraded = [];
+    // public $guraded = [];
+    protected $fillable = [
+        'answer',
+        'question_id',
+        'correct',
+    ];
+
+    public function dataexcel()
+    {
+        return $this->belongsTo(Question::class, 'question_id', 'id');
+    }
 }

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
 use App\Models\Answer;
 use Illuminate\Http\Request;
+use App\Exports\AnswersExport;
+use App\Http\Controllers\Controller;
+use App\Imports\AnswersImport;
+use Maatwebsite\Excel\Facades\Excel;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AnswersController extends Controller
 {
@@ -15,7 +19,9 @@ class AnswersController extends Controller
      */
     public function index()
     {
-        //
+        $answers = Answer::orderby('id')->paginate(3);
+
+        return view('dashboard.answers.index', compact('answers'));
     }
 
     /**
@@ -82,5 +88,23 @@ class AnswersController extends Controller
     public function destroy(Answer $answer)
     {
         //
+    }
+
+    public function export()
+    {
+        Alert::toast('deleted successfully download file',);
+        return Excel::download(new AnswersExport, 'answers.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $data = $request->file('file');
+
+        $namefile = $data->getClientOriginalName();
+        $data->move('excel', $namefile);
+
+        Excel::import(new AnswersImport, \public_path('/excel/' . $namefile));
+        // dd('mp');
+        return redirect()->back()->with('success', 'Data has been Insert SuccessFully');
     }
 }

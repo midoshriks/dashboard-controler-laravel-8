@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductsTableSeeder::class);
         $this->call(QuestionsTableSeeder::class);
         $this->call(HelpersTableSeeder::class);
+        $this->call(AnswersTableSeeder::class);
 
     }
 }

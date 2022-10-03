@@ -2,14 +2,14 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">{{ display('create user') }}</h5>
+                <h5 class="modal-title">{{ display('create users') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header mr-lg-5">
-                            <h3 class="card-title">{{ display('form Admin end User ') }}</h3>
+                            <h3 class="card-title">{{ display('Form Admin or User ') }}</h3>
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-plus"
                                 width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                 fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -26,50 +26,62 @@
                                 {{ method_field('post') }}
 
                                 <div class="form-group mb-3 col-md-12 d-flex">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <label class="form-label required">{{ display('first name') }}</label>
                                         <div class="">
-                                            <input type="text" class="form-control" name="first_name" value="ioioi"
-                                                placeholder="Enter First name">
+                                            <input type="text" class="form-control" name="first_name"
+                                                value="firts name" placeholder="Enter First name">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                </div>
+
+
+                                <div class="form-group mb-3 col-md-12 d-flex">
+                                    <div class="col-md-12">
                                         <label class="form-label required">{{ display('last name') }}</label>
                                         <div>
-                                            <input type="text" class="form-control" name="last_name" value="ytyt"
-                                                placeholder="Enter last name">
+                                            <input type="text" class="form-control" name="last_name"
+                                                value="last name" placeholder="Enter last name">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group mb-3 col-md-12 d-flex">
+                                    <div class="col-md-12">
+                                        <label class="form-label required">{{ display('Phone user') }}</label>
+                                        <div>
+                                            <input type="number" class="form-control" name="phone" value="012000000"
+                                                placeholder="+020--- -- --">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group mb-3 col-md-12 d-flex">
-                                    <div class="col-md-6">
-                                        <label class="form-label required">{{ display('Phone user') }}</label>
-                                        <div>
-                                            <input type="number" class="form-control" name="phone" value="898989"
-                                                placeholder="+020--- -- --">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <label class="form-label required">{{ display('date of birth') }}</label>
                                         <input type="date" name="dob_date" id="" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="form-group mb-3 col-md-12 d-flex">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div>
                                             <div class="mb-3">
                                                 <div class="form-label">{{ display('Select Role') }}</div>
                                                 <select class="form-select" name="role_permissions">
-                                                    {{-- <option value="">chooes</option> --}}
-                                                    <option value="gaming">{{ display('Gaming') }}</option>
-                                                    <option value="admin">{{ display('Admin') }}</option>
+                                                    <option value="">chooes</option>
+                                                    @foreach ($types as $type)
+                                                        <option value="{{$type->name}}">{{ display($type->name) }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                </div>
+
+                                <div class="form-group mb-3 col-md-12 d-flex">
+                                    <div class="col-md-12">
                                         <div class="mb-3">
                                             <div class="form-label">{{ display('Select gender') }}</div>
                                             <select class="form-select" name="gender">

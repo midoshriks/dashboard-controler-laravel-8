@@ -17,16 +17,16 @@ class AnswersTableSeeder extends Seeder
     {
         // @mido_shriks function seeder create question & answers
         $questions = [
-            'haed' => 'test question by seeder ?',
-            'easy' => 'how make question by seeder ?',
-            'low' => 'i cant make question by seeder ?',
+            '4' => 'test question by seeder ?',
+            '3' => 'how make question by seeder ?',
+            '1' => 'i cant make question by seeder ?',
         ];
 
         foreach ($questions as $key => $value) {
             # code...
             $question = Question::create([
                 'name' => $value,
-                'type_question' => $key,
+                'type_id' => '4',
                 'level_id' => 1,
             ]);
 

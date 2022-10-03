@@ -15,7 +15,7 @@
                             {{ display('Overview') }}
                         </div>
                         <h2 class="page-title">
-                            {{ display('Dashboard') }} \ {{ display('products') }}
+                            {{ display('Dashboard') }} \ {{ display($type) }}
                         </h2>
                     </div>
                     <!-- Page title actions -->
@@ -34,7 +34,7 @@
                                 {{ display('Create new products') }}
                             </a>
                             {{-- @mido_shriks --}}
-                                @include('dashboard.products.create')
+                            @include('dashboard.products.create')
                             {{-- @mido_shriks --}}
                             <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
                                 data-bs-target="#modal-large">
@@ -62,37 +62,43 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>{{ display('name') }}</th>
                                             <th>{{ display('quantity') }}</th>
                                             <th>{{ display('price') }}</th>
-                                            <th>{{ display('helpers') }}</th>
+                                            @if ($type == 'helper')
+                                                <th>{{ display('helpers') }}</th>
+                                            @endIf
                                             <th class="w-1"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($products as $index => $product)
+                                        {{-- @dd($product->helper); --}}
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
-                                                <td>{{ $product->name }}</td>
                                                 <td>{{ $product->quantity }}</td>
                                                 <td>
                                                     $ {{ $product->price }}
                                                 </td>
                                                 {{-- @mido_shriks show hlepe acive only  --}}
-                                                <td>
-                                                    <div class="datagrid-item">
-                                                        <div class="datagrid-title">{{ display($product->helepr->name) }}</div>
-                                                        <div class="datagrid-content">
-                                                            @if ($product->helepr->status == 1)
-                                                                <span class="status status-green">{{ display('Active') }}</span>
-                                                            @else
-                                                                <span class="status status-red">{{ display('Non-Active') }}</span>
-                                                            @endif
+                                                @if ($type == 'helper')
+                                                    <td>
+                                                        <div class="datagrid-item">
+                                                            <div class="datagrid-title">
+                                                                {{ display(@$product->helper->name) }}</div>
+                                                            <div class="datagrid-content">
+                                                                @if (@$product->helper->status == 1)
+                                                                    <span
+                                                                        class="status status-green">{{ display('Active') }}</span>
+                                                                @else
+                                                                    <span
+                                                                        class="status status-red">{{ display('Non-Active') }}</span>
+                                                                @endif
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    {{-- {{$product->helepr->status == 1 ? $product->helepr->name : 'this helper non avtiv'}} --}}
-                                                </td>
-                                                {{-- @mido_shriks show hlepe acive only  --}}
+                                                    </td>
+                                                @endif
+
+                                                {{-- @mido_shriks show hlepe acive only --}}
                                                 <td>
                                                     <div class="col-auto">
                                                         <div class="dropdown">
@@ -135,7 +141,7 @@
                                 </table>
 
                                 <div class="">
-                                    {{ $products->links('pagination::bootstrap-4') }}
+                                    {{ $products->appends(['type' => $type])->links('pagination::bootstrap-4') }}
                                 </div>
                             </div>
                         </div>

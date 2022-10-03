@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Product;
 use App\Models\Helper;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -15,11 +16,16 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::orderby('id')->paginate(3);
-        
-        return view('dashboard.products.index', compact('products'));
+
+        $type = $request->type;
+        $products = Product::orderby('id')->whereHas('type', function ($q) use ($type) {
+            $q->where('name', $type);
+        })->paginate(20);
+        $types = Type::where('model', 'product')->get();
+        $helpers = Helper::all();
+        return view('dashboard.products.index', compact('products', 'types', 'type', 'helpers'));
     }
 
     /**
@@ -41,14 +47,14 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         $product = new Product();
-        $product->name = $request->name;
+        $product->type_id = $request->type_id;
         $product->quantity = $request->quantity;
         $product->price = $request->price;
-
+        $product->helper_id = $request->helper_id;
         $product->save();
 
         Alert::success('Success Save product' . ' ' . $product->name);
-        return redirect()->route('dashboard.products.index');
+        return redirect()->route('dashboard.products.index', ['type' => $request->type]);
         // dd($request->all());
     }
 
@@ -91,7 +97,7 @@ class ProductsController extends Controller
 
         $product->update();
 
-        Alert::success('Success Update product'.' '.$product->name);
+        Alert::success('Success Update product' . ' ' . $product->name);
         return redirect()->route('dashboard.products.index');
         // dd($product);
         // dd($request->all());

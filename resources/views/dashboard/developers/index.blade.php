@@ -79,7 +79,7 @@
                                                     <td>{{ $developer->type }}</td>
                                                     <td>{{ $developer->model }}</td>
                                                     <td><a target="_blank"
-                                                            href="{{ $developer->route_api }}">{{ $developer->route_api }}</a>
+                                                            href="{{ url($developer->route_api) }}">{{ $developer->route_api }}</a>
                                                     </td>
                                                     <td>
                                                         <div class="col-auto">

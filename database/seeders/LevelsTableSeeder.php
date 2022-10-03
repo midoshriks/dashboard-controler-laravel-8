@@ -15,9 +15,10 @@ class LevelsTableSeeder extends Seeder
     public function run()
     {
         $levels = [
-            '$100' => 'one',
-            '$200' => 'two',
-            '$300' => 'three',
+            '100' => 'one',
+            '200' => 'two',
+            '300' => 'three',
+            '400' => 'for',
         ];
 
         foreach ($levels as $key => $level) {

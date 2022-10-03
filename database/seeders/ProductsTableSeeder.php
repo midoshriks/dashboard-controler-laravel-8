@@ -17,19 +17,18 @@ class ProductsTableSeeder extends Seeder
         $helper_id = 1;
 
         $products = [
-            'gold' => '25.Kg',
-            'silver' => '35.Kg',
-            'bronzy' => '45.Kg',
+            '25',
+            '35',
+            '45',
         ];
         foreach ($products as $key => $value) {
             # code...
                 # code...
                 $product = Product::create([
-                    'name' => $key,
                     'quantity' => $value,
-                    'price' => '10.08',
-                    'type_id' => '2',
-                    'helpers_id' => $helper_id++,
+                    'price' => '10.00',
+                    'type_id' => '8',
+                    'helper_id' => $helper_id++,
                 ]);
         }
     }

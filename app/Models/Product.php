@@ -11,8 +11,14 @@ class Product extends Model
 
     public $guarded = [];
 
+    // relation type
+    public function type()
+    {
+        return $this->belongsTo(Type::class, 'type_id', 'id');
+    }
 
-    public function helepr(){
-        return $this->belongsTo(Helper::class, 'helpers_id', 'id');
+    public function helper()
+    {
+        return $this->belongsTo(Helper::class, 'helper_id', 'id');
     }
 }

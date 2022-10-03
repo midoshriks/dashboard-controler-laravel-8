@@ -8,6 +8,7 @@ use App\Models\country;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Type;
 use RealRashid\SweetAlert\Facades\Alert;
 use phpDocumentor\Reflection\Types\Null_;
 
@@ -22,8 +23,9 @@ class UsersController extends Controller
     {
         $users = User::all();
         $select_countries = country::all();
+        $types = Type::where('model','user')->get();
 
-        return view('dashboard.users.index', compact('users', 'select_countries'));
+        return view('dashboard.users.index', compact('users', 'select_countries','types'));
     }
 
     /**

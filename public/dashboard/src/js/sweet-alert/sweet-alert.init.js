@@ -66,27 +66,25 @@
         });
 
         //Parameter
-        $('.btn-delet').click(function () {
+        $('body').on('click', '.btn-delet', function () {
             let form_id = $(this).data('form-id');
             let name_val = $(this).data('name-item');
-            swal({
-                title: "Are you sure " + name_val + '?',
-                text: "Once deleted, " + name_val + "  you will not be able to recover this imaginary file!",
-                type: "warning",
+            new Swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this lorem ipsum!",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete !",
-                cancelButtonText: "No, cancel !",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            }, function (isConfirm) {
-                if (isConfirm) {
+                confirmButtonText: "Yes, delete it!",
+            }).then(result => {
+                if (result.value) {
                     $('#' + form_id).submit();
-                    swal("Deleted!", "Your imaginary file has been deleted." + name_val, "success");
+                    new Swal("Deleted!", "Your imaginary file has been deleted." + name_val, "success");
                 } else {
-                    swal("Cancelled", "Your imaginary file is safe " + name_val, "error");
+                    new Swal("Cancelled", "Your imaginary file is safe :)", "error");
                 }
+                // swal.closeModal();
             });
+
         });
 
         //Parameter
@@ -94,24 +92,21 @@
             let form_id = $(this).data('form-id');
             let name_val = $(this).data('name-item');
             let self = $(this);
-            swal({
-                title: "Are you sure " + name_val + '?',
-                text: "",
-                type: "warning",
+
+            new Swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this lorem ipsum!",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, !",
-                cancelButtonText: "No, cancel !",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            }, function (isConfirm) {
-                if (isConfirm) {
+                confirmButtonText: "Yes!",
+            }).then(result => {
+                if (result.value) {
                     $('#' + form_id).submit();
                     swal("Active User !", "Your imaginary file has been actived." + name_val, "success");
                 } else {
-                    self.trigger('click');
                     swal("Cancelled", "Your imaginary file is safe " + name_val, "error");
                 }
+                // swal.closeModal();
             });
         });
 

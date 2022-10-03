@@ -21,6 +21,10 @@ class AnswersController extends Controller
     {
         $answers = Answer::orderby('id')->paginate(3);
 
+        // $answers = Answer::with('dataexcel')->first();
+
+        // dd($answers);
+
         return view('dashboard.answers.index', compact('answers'));
     }
 
@@ -92,7 +96,7 @@ class AnswersController extends Controller
 
     public function export()
     {
-        Alert::toast('deleted successfully download file',);
+        Alert::toast('successfully download file',);
         return Excel::download(new AnswersExport, 'answers.xlsx');
     }
 
@@ -100,11 +104,14 @@ class AnswersController extends Controller
     {
         $data = $request->file('file');
 
+        // dd($data);
+
         $namefile = $data->getClientOriginalName();
         $data->move('excel', $namefile);
 
         Excel::import(new AnswersImport, \public_path('/excel/' . $namefile));
-        // dd('mp');
-        return redirect()->back()->with('success', 'Data has been Insert SuccessFully');
+        // dd($data);
+        Alert::toast('successfully Import file',);
+        return redirect()->back();
     }
 }

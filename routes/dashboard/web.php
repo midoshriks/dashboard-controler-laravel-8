@@ -37,7 +37,7 @@ Route::group(
 
             // Users
             Route::resource('/users', 'UsersController');
-            Route::put('/active/{id}', 'UsersController@updatestatus')->name('active');
+            Route::put('/user/active/{id}', 'UsersController@updatestatus')->name('user.active');
 
             // Levels
             Route::resource('/levels', 'LevelsController');
@@ -47,15 +47,16 @@ Route::group(
 
             // Helpers
             Route::resource('/helpers', 'HelpersController');
-            Route::put('/active/{id}', 'HelpersController@updatestatus')->name('active');
+            Route::put('/helpers/active/{id}', 'HelpersController@updatestatus')->name('helper.active');
 
             // Questions
             Route::resource('/questions', 'QuestionsController');
+            Route::post('questions/imoprt', 'QuestionsController@import')->name('questions.import');
 
             // Answers
             Route::resource('/answers', 'AnswersController');
             Route::get('/export','AnswersController@export')->name('export');
-            Route::post('/import','AnswersController@import')->name('import');
+            // Route::post('/import','AnswersController@import')->name('import');
         });
     }
 );

@@ -113,7 +113,7 @@
                                                         </label>
                                                         {{-- form --}}
                                                         <form id="user-active-{{ $user->id }}" style="display: none"
-                                                            action="{{ route('dashboard.active', $user->id) }}"
+                                                            action="{{ route('dashboard.user.active', $user->id) }}"
                                                             {{-- action="{{ route('dashboard.users.update', $user->id) }}" --}}
                                                             method="POST" style="display: inline-block;">
                                                             @csrf

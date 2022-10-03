@@ -2,16 +2,16 @@
 
 namespace App\Imports;
 
-use App\Models\Question;
 use App\Models\Type;
-use App\Models\Level;
+use App\Models\level;
 use App\Models\Answer;
+use App\Models\Question;
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class AnswersImport implements
+class QuestionsImport implements
     ToCollection,
     WithHeadingRow
 {
@@ -22,7 +22,6 @@ class AnswersImport implements
     //  */
     public function collection(Collection $rows)
     {
-
         foreach ($rows as $index => $row) {
             $type = Type::where('name', $row['type'])->first();
             $level = Level::where('name', $row['level'])->first();

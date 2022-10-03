@@ -51,7 +51,7 @@
                     </a>
                     </li>
 
-                    {{-- @mido_shriks --}}
+                    {{-- @mido_shriks  levels_nav --}}
                     @if (app()->getLocale() == 'en')
                         <li class="nav-item {{ Request::is('en/dashboard/levels*') ? 'active' : '' }}">
                         @else
@@ -75,84 +75,70 @@
                             {{ display('levels') }}
                         </span>
                     </a>
-                    </li>
 
-                    {{-- @mido_shriks dropdowen = {products , helpers} --}}
+                    {{-- @mido_shriks -> prodect(coin helper)  --}}
                     @if (app()->getLocale() == 'en')
-                        <li
-                            class="nav-item dropdown {{ Request::is('en/dashboard/products*') || Request::is('en/dashboard/helpers*') ? 'active' : '' }}">
+                        <li class="nav-item {{ Request::is('en/dashboard/products*') ? 'active' : '' }}">
                         @else
-                        <li
-                            class="nav-item dropdown {{ Request::is('ar/dashboard/products*') || Request::is('ar/dashboard/helpers*') ? 'active' : '' }}">
-                            {{-- <li class="nav-item dropdown "> --}}
+                        <li class="nav-item {{ Request::is('ar/dashboard/products*') ? 'active' : '' }}">
                     @endif
-                    <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                        data-bs-auto-close="outside" role="button" aria-expanded="false">
+                    <a class="nav-link" href="{{ route('dashboard.products.index', ['type' => 'coin']) }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <!-- Download SVG icon from http://tabler-icons.io/i/package -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3" />
-                                <line x1="12" y1="12" x2="20" y2="7.5" />
-                                <line x1="12" y1="12" x2="12" y2="21" />
-                                <line x1="12" y1="12" x2="4" y2="7.5" />
-                                <line x1="16" y1="5.25" x2="8" y2="9.75" />
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coin-bitcoin"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <circle cx="12" cy="12" r="9"></circle>
+                                <path
+                                    d="M9 8h4.09c1.055 0 1.91 .895 1.91 2s-.855 2 -1.91 2c1.055 0 1.91 .895 1.91 2s-.855 2 -1.91 2h-4.09">
+                                </path>
+                                <path d="M10 12h4"></path>
+                                <path d="M10 7v10v-9"></path>
+                                <path d="M13 7v1"></path>
+                                <path d="M13 16v1"></path>
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            {{ display('products') }}
+                            {{ display('coins') }}
                         </span>
                     </a>
-                    <div class="dropdown-menu">
-                        <div class="dropdown-menu-columns">
-                            <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="{{ route('dashboard.products.index') }}">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <!-- Download SVG icon from http://tabler-icons.io/i/package -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                            height="24" viewBox="0 0 24 24" stroke-width="2"
-                                            stroke="currentColor" fill="none" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3" />
-                                            <line x1="12" y1="12" x2="20" y2="7.5" />
-                                            <line x1="12" y1="12" x2="12" y2="21" />
-                                            <line x1="12" y1="12" x2="4" y2="7.5" />
-                                            <line x1="16" y1="5.25" x2="8" y2="9.75" />
-                                        </svg>
-                                    </span>
-                                    {{ display('products') }}
-                                </a>
-                                <a class="dropdown-item" href="{{ route('dashboard.helpers.index') }}">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-help" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <circle cx="12" cy="12" r="9"></circle>
-                                            <line x1="12" y1="17" x2="12" y2="17.01">
-                                            </line>
-                                            <path d="M12 13.5a1.5 1.5 0 0 1 1 -1.5a2.6 2.6 0 1 0 -3 -4"></path>
-                                        </svg>
-                                    </span>
-                                    {{ display('helpers') }}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
                     </li>
+
+                    @if (app()->getLocale() == 'en')
+                        <li
+                            class="nav-item {{ Request::is('en/dashboard/products*') || Request::is('en/dashboard/helpers*') ? 'active' : '' }}">
+                        @else
+                        <li
+                            class="nav-item {{ Request::is('ar/dashboard/products*') || Request::is('ar/dashboard/helpers*') ? 'active' : '' }}">
+                    @endif
+                    <a class="nav-link" href="{{ route('dashboard.products.index', ['type' => 'helper']) }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-help"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <circle cx="12" cy="12" r="9"></circle>
+                                <line x1="12" y1="17" x2="12" y2="17.01">
+                                </line>
+                                <path d="M12 13.5a1.5 1.5 0 0 1 1 -1.5a2.6 2.6 0 1 0 -3 -4"></path>
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            {{ display('helpers') }}
+                        </span>
+                    </a>
+                    </li>
+                    {{-- @mido_shriks -> prodect(coin helper)  --}}
+
+
+
                     {{-- @mido_shriks dropdowen = {questions } --}}
                     @if (app()->getLocale() == 'en')
-                        <li class="nav-item dropdown {{ Request::is('en/dashboard/questions*') || Request::is('en/dashboard/answers*') ? 'active' : '' }}">
+                        <li class="nav-item {{ Request::is('en/dashboard/questions*') ? 'active' : '' }}">
                         @else
-                        <li class="nav-item dropdown {{ Request::is('ar/dashboard/questions*') || Request::is('ar/dashboard/answers*') ? 'active' : '' }}">
-                            {{-- <li class="nav-item dropdown "> --}}
+                        <li class="nav-item {{ Request::is('ar/dashboard/questions*') ? 'active' : '' }}">
                     @endif
-                    <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
-                        data-bs-auto-close="outside" role="button" aria-expanded="false">
+                    <a class="nav-link" href="{{ route('dashboard.questions.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home-question"
                                 width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -168,166 +154,11 @@
                             {{ display('questions') }}
                         </span>
                     </a>
-                    <div class="dropdown-menu">
-                        <div class="dropdown-menu-columns">
-                            <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="{{ route('dashboard.questions.index') }}">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-question-mark" width="24"
-                                            height="24" viewBox="0 0 24 24" stroke-width="2"
-                                            stroke="currentColor" fill="none" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <path
-                                                d="M8 8a3.5 3 0 0 1 3.5 -3h1a3.5 3 0 0 1 3.5 3a3 3 0 0 1 -2 3a3 4 0 0 0 -2 4">
-                                            </path>
-                                            <line x1="12" y1="19" x2="12" y2="19.01">
-                                            </line>
-                                        </svg>
-                                    </span>
-                                    {{ display('questions') }}
-                                </a>
-                                <a class="dropdown-item" href="{{ route('dashboard.answers.index') }}">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-brand-stackoverflow" width="24"
-                                            height="24" viewBox="0 0 24 24" stroke-width="2"
-                                            stroke="currentColor" fill="none" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <path d="M4 17v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-1"></path>
-                                            <path d="M8 16h8"></path>
-                                            <path d="M8.322 12.582l7.956 .836"></path>
-                                            <path d="M8.787 9.168l7.826 1.664"></path>
-                                            <path d="M10.096 5.764l7.608 2.472"></path>
-                                        </svg>
-                                    </span>
-                                    {{ display('answers') }}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
-                            data-bs-auto-close="outside" role="button" aria-expanded="false">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <!-- Download SVG icon from http://tabler-icons.io/i/layout-2 -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <rect x="4" y="4" width="6" height="5"
-                                        rx="2" />
-                                    <rect x="4" y="13" width="6" height="7"
-                                        rx="2" />
-                                    <rect x="14" y="4" width="6" height="7"
-                                        rx="2" />
-                                    <rect x="14" y="15" width="6" height="5"
-                                        rx="2" />
-                                </svg>
-                            </span>
-                            <span class="nav-link-title">
-                                Layout
-                            </span>
-                        </a>
-                        <div class="dropdown-menu">
-                            <div class="dropdown-menu-columns">
-                                <div class="dropdown-menu-column">
-                                    <a class="dropdown-item" href="./layout-horizontal.html">
-                                        Horizontal
-                                    </a>
-                                    <a class="dropdown-item" href="./layout-boxed.html">
-                                        Boxed
-                                        <span class="badge badge-sm bg-green text-uppercase ms-2">New</span>
-                                    </a>
-                                    <a class="dropdown-item" href="./layout-vertical.html">
-                                        Vertical
-                                    </a>
-                                    <a class="dropdown-item" href="./layout-vertical-transparent.html">
-                                        Vertical transparent
-                                    </a>
-                                    <a class="dropdown-item" href="./layout-vertical-right.html">
-                                        Right vertical
-                                    </a>
-                                    <a class="dropdown-item" href="./layout-condensed.html">
-                                        Condensed
-                                    </a>
-                                    <a class="dropdown-item" href="./layout-combo.html">
-                                        Combined
-                                    </a>
-                                </div>
-                                <div class="dropdown-menu-column">
-                                    <a class="dropdown-item" href="./layout-navbar-dark.html">
-                                        Navbar dark
-                                    </a>
-                                    <a class="dropdown-item" href="./layout-navbar-sticky.html">
-                                        Navbar sticky
-                                    </a>
-                                    <a class="dropdown-item" href="./layout-navbar-overlap.html">
-                                        Navbar overlap
-                                    </a>
-                                    <a class="dropdown-item" href="./layout-rtl.html">
-                                        RTL mode
-                                    </a>
-                                    <a class="dropdown-item" href="./layout-fluid.html">
-                                        Fluid
-                                    </a>
-                                    <a class="dropdown-item" href="./layout-fluid-vertical.html">
-                                        Fluid vertical
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+                    {{-- @mido_shriks dropdowen = {questions } --}}
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
-                            data-bs-auto-close="outside" role="button" aria-expanded="false">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <circle cx="12" cy="12" r="4" />
-                                    <circle cx="12" cy="12" r="9" />
-                                    <line x1="15" y1="15" x2="18.35" y2="18.35" />
-                                    <line x1="9" y1="15" x2="5.65" y2="18.35" />
-                                    <line x1="5.65" y1="5.65" x2="9" y2="9" />
-                                    <line x1="18.35" y1="5.65" x2="15" y2="9" />
-                                </svg>
-                            </span>
-                            <span class="nav-link-title">
-                                Help
-                            </span>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="./docs/index.html">
-                                Documentation
-                            </a>
-                            <a class="dropdown-item" href="./changelog.html">
-                                Changelog
-                            </a>
-                            <a class="dropdown-item" href="https://github.com/tabler/tabler" target="_blank"
-                                rel="noopener">
-                                Source code
-                            </a>
-                            <a class="dropdown-item text-pink" href="https://github.com/sponsors/codecalm"
-                                target="_blank" rel="noopener">
-                                <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24"
-                                    height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path
-                                        d="M19.5 12.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-                                </svg>
-                                Sponsor project!
-                            </a>
-                        </div>
-                    </li>
+
+
                     {{-- @mido_shriks dropdowen = {languages , developers} --}}
                     @if (app()->getLocale() == 'en')
                         <li

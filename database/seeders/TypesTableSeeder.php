@@ -14,18 +14,30 @@ class TypesTableSeeder extends Seeder
      */
     public function run()
     {
+        // $models = [
+        //     'users',
+        //     'products',
+        //     'levels',
+        //     'questions',
+        // ];
+
+
         $models = [
-            'users',
-            'products',
-            'levels',
-            'questions',
+            "hard" => 'question',
+            "mediam" => 'question',
+            "easy" => 'question',
+            "low" => 'question',
+            "gaming" => 'user',
+            "admin" => 'user',
+            "helper" => 'product',
+            "coin" => 'product',
         ];
 
         foreach ($models as $key => $model) {
             # code...
-            $types = type::create([
+            $types = Type::create([
                 'model' => $model,
-                'name' => $model,
+                'name' => $key,
             ]);
         }
     }

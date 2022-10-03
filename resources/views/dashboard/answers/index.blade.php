@@ -41,7 +41,7 @@
                                     {{ 'download file' }}
                                 </a>
                             </span>
-                            {{-- <form action="{{ route('dashboard.import')}}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('dashboard.import')}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="modal-body">
                                     <div class="from-group">
@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                                 <span class="d-none d-sm-inline">
-                                    <a href="{{ route('dashboard.import') }}" class="btn btn-white">
+                                    <button type="submit" href="" class="btn btn-white">
                                         <span>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-upload"
                                                 width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -62,9 +62,9 @@
                                             </svg>
                                         </span>
                                         {{ 'import file' }}
-                                    </a>
+                                    </button>
                                 </span>
-                            </form> --}}
+                            </form>
 
                         </div>
                     </div>

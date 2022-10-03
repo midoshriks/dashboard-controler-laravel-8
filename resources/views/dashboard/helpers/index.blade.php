@@ -65,7 +65,7 @@
                                                             {{-- form --}}
                                                             <form id="helper-active-{{ $helper->id }}"
                                                                 style="display: none"
-                                                                action="{{ route('dashboard.active', $helper->id) }}"
+                                                                action="{{ route('dashboard.helper.active', $helper->id) }}"
                                                                 {{-- action="{{ route('dashboard.helpers.updatestatus', $helper->id) }}" --}} method="POST"
                                                                 style="display: inline-block;">
                                                                 @csrf

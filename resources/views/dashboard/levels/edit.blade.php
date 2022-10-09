@@ -9,12 +9,16 @@
                 <div class="col">
                     <!-- Page pre-title -->
                     <div class="page-pretitle">
-                        {{ display('Overview') }}
+                        {{ display('Smart bucks') }}
                     </div>
-                    <h2 class="page-title">
-                        {{ display('Dashboard') }} \ {{ display('level') }} \ {{ display('edit') }} \
-                        {{ $level->name }}
-                    </h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard.index')}}">{{ display('Home')}}</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard.levels.index')}}">{{ display($title)}}</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard.levels.edit',$level->id)}}">{{ display($level->name)}}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ display('Edit')}}</li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
         </div>

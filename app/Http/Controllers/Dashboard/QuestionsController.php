@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Exports\QuestionsExport;
 use App\Models\Type;
 use App\Models\Level;
 use App\Models\Answer;
@@ -22,10 +23,11 @@ class QuestionsController extends Controller
      */
     public function index()
     {
+        $title = "Questions";
         $questions = Question::orderby('id')->paginate(20);
         $types = Type::where('model', 'question')->get();
         $levels = level::all();
-        return view('dashboard.questions.index', compact('questions', 'types', 'levels'));
+        return view('dashboard.questions.index', compact('title', 'questions', 'types', 'levels'));
     }
 
     /**
@@ -86,8 +88,11 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question)
     {
+        $title = "Questions";
+        $types = Type::where('model', 'question')->get();
+        $levels = level::all();
         // dd($question);
-        return view('dashboard.questions.edit', compact('question'));
+        return view('dashboard.questions.edit', compact('title', 'question', 'types', 'levels'));
     }
 
     /**
@@ -100,21 +105,31 @@ class QuestionsController extends Controller
     public function update(Request $request, Question $question)
     {
         $question = Question::find($question->id);
-        // $question->name = $request->name;
-        // $question->type_question = $request->type_question;
-        // $question->update();
+        // dd($question);
+
         $question->name = $request->name;
         $question->type_id = $request->type_id;
         $question->level_id = $request->level_id;
-        $question->save();
-        // dd($question->id);
+
+        $question->update();
+        // dd($question);
+
+        // لحذف جميع الأسؤلة لتعديل وأضافة عليا من جديد
+        $question->answers()->delete();
+        // لحذف جميع الأسؤلة لتعديل وأضافة عليا من جديد
+
+
+
         for ($i = 1; $i <= 4; $i++) {
-            Answer::create([
+            $answer = Answer::create([
                 'answer' => $request["answer_$i"],
                 'question_id' => $question->id,
                 'correct' => ($request['correct'] == $i) ? 1 : 0,
             ]);
         }
+
+        // $answer = Answer::where('question_id' , $question->id)->get();
+        // dd($answer);
 
         Alert::success('Success Update Question' . ' ' . $question->name);
         return redirect()->route('dashboard.questions.index');
@@ -129,11 +144,21 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
+        // @mido_shriks لمسح الأسئلة المتعلقة با رقم تعريف با لسؤال
+        $question->answers()->delete();
+        // @mido_shriks لمسح الأسئلة المتعلقة با رقم تعريف با لسؤال
         $question->delete();
 
         Alert::toast('deleted successfully question',);
         return redirect()->route('dashboard.questions.index');
     }
+
+    public function export()
+    {
+        Alert::toast('successfully download file',);
+        return Excel::download(new QuestionsExport, 'questions_answers.xlsx');
+    } // end of function export
+
     public function import(Request $request)
     {
         $data = $request->file('file');
@@ -147,5 +172,5 @@ class QuestionsController extends Controller
         // dd($data);
         Alert::toast('successfully Import file',);
         return redirect()->back();
-    }
+    } // end of function import
 }

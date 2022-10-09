@@ -32,14 +32,17 @@
                                 @include('partials._errors')
 
                                 <div class="form-group mb-3 col-md-12 d-flex">
-                                    <div class="col-sm-6 m-1">
+                                    <div class="col-sm-12 m-1">
                                         <label class="form-label required">{{ display('quantity products') }}</label>
                                         <div>
                                             <input type="text" class="form-control" name="name" value="how ? "
                                                 placeholder="Enter questions ...?">
                                         </div>
                                     </div>
-                                    <div class="col-sm-6 m-1">
+                                </div>
+
+                                <div class="form-group mb-3 col-md-12 d-flex">
+                                    <div class="col-sm-12 m-1">
                                         <label class="form-label required">{{ display('type') }}</label>
                                         <div>
                                             <select class="form-select" name="type_id">
@@ -54,14 +57,18 @@
                                 </div>
 
                                 <div class="form-group mb-3 col-md-12 d-flex">
-                                    <label class="form-label required">{{ display('level') }}</label>
-                                    <select class="form-select" name="level_id">
-                                        <option value="">chooes</option>
-                                        @foreach ($levels as $level)
-                                            <option value="{{ $level->id }}">{{ display($level->name) }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    <div class="col-sm-12 m-1">
+                                        <label class="form-label required">{{ display('level') }}</label>
+                                        <div class="">
+                                            <select class="form-select" name="level_id">
+                                                <option value="">chooes</option>
+                                                @foreach ($levels as $level)
+                                                    <option value="{{ $level->id }}">{{ display($level->name) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
 
 
@@ -106,14 +113,18 @@
                                 </div>
 
                                 <div class="form-group mb-3 col-md-12 d-flex">
-                                    <label class="form-label required">{{ display('correct') }}</label>
-                                    <select class="form-select" name="correct">
-                                        <option value="">chooes</option>
-                                        <option value="1"> 1 </option>
-                                        <option value="2"> 2 </option>
-                                        <option value="3"> 3</option>
-                                        <option value="4"> 4 </option>
-                                    </select>
+                                    <div class="col-sm-12 m-1">
+                                        <label class="form-label required">{{ display('correct') }}</label>
+                                        <div class="">
+                                            <select class="form-select" name="correct">
+                                                <option value="">chooes</option>
+                                                <option value="1"> 1 </option>
+                                                <option value="2"> 2 </option>
+                                                <option value="3"> 3</option>
+                                                <option value="4"> 4 </option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>

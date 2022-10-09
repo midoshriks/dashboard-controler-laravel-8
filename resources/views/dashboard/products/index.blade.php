@@ -12,11 +12,15 @@
                     <div class="col">
                         <!-- Page pre-title -->
                         <div class="page-pretitle">
-                            {{ display('Overview') }}
+                            {{ display('Smart bucks') }}
                         </div>
-                        <h2 class="page-title">
-                            {{ display('Dashboard') }} \ {{ display($type) }}
-                        </h2>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard.index')}}">{{ display('Home')}}</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard.products.index')}}">{{ display($type) }}</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ display('Data '.$type.' tables')}}</li>
+                            </ol>
+                        </nav>
                     </div>
                     <!-- Page title actions -->
                     <div class="col-12 col-md-auto ms-auto d-print-none">
@@ -58,7 +62,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="table-responsive">
-                                <table class="table table-vcenter card-table text-center">
+                                <table id="dataTable" class="table table-vcenter card-table">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -67,7 +71,7 @@
                                             @if ($type == 'helper')
                                                 <th>{{ display('helpers') }}</th>
                                             @endIf
-                                            <th class="w-1"></th>
+                                            <th>{{ display('Action') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>

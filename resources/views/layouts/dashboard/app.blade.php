@@ -12,6 +12,9 @@
     <link href="{{ asset('dashboard/src/js/sweet-alert/sweet-alert.min.css') }}" rel="stylesheet">
     {{-- @mido_shriks use btn animation by sweetalert2 --}}
 
+    {{-- @mido_shriks datatable --}}
+
+
 
     {{-- Style Dashboard --}}
     @if (app()->getLocale() == 'en')
@@ -36,11 +39,22 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    {{-- @mido_shriks libry datatable css --}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/datatables/datatables.min.css') }}" />
+    {{-- // cdn --}}
+    {{-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.2/css/bulma.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bm/jq-3.6.0/dt-1.12.1/b-2.2.3/b-html5-2.2.3/sl-1.4.0/datatables.min.css"/> --}}
+
+
+
+
+
 </head>
 
 <body>

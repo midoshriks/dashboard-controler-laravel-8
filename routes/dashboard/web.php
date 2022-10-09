@@ -52,10 +52,15 @@ Route::group(
             // Questions
             Route::resource('/questions', 'QuestionsController');
             Route::post('questions/imoprt', 'QuestionsController@import')->name('questions.import');
+            Route::get('qouestions/export/', 'QuestionsController@export')->name('questions.export');
+
+            Route::get('/tables', function() {
+                return view('test_table');
+            });
 
             // Answers
-            Route::resource('/answers', 'AnswersController');
-            Route::get('/export','AnswersController@export')->name('export');
+            // Route::resource('/answers', 'AnswersController');
+            // Route::get('/export','AnswersController@export')->name('export');
             // Route::post('/import','AnswersController@import')->name('import');
         });
     }

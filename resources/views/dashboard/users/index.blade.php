@@ -62,7 +62,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="table-responsive">
-                            <table class="table table-vcenter card-table">
+                            <table id="dataTable" class="table table-vcenter card-table">
                                 <thead>
                                     <tr>
                                         <th>{{ display('Name') }}</th>
@@ -70,7 +70,6 @@
                                         <th>{{ display('Role') }}</th>
                                         <th>{{ display('Status') }}</th>
                                         <th>{{ display('Action') }}</th>
-                                        <th class="w-1"></th>
                                     </tr>
                                 </thead>
                                 <tbody>

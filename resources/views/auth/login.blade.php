@@ -2,16 +2,18 @@
 
 @section('content')
     <div class="container-tight py-4">
-        <div class="text-center mb-4">
-            <a href="." class="navbar-brand navbar-brand-autodark"><img
-                    src="{{ asset('dashboard/src/static/logo.svg') }}" height="36" alt=""></a>
+        <div class="text-center">
+            <a href="." class="navbar-brand navbar-brand-autodark">
+                <img src="{{ asset('dashboard/src/static/smart_logo.png') }}" height="200" alt="">
+                <span>{{ display('smart bucks')}}</span>
+            </a>
         </div>
         <form class="card card-md" action="{{ route('login') }}" method="POST" autocomplete="off">
             @csrf
             <div class="card-body">
-                <h2 class="card-title text-center mb-4">Login to your account</h2>
+                <h2 class="card-title text-center mb-4">{{ display('Login to your account') }}</h2>
                 <div class="mb-3">
-                    <label class="form-label">Email address</label>
+                    <label class="form-label">{{ display('Email address') }}</label>
                     <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
                         placeholder="Enter email" autocomplete="off" id="email">
                     @error('email')
@@ -22,9 +24,9 @@
                 </div>
                 <div class="mb-2">
                     <label class="form-label">
-                        Password
+                        {{ display('Password') }}
                         <span class="form-label-description">
-                            <a href="{{ route('password.request') }}">I forgot password</a>
+                            <a href="{{ route('password.request') }}">{{ display('I forgot password') }}</a>
                         </span>
                     </label>
                     <div class="input-group input-group-flat">
@@ -54,14 +56,14 @@
                 <div class="mb-2">
                     <label class="form-check">
                         <input type="checkbox" class="form-check-input" />
-                        <span class="form-check-label">Remember me on this device</span>
+                        <span class="form-check-label">{{ display('Remember me on this device') }}</span>
                     </label>
                 </div>
                 <div class="form-footer">
-                    <button type="submit" class="btn btn-primary w-100">Sign in</button>
+                    <button type="submit" class="btn btn-primary w-100">{{ display('Sign in') }}</button>
                 </div>
             </div>
-            <div class="hr-text">or</div>
+            <div class="hr-text">{{ display('or') }}</div>
             <div class="card-body">
                 <div class="row">
                     <div class="col"><a href="#" class="btn btn-white w-100">
@@ -72,7 +74,7 @@
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3"></path>
                             </svg>
-                            Login Facebook
+                            {{ display('Login Facebook') }}
                         </a></div>
                     <div class="col"><a href="#" class="btn btn-white w-100">
                             <!-- Download SVG icon from http://tabler-icons.io/i/brand-google -->
@@ -82,13 +84,14 @@
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path d="M17.788 5.108a9 9 0 1 0 3.212 6.892h-8"></path>
                             </svg>
-                            Login Google
+                            {{ display('Login Google') }}
                         </a></div>
                 </div>
             </div>
         </form>
         <div class="text-center text-muted mt-3">
-            Don't have account yet? <a href="./sign-up.html" tabindex="-1">Sign up</a>
+            {{ display("Don't have account yet") }} ? <a href="./sign-up.html"
+                tabindex="-1">{{ display('Sign up') }}</a>
         </div>
     </div>
 @endsection

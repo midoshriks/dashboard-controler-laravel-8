@@ -17,9 +17,9 @@ class LevelsController extends Controller
     public function index()
     {
         // $data = Employee::orderby('id', 'desc')->paginate(15);
-
+        $title = 'Levels';
         $levels = level::orderby('id')->paginate(5);
-        return view('dashboard.levels.index', compact('levels'));
+        return view('dashboard.levels.index', compact( 'title','levels'));
     }
 
     /**
@@ -76,8 +76,9 @@ class LevelsController extends Controller
      */
     public function edit(level $level)
     {
+        $title = 'Level';
         $level = level::find($level->id);
-        return view('dashboard.levels.edit', compact('level'));
+        return view('dashboard.levels.edit', compact( 'title','level'));
     }
 
     /**

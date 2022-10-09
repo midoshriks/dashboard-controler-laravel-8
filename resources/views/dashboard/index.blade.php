@@ -1817,4 +1817,6 @@
         </div>
     </div>
 
+    {{-- script chert js --}}
+    @include('layouts.dashboard.script_index')
 @endsection

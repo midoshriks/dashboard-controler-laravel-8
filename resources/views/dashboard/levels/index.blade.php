@@ -10,13 +10,16 @@
             <div class="page-header d-print-none">
                 <div class="row g-2 align-items-center">
                     <div class="col">
-                        <!-- Page pre-title -->
                         <div class="page-pretitle">
-                            {{ display('Overview') }}
+                            {{ display('Smart bucks') }}
                         </div>
-                        <h2 class="page-title">
-                            {{ display('Dashboard') }}\{{ display('levels') }}
-                        </h2>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard.index')}}">{{ display('Home')}}</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard.levels.index')}}">{{ display($title)}}</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ display('Data levels tables')}}</li>
+                            </ol>
+                        </nav>
                     </div>
                     <!-- Page title actions -->
                     <div class="col-12 col-md-auto ms-auto d-print-none">
@@ -63,13 +66,13 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="table-responsive">
-                                <table class="table table-vcenter card-table text-center">
-                                    <thead >
+                                <table id="dataTable" class="table table-vcenter card-table">
+                                    <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>{{ display('Name') }}</th>
                                             <th>{{ display('rewards') }}</th>
-                                            <th class="w-1"></th>
+                                            <th>{{ display('Action') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>

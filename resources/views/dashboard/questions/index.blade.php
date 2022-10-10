@@ -8,7 +8,7 @@
             {{-- @mido_shriks show errors --}}
             @include('partials._errors')
             <div class="page-header d-print-none">
-                <div class="row g-2 align-items-center">
+                <div class="row">
                     <div class="col">
                         <!-- Page pre-title -->
                         <div class="page-pretitle">

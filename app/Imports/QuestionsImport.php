@@ -10,6 +10,8 @@ use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Illuminate\Support\Facades\Validator;
+
 
 class QuestionsImport implements
     ToCollection,
@@ -22,6 +24,16 @@ class QuestionsImport implements
     //  */
     public function collection(Collection $rows)
     {
+        // @mido_shriks validator excel
+        validator::make($rows->toArray(), [
+            '*.type' => 'required',
+            '*.level' => 'required',
+
+            '*.name' => 'required|min:10|unique:questions,name',
+            '*.answer' => 'required|min:10|unique:answers,answer',
+            '*.correct' => 'required',
+        ])->validate();
+
         foreach ($rows as $index => $row) {
             $type = Type::where('name', $row['type'])->first();
             $level = Level::where('name', $row['level'])->first();

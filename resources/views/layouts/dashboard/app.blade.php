@@ -48,12 +48,9 @@
     {{-- @mido_shriks libry datatable css --}}
     <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/datatables/datatables.min.css') }}" />
     {{-- // cdn --}}
-    {{-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.2/css/bulma.min.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bm/jq-3.6.0/dt-1.12.1/b-2.2.3/b-html5-2.2.3/sl-1.4.0/datatables.min.css"/> --}}
 
-
-
-
+    {{-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/ju/jq-3.6.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-html5-2.2.3/cr-1.5.6/date-1.1.2/fc-4.1.0/fh-3.2.4/kt-2.7.0/sp-2.0.2/sl-1.4.0/datatables.min.css"/> --}}
 
 </head>
 

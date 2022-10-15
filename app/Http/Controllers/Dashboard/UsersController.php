@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Role;
+use App\Models\Type;
 use App\Models\User;
 use App\Models\country;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Type;
+use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
 use phpDocumentor\Reflection\Types\Null_;
 
@@ -59,7 +60,7 @@ class UsersController extends Controller
         // dd($request->all());
         // exit;
 
-        $request_data = $request->except(['password', 'password_confirmation', 'permissions', 'code_membership', 'role_permissions']);
+        $request_data = $request->except(['password', 'password_confirmation', 'permissions', 'code_membership', 'role_permissions','image']);
         $request_data['password'] = bcrypt($request->password);
 
 
@@ -83,6 +84,16 @@ class UsersController extends Controller
             $request_data['role_permissions']  = 'gaming';
             $user = User::create($request_data);
 
+            if ($request->image) {
+                $upload_path = public_path('uploads/users/' . $request->image->hashName());
+                Image::make($request->image)->save($upload_path);
+                $user->addMedia($upload_path)->toMediaCollection('photo', 'users');
+
+                // var_dump($user->image);
+                // dd($request->all());
+                // exit;
+            }
+
             Alert::success('Success Title', 'Success Save  gaming ' .  $user->first_name);
             return redirect()->route('dashboard.users.index');
         } else {
@@ -99,8 +110,18 @@ class UsersController extends Controller
             // exit;
 
             $user = User::create($request_data);
-            $user->attachRole('admin');
 
+            if ($request->image) {
+                $upload_path = public_path('uploads/users/' . $request->image->hashName());
+                Image::make($request->image)->save($upload_path);
+                $user->addMedia($upload_path)->toMediaCollection('photo', 'users');
+
+                // var_dump($user->image);
+                // dd($request->all());
+                // exit;
+            }
+
+            $user->attachRole('admin');
             $user->syncPermissions($request->permissions);
 
             // var_dump($request_data['code_membership']);
@@ -137,8 +158,10 @@ class UsersController extends Controller
     {
         $user = User::find($user->id);
         $select_countries = country::all();
+        $types = Type::where('model','user')->get();
+
         // dd($user);
-        return view('dashboard.users.edit', compact('user', 'select_countries'));
+        return view('dashboard.users.edit', compact('user', 'select_countries', 'types'));
     }
 
     /**
@@ -160,7 +183,7 @@ class UsersController extends Controller
         //     'permissions' => 'required|min:1'
         // ]);
 
-        $request_data = $request->except(['permissions', 'role_permissions']);
+        $request_data = $request->except(['permissions', 'role_permissions','image']);
         $request_data['role_permissions'] = $request->role_permissions;
         if ($request_data['role_permissions']  == 'gaming') {
             // var_dump($request_data);
@@ -170,12 +193,34 @@ class UsersController extends Controller
             $request_data['role_permissions']  = 'gaming';
             $user->update($request_data);
 
+            if ($request->image) {
+                $upload_path = public_path('uploads/users/' . $request->image->hashName());
+                Image::make($request->image)->save($upload_path);
+                $user->clearMediaCollection('photo');
+                $user->addMedia($upload_path)->toMediaCollection('photo', 'users');
+
+                // var_dump($user->id);
+                // dd($request->all());
+                // exit;
+            }
+
             Alert::toast('Success Title', 'Success Update user gaming ' .  $user->first_name);
             return redirect()->route('dashboard.users.index');
         } else {
             # code...
             $user->syncPermissions($request->permissions);
             $user->update($request_data);
+
+            if ($request->image) {
+                $upload_path = public_path('uploads/users/' . $request->image->hashName());
+                Image::make($request->image)->save($upload_path);
+                $user->clearMediaCollection('photo');
+                $user->addMedia($upload_path)->toMediaCollection('photo', 'users');
+
+                // var_dump($user->id);
+                // dd($request->all());
+                // exit;
+            }
 
             // dd($request_data);
 

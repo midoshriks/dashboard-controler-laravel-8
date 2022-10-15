@@ -71,6 +71,7 @@
                                             @if ($type == 'helper')
                                                 <th>{{ display('helpers') }}</th>
                                             @endIf
+                                            <th>{{ display('image') }}</th>
                                             <th>{{ display('Action') }}</th>
                                         </tr>
                                     </thead>
@@ -101,7 +102,12 @@
                                                         </div>
                                                     </td>
                                                 @endif
-
+                                                <td>
+                                                    <span class="avatar me-2">
+                                                        <img src="{{ $product->getMedia('photo_products')->last()? $product->getMedia('photo_products')->last()->getUrl('mobile'): $product->image_path }}"
+                                                            alt="">
+                                                    </span>
+                                                </td>
                                                 {{-- @mido_shriks show hlepe acive only --}}
                                                 <td>
                                                     <div class="col-auto">

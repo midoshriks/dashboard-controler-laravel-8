@@ -83,6 +83,17 @@
                                             </div>
                                         </div>
 
+                                        <div class="form-group mb-3 ">
+                                            <label class="form-label required">{{ display('image user') }}</label>
+                                            <div>
+                                                <input type="file" class="form-control" name="image">
+                                                <small class="form-hint">
+                                                    <img src="{{ $level->getFirstMediaUrl('photo_level') }}" alt=""
+                                                        srcset="" width="160">
+                                                </small>
+                                            </div>
+                                        </div>
+
                                         <div class="form-group mb-1 ">
                                             <div class="modal-footer mt-lg-5">
                                                 <button type="submit" class="btn btn-primary"

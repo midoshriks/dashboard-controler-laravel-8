@@ -29,8 +29,8 @@ class QuestionsImport implements
             '*.type' => 'required',
             '*.level' => 'required',
 
-            '*.name' => 'required|min:10|unique:questions,name',
-            '*.answer' => 'required|min:10|unique:answers,answer',
+            '*.question' => 'required|min:10|unique:questions,name',
+            // '*.answer_'.$i => 'required|min:10|unique:answers,answer',
             '*.correct' => 'required',
         ])->validate();
 

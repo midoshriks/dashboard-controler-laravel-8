@@ -72,6 +72,7 @@
                                             <th>#</th>
                                             <th>{{ display('Name') }}</th>
                                             <th>{{ display('rewards') }}</th>
+                                            <th>{{ display('images') }}</th>
                                             <th>{{ display('Action') }}</th>
                                         </tr>
                                     </thead>
@@ -82,6 +83,12 @@
                                                 <td>{{ $level->name }}</td>
                                                 <td>
                                                     {{ $level->rewards }}
+                                                </td>
+                                                <td>
+                                                    <span class="avatar me-2">
+                                                        <img src="{{ $level->getMedia('photo_level')->last()? $level->getMedia('photo_level')->last()->getUrl('mobile'): $level->photo_level }}"
+                                                            alt="">
+                                                    </span>
                                                 </td>
                                                 <td>
                                                     <div class="col-auto">

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\Product;
-use App\Models\Helper;
 use App\Models\Type;
+use App\Models\Helper;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ProductsController extends Controller
@@ -53,6 +54,16 @@ class ProductsController extends Controller
         $product->helper_id = $request->helper_id;
         $product->save();
 
+        if ($request->image) {
+            $upload_path = public_path('uploads/products' . $request->image->hashName());
+            Image::make($request->image)->save($upload_path);
+            $product->addMedia($upload_path)->toMediaCollection('photo_products', 'products');
+
+            // var_dump($user->image);
+            // dd($request->all());
+            // exit;
+        }
+
         Alert::success('Success Save product' . ' ' . $product->name);
         return redirect()->route('dashboard.products.index', ['type' => $request->type]);
         // dd($request->all());
@@ -96,6 +107,17 @@ class ProductsController extends Controller
         $product->price = $request->price;
 
         $product->update();
+
+        if ($request->image) {
+            $upload_path = public_path('uploads/products' . $request->image->hashName());
+            Image::make($request->image)->save($upload_path);
+            $product->clearMediaCollection('photo_products');
+            $product->addMedia($upload_path)->toMediaCollection('photo_products', 'products');
+
+            // var_dump($user->image);
+            // dd($request->all());
+            // exit;
+        }
 
         Alert::success('Success Update product' . ' ' . $product->name);
         return redirect()->route('dashboard.products.index');

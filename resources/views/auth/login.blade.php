@@ -3,9 +3,8 @@
 @section('content')
     <div class="container-tight py-4">
         <div class="text-center">
-            <a href="." class="navbar-brand navbar-brand-autodark">
+            <a href="." class="navbar-brand navbar-brand-autodark mb-0">
                 <img src="{{ asset('dashboard/src/static/smart_logo.png') }}" height="200" alt="">
-                <span>{{ display('smart bucks')}}</span>
             </a>
         </div>
         <form class="card card-md" action="{{ route('login') }}" method="POST" autocomplete="off">

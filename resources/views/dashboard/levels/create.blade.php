@@ -47,6 +47,13 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="form-group mb-3 ">
+                                    <label class="form-label required">{{ display('image user') }}</label>
+                                    <div>
+                                        <input type="file" class="form-control" name="image">
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>

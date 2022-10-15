@@ -98,7 +98,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group mb-3 ">
+                                    <label class="form-label required">{{ display('image helpers') }}</label>
+                                    <div>
+                                        <input type="file" class="form-control" name="image">
+                                    </div>
+                                </div>
                             </div>
+
+
 
                             {{-- @mido_shriks footer body --}}
                             <div class="modal-footer">

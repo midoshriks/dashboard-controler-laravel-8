@@ -46,5 +46,6 @@ class UsersTableSeeder extends Seeder
         ]);
 
         $user->attachRole('admin');
+
     }// end run
 }// end seeder

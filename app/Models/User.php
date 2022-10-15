@@ -2,15 +2,19 @@
 
 namespace App\Models;
 
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Notifications\Notifiable;
+use Laratrust\Traits\LaratrustUserTrait;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use Laratrust\Traits\LaratrustUserTrait;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
+    use InteractsWithMedia;
     use LaratrustUserTrait;
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -27,6 +31,22 @@ class User extends Authenticatable
     //     'email',
     //     'password',
     // ];
+
+    protected $appends = ['photo'];
+
+    public function getImagePathAttribute()
+    {
+        return asset('uploads/users/' . $this->image);
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('country')->fit('fill', 590, 206);
+        $this->addMediaConversion('mobile')->fit('fill', 450, 321);
+        $this->addMediaConversion('desktop')->fit('fill', 1351, 206);
+    }
+
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -48,7 +68,7 @@ class User extends Authenticatable
     ];
 
     // علاقة المستحدم مع الدول
-    // @mido_shriks 
+    // @mido_shriks
     public function country() {
         return $this->belongsTo(country::class,'country_id','id');
     }

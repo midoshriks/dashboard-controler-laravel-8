@@ -72,7 +72,8 @@
                                                 <select class="form-select" name="role_permissions">
                                                     <option value="">chooes</option>
                                                     @foreach ($types as $type)
-                                                        <option value="{{$type->name}}">{{ display($type->name) }}</option>
+                                                        <option value="{{ $type->name }}">{{ display($type->name) }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -99,8 +100,8 @@
                                         <select class="form-select" name="country_id">
                                             <option value="">{{ display('chooes') }}</option>
                                             @foreach ($select_countries as $select_country)
-                                                <option value="{{ $select_country->id }}">
-                                                    {{ $select_country->name }}</option>
+                                                <option value="{{ $select_country->id }}">{{ $select_country->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -133,67 +134,49 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group mb-3 ">
+                                    <label class="form-label required">{{ display('image user') }}</label>
+                                    <div>
+                                        <input type="file" class="form-control" name="image">
+                                    </div>
+                                </div>
+
+
                                 @php
                                     $models = ['users', 'qoution'];
                                     $maps = ['create', 'read', 'update', 'delete'];
                                 @endphp
 
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        {{-- @mido_shriks_tabs --}}
-                                        <div class="card">
-                                            {{-- haeder tabs --}}
-                                            <ul class="nav nav-tabs">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <ul class="nav nav-tabs" data-bs-toggle="tabs">
+                                            @foreach ($models as $index => $model)
+                                                <li class="nav-item">
+                                                    <a href="#{{ $model }}"
+                                                        class="nav-link {{ $index == 0 ? 'active' : '' }}"
+                                                        data-bs-toggle="tab">{{ $model }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+
+                                        <div class="card-body">
+                                            <div class="tab-content">
                                                 @foreach ($models as $index => $model)
-                                                    <li class="nav-item {{ $index == 0 ? 'active' : '' }}">
-                                                        <a href="#{{ $model }}"
-                                                            class="nav-link {{ $index == 0 ? 'active' : '' }}"
-                                                            data-toggle="tab">
-                                                            <!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2"
-                                                                width="24" height="24" viewBox="0 0 24 24"
-                                                                stroke-width="2" stroke="currentColor" fill="none"
-                                                                stroke-linecap="round" stroke-linejoin="round">
-                                                                <path stroke="none" d="M0 0h24v24H0z"
-                                                                    fill="none" />
-                                                                <polyline points="5 12 3 12 12 3 21 12 19 12" />
-                                                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-                                                            </svg>
-                                                            {{ $model }}
-                                                        </a>
-                                                    </li>
+                                                    <div class="tab-pane fade {{ $index == 0 ? 'active' : '' }} show"
+                                                        id="{{ $model }}">
+                                                        @foreach ($maps as $map)
+                                                            <label style="margin-right: 20px;">
+                                                                <input type="checkbox" name="permissions[]"
+                                                                    value="{{ $model . '_' . $map }}" id="">
+                                                                {{ $model . ' ' . $map }}
+                                                            </label>
+                                                        @endforeach
+                                                    </div>
                                                 @endforeach
-                                            </ul>
-                                            {{-- haeder tabs --}}
-
-                                            {{-- body tabs --}}
-                                            <div class="card-body">
-                                                <div class="tab-content">
-                                                    @foreach ($models as $index => $model)
-                                                        <div class="tab-pane {{ $index == 0 ? 'active' : '' }}"
-                                                            id="{{ $model }}">
-
-                                                            @foreach ($maps as $map)
-                                                                <label style="margin-right: 20px;">
-                                                                    <input type="checkbox" name="permissions[]"
-                                                                        value="{{ $model . '_' . $map }}"
-                                                                        id="">
-                                                                    {{ $model . ' ' . $map }}
-                                                                </label>
-                                                            @endforeach
-
-                                                        </div>
-                                                    @endforeach
-                                                </div>
                                             </div>
-                                            {{-- body tabs --}}
-
                                         </div>
                                     </div>
                                 </div>
-
-
                         </div>
                     </div>
                 </div>

@@ -77,11 +77,15 @@
                                         <tr>
                                             <td>
                                                 <div class="d-flex py-1 align-items-center">
-                                                    <span class="avatar me-2">SA</span>
+                                                    <span class="avatar me-2">
+                                                        <img src="{{ $user->getMedia('photo')->last()? $user->getMedia('photo')->last()->getUrl('mobile'): $user->image_path }}"
+                                                            alt="">
+                                                    </span>
                                                     <div class="flex-fill">
                                                         <div class="font-weight-medium">{{ $user->first_name }}
                                                         </div>
-                                                        <div class="text-muted"><a href="{{ route('dashboard.users.show',$user->id)}}"
+                                                        <div class="text-muted"><a
+                                                                href="{{ route('dashboard.users.show', $user->id) }}"
                                                                 class="text-reset">{{ $user->email }}</a>
                                                         </div>
                                                     </div>
@@ -113,11 +117,12 @@
                                                         {{-- form --}}
                                                         <form id="user-active-{{ $user->id }}" style="display: none"
                                                             action="{{ route('dashboard.user.active', $user->id) }}"
-                                                            {{-- action="{{ route('dashboard.users.update', $user->id) }}" --}}
-                                                            method="POST" style="display: inline-block;">
+                                                            {{-- action="{{ route('dashboard.users.update', $user->id) }}" --}} method="POST"
+                                                            style="display: inline-block;">
                                                             @csrf
                                                             @method('PUT')
-                                                            <input name="status" value="{{ $user->status == 1 ? 0 : 1 }}">
+                                                            <input name="status"
+                                                                value="{{ $user->status == 1 ? 0 : 1 }}">
                                                             <input type="submit" value="save">
                                                         </form>
                                                         {{-- form --}}
@@ -145,7 +150,8 @@
                                                             </svg>
                                                         </a>
                                                         <div class="dropdown-menu dropdown-menu-end">
-                                                            <a href="{{ route('dashboard.users.edit',$user->id)}}" class="dropdown-item">Edit</a>
+                                                            <a href="{{ route('dashboard.users.edit', $user->id) }}"
+                                                                class="dropdown-item">Edit</a>
                                                             {{-- <a href="#"  class="dropdown-item text-danger">Delete</a> --}}
 
                                                             <a href="javascript:;"

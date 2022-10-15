@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\level;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class LevelsController extends Controller
@@ -53,6 +54,16 @@ class LevelsController extends Controller
 
         $level->save();
 
+        if ($request->image) {
+            $upload_path = public_path('uploads/levels/' . $request->image->hashName());
+            Image::make($request->image)->save($upload_path);
+            $level->addMedia($upload_path)->toMediaCollection('photo_level', 'levels');
+
+            // var_dump($level->id);
+            // dd($request->all());
+            // exit;
+        }
+
         Alert::success('Success Save level'.' '.$level->name);
         return redirect()->route('dashboard.levels.index');
     }
@@ -96,6 +107,17 @@ class LevelsController extends Controller
         $level->rewards = $request->rewards;
 
         $level->update();
+
+        if ($request->image) {
+            $upload_path = public_path('uploads/levels/' . $request->image->hashName());
+            Image::make($request->image)->save($upload_path);
+            $level->clearMediaCollection('photo_level');
+            $level->addMedia($upload_path)->toMediaCollection('photo_level', 'levels');
+
+            // var_dump($level->id);
+            // dd($request->all());
+            // exit;
+        }
 
         Alert::success('Success Update level'.' '.$level->name);
         return redirect()->route('dashboard.levels.index');

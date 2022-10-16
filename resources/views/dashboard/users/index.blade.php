@@ -78,7 +78,7 @@
                                             <td>
                                                 <div class="d-flex py-1 align-items-center">
                                                     <span class="avatar me-2">
-                                                        <img src="{{ $user->getMedia('photo')->last()? $user->getMedia('photo')->last()->getUrl('mobile'): $user->image_path }}"
+                                                        <img src="{{ $user->getMedia('photo_user')->last()? $user->getMedia('photo_user')->last()->getUrl('mobile'): $user->photo_user }}"
                                                             alt="">
                                                     </span>
                                                     <div class="flex-fill">

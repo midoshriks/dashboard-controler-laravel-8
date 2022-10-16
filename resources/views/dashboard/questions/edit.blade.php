@@ -109,38 +109,20 @@
                                     </div>
 
                                     {{-- @mido_shriks function get countr number answer --}}
-                                    @php
-                                        $answer_view = 1; // to view blade
-                                        $answer_name = 1; // to count name backend
-                                    @endphp
 
-                                    @foreach ($question->answers as $answer)
-                                        @if ($answer->correct == 1)
-                                            <div class="form-group mb-3 col-md-12 d-flex">
-                                                <div class="col-sm-12 m-1">
-                                                    <label
-                                                        class="form-label required">{{ display('answer ' . $answer_view) }}</label>
-                                                    <div>
-                                                        <input type="text" class="form-control"
-                                                            name="{{ 'answer_' . $answer_name++ }}"
-                                                            {{ $question->id == $answer->question_id }}
-                                                            value="{{ $answer->answer }}" placeholder="answer">
-                                                    </div>
+
+                                    @foreach ($question->answers as $key=>$answer)
+                                        <div class="form-group mb-3 col-md-12 d-flex">
+                                            <div class="col-sm-12 m-1">
+                                                <label
+                                                    class="form-label required">{{ display('answer ' . $key+1) }}</label>
+                                                <div>
+                                                    <input type="text" class="form-control"
+                                                        name="{{ 'answer_' . $key+1 }}"
+                                                        value="{{ $answer->answer }}" placeholder="answer">
                                                 </div>
                                             </div>
-                                        @else
-                                            <div class="form-group mb-3 col-md-12 d-flex">
-                                                <div class="col-sm-12 m-1">
-                                                    <label
-                                                        class="form-label required">{{ display('answer ' . $answer_view++) }}</label>
-                                                    <div>
-                                                        <input type="text" class="form-control"
-                                                            name="{{ 'answer_' . $answer_name++ }}"
-                                                            value="{{ $answer->answer }}" placeholder="answer">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
+                                        </div>
                                     @endforeach
 
                                     {{-- @mido_shriks get correct and show select correct --}}

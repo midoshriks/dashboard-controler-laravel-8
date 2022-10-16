@@ -2,14 +2,14 @@
     <thead>
         <tr>
             <th>#</th>
-            <th>{{ display('name') }}</th>
-            <th>{{ display('type') }}</th>
-            <th>{{ display('level') }}</th>
-            <th>{{ display('answer 1') }}</th>
-            <th>{{ display('answer 2') }}</th>
-            <th>{{ display('answer 3') }}</th>
-            <th>{{ display('answer 4') }}</th>
-            <th>{{ display('correct') }}</th>
+            <th>question</th>
+            <th>type</th>
+            <th>level</th>
+            <th>answer_1</th>
+            <th>answer_2</th>
+            <th>answer_3</th>
+            <th>answer_4</th>
+            <th>correct</th>
             <th class="w-1"></th>
         </tr>
     </thead>
@@ -22,20 +22,13 @@
                 <td>{{ display($question->level->name) }}</td>
                 @foreach ($question->answers as $answer)
                     <td>
-                        @if ($answer->correct == 1)
-                            {{ $answer->answer }}
-                        @else
-                            {{ $answer->answer }}
-                        @endif
+                        {{ $answer->answer }}
                     </td>
                 @endforeach
                 {{-- @mido_shriks get number correct data in excel --}}
                 <td>
                     @foreach ($question->answers as $index => $answer)
-                        @for ($i = 1; $i < 5; $i++)
-                            {{-- @dd($answer->correct == $i ? $index+1 : '') --}}
-                            {{ $answer->correct == $i ? $index + 1 : '' }}
-                        @endfor
+                        {{ $answer->correct == 1 ? $index + 1 : '' }}
                     @endforeach
                 </td>
                 {{-- @mido_shriks get number correct data in excel --}}

@@ -121,7 +121,7 @@ class QuestionsController extends Controller
 
 
         for ($i = 1; $i <= 4; $i++) {
-            $answer = Answer::create([
+           Answer::create([
                 'answer' => $request["answer_$i"],
                 'question_id' => $question->id,
                 'correct' => ($request['correct'] == $i) ? 1 : 0,

@@ -103,8 +103,9 @@
                                                     </td>
                                                 @endif
                                                 <td>
+                                                    {{-- @dd($product->photo_product) --}}
                                                     <span class="avatar me-2">
-                                                        <img src="{{ $product->getMedia('photo_products')->last()? $product->getMedia('photo_products')->last()->getUrl('mobile'): $product->image_path }}"
+                                                        <img src="{{ $product->getMedia('photo_product')->last()? $product->getMedia('photo_product')->last()->getUrl('mobile'): $product->photo_product }}"
                                                             alt="">
                                                     </span>
                                                 </td>
@@ -126,7 +127,7 @@
                                                                 </svg>
                                                             </a>
                                                             <div class="dropdown-menu dropdown-menu-end">
-                                                                <a href="{{ route('dashboard.products.edit', $product->id) }}"
+                                                                <a href="{{ route('dashboard.products.edit', ['product'=>$product->id, 'type'=>$product->type->name]) }}"
                                                                     class="dropdown-item">Edit</a>
 
                                                                 <a href="javascript:;"
@@ -137,7 +138,7 @@
                                                                 </a>
 
                                                                 <form id="product-delete-{{ $product->id }}"
-                                                                    action="{{ route('dashboard.products.destroy', $product->id) }}"
+                                                                    action="{{ route('dashboard.products.destroy', ['product'=>$product->id, 'type'=>$product->type->name]) }}"
                                                                     method="POST" style="display: inline-block;">
                                                                     @csrf
                                                                     @method('DELETE')

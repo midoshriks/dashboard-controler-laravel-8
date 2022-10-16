@@ -57,7 +57,7 @@ class ProductsController extends Controller
         if ($request->image) {
             $upload_path = public_path('uploads/products' . $request->image->hashName());
             Image::make($request->image)->save($upload_path);
-            $product->addMedia($upload_path)->toMediaCollection('photo_products', 'products');
+            $product->addMedia($upload_path)->toMediaCollection('photo_product', 'products');
 
             // var_dump($user->image);
             // dd($request->all());
@@ -86,10 +86,13 @@ class ProductsController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Product $product , Request $request)
     {
         // dd($product);
-        return view('dashboard.products.edit', compact('product'));
+        $type = $request->type;
+        $types = Type::where('model', 'product')->get();
+        $helpers = Helper::all();
+        return view('dashboard.products.edit', compact('product','types','type','helpers'));
     }
 
     /**
@@ -102,25 +105,31 @@ class ProductsController extends Controller
     public function update(Request $request, Product $product)
     {
         $product = Product::find($product->id);
-        $product->name = $request->name;
+
+        $product->type_id = $request->type_id;
         $product->quantity = $request->quantity;
         $product->price = $request->price;
+        $product->helper_id = $request->helper_id;
+
+        // dd($product);
 
         $product->update();
 
         if ($request->image) {
             $upload_path = public_path('uploads/products' . $request->image->hashName());
             Image::make($request->image)->save($upload_path);
-            $product->clearMediaCollection('photo_products');
-            $product->addMedia($upload_path)->toMediaCollection('photo_products', 'products');
+            $product->clearMediaCollection('photo_product');
+            $product->addMedia($upload_path)->toMediaCollection('photo_product', 'products');
 
             // var_dump($user->image);
             // dd($request->all());
             // exit;
         }
 
+        // dd($product);
+
         Alert::success('Success Update product' . ' ' . $product->name);
-        return redirect()->route('dashboard.products.index');
+        return redirect()->route('dashboard.products.index', ['type' => $request->type]);
         // dd($product);
         // dd($request->all());
     }
@@ -131,11 +140,14 @@ class ProductsController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product, Request $request)
     {
         $product->delete();
 
         Alert::toast('deleted successfully product',);
-        return redirect()->route('dashboard.products.index');
+        // return redirect()->route('dashboard.products.index');
+        return redirect()->route('dashboard.products.index', ['type' => $request->type]);
+
+
     }
 }

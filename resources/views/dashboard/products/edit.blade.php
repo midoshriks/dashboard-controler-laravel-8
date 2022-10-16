@@ -61,15 +61,38 @@
                                         enctype="multipart/form-data">
                                         {{ csrf_field() }}
                                         {{ method_field('PUT') }}
+                                        @include('partials._errors')
 
-                                        <div class="form-group mb-3 col-md-12 d-flex">
-                                            <div class="col-sm-6 m-1">
-                                                <label class="form-label required">{{ display('product name') }}</label>
-                                                <div class="">
-                                                    <input type="text" class="form-control" name="name"
-                                                        value="{{ $product->name }}" placeholder="Enter product name">
+                                        <div class="col-sm-12 m-1 d-none">
+                                            <input type="hidden" value="{{ $type }}" name="type">
+                                            <label class="form-label required">{{ display('type') }}</label>
+                                            <div>
+                                                <select class="form-select" name="type_id">
+                                                    <option value="">chooes</option>
+                                                    @foreach ($types as $product_type)
+                                                        <option {{ $product_type->name == $type ? 'selected' : '' }}
+                                                            value="{{ $product_type->id }}">
+                                                            {{ display($product_type->name) }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        @if ($type == 'helper' || 'coin')
+                                            <div class="col-sm-12 m-1 {{ $type == 'helper' ? '' : 'd-none' }}">
+                                                <label class="form-label required">{{ display('helper') }}</label>
+                                                <div>
+                                                    <select class="form-select" name="helper_id">
+                                                        <option value="">chooes</option>
+                                                        @foreach ($helpers as $helper)
+                                                            <option {{$helper->id == $product->helper_id ? 'selected' : ''}} value="{{ $helper->id }}"> {{ display($helper->name) }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
+                                        @endIf
+                                        <div class="form-group mb-3 col-md-12 d-flex">
                                             <div class="col-sm-6 m-1">
                                                 <label
                                                     class="form-label required">{{ display('quantity product') }}</label>
@@ -79,8 +102,6 @@
                                                         placeholder="Enter quantity product">
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group mb-3 col-md-12 d-flex">
                                             <div class="col-sm-6 m-1">
                                                 <label class="form-label required">{{ display('price product') }}</label>
                                                 <div>
@@ -95,8 +116,8 @@
                                             <div>
                                                 <input type="file" class="form-control" name="image">
                                                 <small class="form-hint">
-                                                    <img src="{{ $product->getFirstMediaUrl('photo_products') }}" alt=""
-                                                        srcset="" width="160">
+                                                    <img src="{{ $product->getFirstMediaUrl('photo_product') }}"
+                                                        alt="" srcset="" width="160">
                                                 </small>
                                             </div>
                                         </div>

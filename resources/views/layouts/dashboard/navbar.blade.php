@@ -75,12 +75,11 @@
                             {{ display('levels') }}
                         </span>
                     </a>
-
                     {{-- @mido_shriks -> prodect(coin helper)  --}}
                     @if (app()->getLocale() == 'en')
-                        <li class="nav-item {{ Request::is('en/dashboard/products*') ? 'active' : '' }}">
+                        <li class="nav-item {{ Request::is('en/dashboard/products*') && request()->type == 'coin' ? 'active' : '' }}">
                         @else
-                        <li class="nav-item {{ Request::is('ar/dashboard/products*') ? 'active' : '' }}">
+                        <li class="nav-item {{ Request::is('ar/dashboard/products*') && request()->type == 'coin' ? 'active' : '' }}">
                     @endif
                     <a class="nav-link" href="{{ route('dashboard.products.index', ['type' => 'coin']) }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -106,10 +105,10 @@
 
                     @if (app()->getLocale() == 'en')
                         <li
-                            class="nav-item {{ Request::is('en/dashboard/products*') || Request::is('en/dashboard/helpers*') ? 'active' : '' }}">
+                            class="nav-item {{ Request::is('en/dashboard/products*') && request()->type == 'helper' ? 'active' : '' }}">
                         @else
                         <li
-                            class="nav-item {{ Request::is('ar/dashboard/products*') || Request::is('ar/dashboard/helpers*') ? 'active' : '' }}">
+                            class="nav-item {{ Request::is('ar/dashboard/products*') && request()->type == 'helper' ? 'active' : '' }}">
                     @endif
                     <a class="nav-link" href="{{ route('dashboard.products.index', ['type' => 'helper']) }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">

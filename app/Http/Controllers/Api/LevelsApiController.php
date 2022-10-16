@@ -16,12 +16,22 @@ class LevelsApiController extends Controller
      */
     public function index()
     {
-        $levels = level::all([
-            'name',
-            'rewards',
-        ]);
+        // $levels = level::select([
+        //     'levels.id',
+        //     'levels.name as level',
+        //     'rewards',
+        // ])->with(['questions' => function($q){
+        //     $q->select('level_id', 'id',  'name');
+        // }])->get();
 
-        return response()->json($levels, $status = 200,);
+        $levels = level::select([
+            'levels.id',
+            'levels.name as level',
+            'rewards',
+        ])->withCount('questions as questions')->get();
+
+
+        return response()->json(['levels'=>$levels], $status = 200,);
     }
 
     /**
@@ -81,11 +91,13 @@ class LevelsApiController extends Controller
      * @param  \App\Models\level  $level
      * @return \Illuminate\Http\Response
      */
-    public function show(level $level , $id)
+    public function show(level $level, $id)
     {
-        $level = level::find($id);
+        $level = level::where('id', $id)->with(['questions' => function($q){
+            $q->with('answers');
+        }])->get();
         // dd($level);
-        return response()->json($level);
+        return response()->json(['level'=>$level]);
     }
 
     /**
@@ -106,14 +118,14 @@ class LevelsApiController extends Controller
      * @param  \App\Models\level  $level
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, level $level , $id)
+    public function update(Request $request, level $level, $id)
     {
         $level = level::findOrFail($id);
 
         // // var_dump($level);
         // // exit;
         $rules = [
-            'name' => 'required|string|min:3|unique:levels,name,'.$id,
+            'name' => 'required|string|min:3|unique:levels,name,' . $id,
             'rewards' => 'required',
         ];
 
@@ -142,7 +154,7 @@ class LevelsApiController extends Controller
      * @param  \App\Models\level  $level
      * @return \Illuminate\Http\Response
      */
-    public function destroy(level $level , $id)
+    public function destroy(level $level, $id)
     {
         $level = level::findOrFail($id);
         // var_dump($level->name);

@@ -32,9 +32,9 @@ class User extends Authenticatable implements HasMedia
     //     'password',
     // ];
 
-    protected $appends = ['photo'];
+    protected $appends = ['photo_user'];
 
-    public function getImagePathAttribute()
+    public function getPhotoUserAttribute() // get ['PhotoUser '] Attribute
     {
         return asset('uploads/users/' . $this->image);
     }

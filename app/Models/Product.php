@@ -15,11 +15,11 @@ class Product extends Model implements HasMedia
 
     public $guarded = [];
 
-    protected $appends = ['photo_products'];
+    protected $appends = ['photo_product'];
 
-    public function getImagePathAttribute()
+    public function getPhotoProductAttribute()
     {
-        return asset('uploads/product/helpers' . $this->image);
+        return asset('uploads/products/' . $this->image);
     }
 
     public function registerMediaConversions(Media $media = null): void

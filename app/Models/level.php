@@ -15,9 +15,9 @@ class level extends Model implements HasMedia
 
     protected $guarded = [];
 
-    protected $appends = ['photo_level'];
+    protected $appends = ['photo_level']; // get photo_level Attribute
 
-    public function getImagePathAttribute()
+    public function getPhotoLevelAttribute()
     {
         return asset('uploads/levels/' . $this->image);
     }
@@ -27,6 +27,10 @@ class level extends Model implements HasMedia
         $this->addMediaConversion('country')->fit('fill', 590, 206);
         $this->addMediaConversion('mobile')->fit('fill', 450, 321);
         $this->addMediaConversion('desktop')->fit('fill', 1351, 206);
+    }
+
+    public function questions() {
+        return $this->hasMany(Question::class, 'level_id','id');
     }
 
 }

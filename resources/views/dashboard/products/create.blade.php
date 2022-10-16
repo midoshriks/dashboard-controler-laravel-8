@@ -77,8 +77,8 @@
                                         </div>
                                     </div>
                                 @endIf
+                                
                                 <div class="form-group mb-3 col-md-12 d-flex">
-
                                     <div class="col-sm-12 m-1">
                                         <label
                                             class="form-label required">{{ display('quantity products ' . $type) }}</label>

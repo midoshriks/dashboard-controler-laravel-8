@@ -87,7 +87,7 @@ class UsersController extends Controller
             if ($request->image) {
                 $upload_path = public_path('uploads/users/' . $request->image->hashName());
                 Image::make($request->image)->save($upload_path);
-                $user->addMedia($upload_path)->toMediaCollection('photo', 'users');
+                $user->addMedia($upload_path)->toMediaCollection('photo_user', 'users');
 
                 // var_dump($user->image);
                 // dd($request->all());
@@ -114,7 +114,7 @@ class UsersController extends Controller
             if ($request->image) {
                 $upload_path = public_path('uploads/users/' . $request->image->hashName());
                 Image::make($request->image)->save($upload_path);
-                $user->addMedia($upload_path)->toMediaCollection('photo', 'users');
+                $user->addMedia($upload_path)->toMediaCollection('photo_user', 'users');
 
                 // var_dump($user->image);
                 // dd($request->all());
@@ -196,8 +196,8 @@ class UsersController extends Controller
             if ($request->image) {
                 $upload_path = public_path('uploads/users/' . $request->image->hashName());
                 Image::make($request->image)->save($upload_path);
-                $user->clearMediaCollection('photo');
-                $user->addMedia($upload_path)->toMediaCollection('photo', 'users');
+                $user->clearMediaCollection('photo_user');
+                $user->addMedia($upload_path)->toMediaCollection('photo_user', 'users');
 
                 // var_dump($user->id);
                 // dd($request->all());
@@ -214,8 +214,8 @@ class UsersController extends Controller
             if ($request->image) {
                 $upload_path = public_path('uploads/users/' . $request->image->hashName());
                 Image::make($request->image)->save($upload_path);
-                $user->clearMediaCollection('photo');
-                $user->addMedia($upload_path)->toMediaCollection('photo', 'users');
+                $user->clearMediaCollection('photo_user');
+                $user->addMedia($upload_path)->toMediaCollection('photo_user', 'users');
 
                 // var_dump($user->id);
                 // dd($request->all());

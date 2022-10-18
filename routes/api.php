@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\HelpersApiController;
 use App\Http\Controllers\Api\LevelsApiController;
+use App\Http\Controllers\Api\ProductsApiController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +25,15 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::get('/level/{id}', [LevelsApiController::class, 'show']);
     Route::put('/update/level/{id}', [LevelsApiController::class, 'update']);
     Route::delete('/delete/level/{id}', [LevelsApiController::class, 'destroy']);
+
+    // Prodect coin & helpers
+    Route::get('/products/coins',[ProductsApiController::class, 'index']);
+    Route::get('/products/coin/{id}',[ProductsApiController::class, 'show']);
+
+    Route::get('products/helpers', [HelpersApiController::class, 'index']);
+    Route::get('products/helper/{id}', [HelpersApiController::class, 'show']);
+    Route::get('products/helper/{id}', [HelpersApiController::class, 'show']);
+
 });
 
 

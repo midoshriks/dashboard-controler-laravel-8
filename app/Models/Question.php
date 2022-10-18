@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\type;
+use App\Models\level;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Question extends Model
 {
@@ -16,13 +18,13 @@ class Question extends Model
     // relation type
     public function type()
     {
-        return $this->belongsTo(Type::class, 'type_id', 'id');
+        return $this->belongsTo(type::class, 'type_id', 'id');
     }
 
     // relation level
     public function level()
     {
-        return $this->belongsTo(Level::class, 'level_id', 'id');
+        return $this->belongsTo(level::class, 'level_id', 'id');
     }
 
 

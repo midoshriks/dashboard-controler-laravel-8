@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Exports\QuestionsExport;
-use App\Models\Type;
-use App\Models\Level;
+use App\Models\type;
+use App\Models\level;
 use App\Models\Answer;
 use App\Models\Question;
 use function Ramsey\Uuid\v1;
@@ -25,7 +25,7 @@ class QuestionsController extends Controller
     {
         $title = "Questions";
         $questions = Question::orderby('id')->paginate(20);
-        $types = Type::where('model', 'question')->get();
+        $types = type::where('model', 'question')->get();
         $levels = level::all();
         return view('dashboard.questions.index', compact('title', 'questions', 'types', 'levels'));
     }

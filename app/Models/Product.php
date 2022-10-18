@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\type;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -32,7 +33,7 @@ class Product extends Model implements HasMedia
     // relation type
     public function type()
     {
-        return $this->belongsTo(Type::class, 'type_id', 'id');
+        return $this->belongsTo(type::class, 'type_id', 'id');
     }
 
     public function helper()

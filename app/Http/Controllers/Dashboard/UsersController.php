@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Role;
-use App\Models\Type;
 use App\Models\User;
 use App\Models\country;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\type;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
 use phpDocumentor\Reflection\Types\Null_;
@@ -24,7 +24,7 @@ class UsersController extends Controller
     {
         $users = User::all();
         $select_countries = country::all();
-        $types = Type::where('model','user')->get();
+        $types = type::where('model','user')->get();
 
         return view('dashboard.users.index', compact('users', 'select_countries','types'));
     }
@@ -158,7 +158,7 @@ class UsersController extends Controller
     {
         $user = User::find($user->id);
         $select_countries = country::all();
-        $types = Type::where('model','user')->get();
+        $types = type::where('model','user')->get();
 
         // dd($user);
         return view('dashboard.users.edit', compact('user', 'select_countries', 'types'));

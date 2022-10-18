@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\Type;
 use App\Models\Helper;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\type;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -24,7 +24,7 @@ class ProductsController extends Controller
         $products = Product::orderby('id')->whereHas('type', function ($q) use ($type) {
             $q->where('name', $type);
         })->paginate(20);
-        $types = Type::where('model', 'product')->get();
+        $types =  type::where('model', 'product')->get();
         $helpers = Helper::all();
         return view('dashboard.products.index', compact('products', 'types', 'type', 'helpers'));
     }
@@ -90,7 +90,7 @@ class ProductsController extends Controller
     {
         // dd($product);
         $type = $request->type;
-        $types = Type::where('model', 'product')->get();
+        $types = type::where('model', 'product')->get();
         $helpers = Helper::all();
         return view('dashboard.products.edit', compact('product','types','type','helpers'));
     }

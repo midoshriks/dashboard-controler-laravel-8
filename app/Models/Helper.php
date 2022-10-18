@@ -10,4 +10,8 @@ class Helper extends Model
     use HasFactory;
 
     public $guarded = [];
+
+    public function coin(){
+        return $this->belongsTo(Product::class, 'id' , 'helper_id');
+    }
 }

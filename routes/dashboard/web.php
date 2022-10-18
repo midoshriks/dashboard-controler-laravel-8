@@ -54,9 +54,9 @@ Route::group(
             Route::post('questions/imoprt', 'QuestionsController@import')->name('questions.import');
             Route::get('qouestions/export/', 'QuestionsController@export')->name('questions.export');
 
-            Route::get('/tables', function() {
-                return view('test_table');
-            });
+            // Route::get('/tables', function() {
+            //     return view('test_table');
+            // });
 
             // Answers
             // Route::resource('/answers', 'AnswersController');

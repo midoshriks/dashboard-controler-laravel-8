@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\level;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
 
 class LevelsApiController extends Controller
@@ -97,7 +98,18 @@ class LevelsApiController extends Controller
             $q->with('answers');
         }])->get();
         // dd($level);
-        return response()->json(['level'=>$level]);
+
+        // $level = Product::all(
+        //     'quantity',
+        //     'price',
+        // );
+
+        $response = [
+            'status' => true,
+            'message' => "The level has been Show successfully!"
+        ];
+
+        return response()->json(['level' => $level , $response , 200 ]);
     }
 
     /**

@@ -30,12 +30,20 @@ return [
 
     'disks' => [
 
+        'backup' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/backup'),
+            'url' => env('APP_URL') . '/uploads/backup',
+            'visibility' => 'public',
+        ],
+
         'products' => [
             'driver' => 'local',
             'root' => public_path('uploads/products'),
             'url' => env('APP_URL') . '/uploads/products',
             'visibility' => 'public',
         ],
+
         'levels' => [
             'driver' => 'local',
             'root' => public_path('uploads/levels'),

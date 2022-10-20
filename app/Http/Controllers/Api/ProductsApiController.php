@@ -16,8 +16,15 @@ class ProductsApiController extends Controller
      */
     public function index()
     {
+        // $products = Product::select([
+        //     'products.id',
+        //     'products.quantity',
+        //     'products.price',
+        // ])->with('type')->get();
+
         $products = Product::select([
             'products.id',
+            'products.type_id', // stop mo2men look this
             'products.quantity',
             'products.price',
         ])->get();

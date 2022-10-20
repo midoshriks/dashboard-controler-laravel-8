@@ -14,7 +14,6 @@ class ProductsTableSeeder extends Seeder
      */
     public function run()
     {
-        $helper_id = 1;
 
         $products = [
             '25',
@@ -24,13 +23,12 @@ class ProductsTableSeeder extends Seeder
         ];
         foreach ($products as $key => $value) {
             # code...
-                # code...
-                $product = Product::create([
-                    'quantity' => $value,
-                    'price' => '10.00',
-                    'type_id' => '8',
-                    'helper_id' => $helper_id++,
-                ]);
+            $product = Product::create([
+                'quantity' => $value,
+                'price' => '10.00',
+                'type_id' => '8',
+                'helper_id' => null,
+            ]);
         }
     }
 }

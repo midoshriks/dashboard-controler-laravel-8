@@ -15,11 +15,21 @@ class HelpersApiController extends Controller
      */
     public function index()
     {
+        // $helpers = Helper::select([
+        //     'helpers.id',
+        //     'helpers.name',
+        //     'helpers.status',
+        // ])->get();
+
         $helpers = Helper::select([
             'helpers.id',
             'helpers.name',
             'helpers.status',
-        ])->get();
+        ])->with(['products' => function($q) {
+            $q->with('type');
+        }])->get();
+
+        // ])->with('type')->get();
 
         $response = [
             'status' => true,

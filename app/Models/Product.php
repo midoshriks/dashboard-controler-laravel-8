@@ -16,12 +16,18 @@ class Product extends Model implements HasMedia
 
     public $guarded = [];
 
-    protected $appends = ['photo_product'];
+    protected $appends = ['photo_product', 'type_name'];
+
+    public function getTypeNameAttribute()
+    {
+        return $this->type->name;
+    }
 
     public function getPhotoProductAttribute()
     {
         return asset('uploads/products/' . $this->image);
     }
+
 
     public function registerMediaConversions(Media $media = null): void
     {

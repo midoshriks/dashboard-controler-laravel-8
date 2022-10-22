@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -31,6 +32,10 @@ class level extends Model implements HasMedia
 
     public function questions() {
         return $this->hasMany(Question::class, 'level_id','id');
+    }
+
+    public function users() {
+        return $this->belongsToMany(User::class,);
     }
 
 }

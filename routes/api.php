@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\Api\HelpersApiController;
-use App\Http\Controllers\Api\LevelsApiController;
-use App\Http\Controllers\Api\ProductsApiController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\PassPortController;
+use App\Http\Controllers\Api\LevelsApiController;
+use App\Http\Controllers\Api\HelpersApiController;
+use App\Http\Controllers\Api\ProductsApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/login', [PassPortController::class, 'login']);
+Route::post('/register', [PassPortController::class, 'register']);
+
+Route::middleware('auth:api')->group(function () {
+});
+
 Route::group(['prefix' => 'dashboard'], function () {
     // Levels
     Route::get('/levels', [LevelsApiController::class, 'index']);
@@ -27,13 +34,12 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::delete('/delete/level/{id}', [LevelsApiController::class, 'destroy']);
 
     // Prodect coin & helpers
-    Route::get('/products/coins',[ProductsApiController::class, 'index']);
-    Route::get('/products/coin/{id}',[ProductsApiController::class, 'show']);
+    Route::get('/products/coins', [ProductsApiController::class, 'index']);
+    Route::get('/products/coin/{id}', [ProductsApiController::class, 'show']);
 
     Route::get('products/helpers', [HelpersApiController::class, 'index']);
     Route::get('products/helper/{id}', [HelpersApiController::class, 'show']);
     Route::get('products/helper/{id}', [HelpersApiController::class, 'show']);
-
 });
 
 

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Laravel\Sanctum\HasApiTokens;
+// use Laravel\Sanctum\HasApiTokens;
+use App\Models\level;
 use Spatie\MediaLibrary\HasMedia;
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -73,4 +75,7 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsTo(country::class,'country_id','id');
     }
 
+    public function levels() {
+        return $this->belongsToMany(level::class, );
+    }
 }

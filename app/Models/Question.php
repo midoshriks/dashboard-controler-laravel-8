@@ -13,7 +13,12 @@ class Question extends Model
 
     public $guarded = [];
 
+    protected $appends = [ 'type_name' ]; // get photo_level Attribute
 
+    public function getTypeNameAttribute()
+    {
+        return $this->type->name;
+    }
 
     // relation type
     public function type()

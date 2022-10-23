@@ -39,7 +39,6 @@ Route::group(['prefix' => 'dashboard'], function () {
 
     Route::get('products/helpers', [HelpersApiController::class, 'index']);
     Route::get('products/helper/{id}', [HelpersApiController::class, 'show']);
-    Route::get('products/helper/{id}', [HelpersApiController::class, 'show']);
 });
 
 

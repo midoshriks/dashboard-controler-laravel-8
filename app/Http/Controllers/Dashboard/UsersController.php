@@ -84,6 +84,12 @@ class UsersController extends Controller
             $request_data['role_permissions']  = 'gaming';
             $user = User::create($request_data);
 
+            $levelids = 1;
+            $user->levels()->attach($levelids);
+
+            // dd($user);
+
+
             if ($request->image) {
                 $upload_path = public_path('uploads/users/' . $request->image->hashName());
                 Image::make($request->image)->save($upload_path);
@@ -110,6 +116,10 @@ class UsersController extends Controller
             // exit;
 
             $user = User::create($request_data);
+
+            $levelids = 1;
+            $user->levels()->attach($levelids);
+
 
             if ($request->image) {
                 $upload_path = public_path('uploads/users/' . $request->image->hashName());
@@ -143,9 +153,9 @@ class UsersController extends Controller
     public function show(User $user)
     {
         $user = User::find($user->id);
-
+        $levels_users = $user->levels;
         // dd($user);
-        return view('dashboard.users.show',compact('user'));
+        return view('dashboard.users.show',compact('user','levels_users'));
     }
 
     /**

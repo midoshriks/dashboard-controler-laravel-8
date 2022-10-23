@@ -25,9 +25,11 @@ class User extends Authenticatable implements HasMedia
      *
      * @var array<int, string>
      */
-        // @mido_shriks
-        public $guarded = [];
-    // old
+    // @mido_shriks
+    public $guarded = [];
+
+    // old conacet
+
     // protected $fillable = [
     //     'name',
     //     'email',
@@ -71,11 +73,13 @@ class User extends Authenticatable implements HasMedia
 
     // علاقة المستحدم مع الدول
     // @mido_shriks
-    public function country() {
-        return $this->belongsTo(country::class,'country_id','id');
+    public function country()
+    {
+        return $this->belongsTo(country::class, 'country_id', 'id');
     }
 
-    public function levels() {
-        return $this->belongsToMany(level::class, );
+    public function levels()
+    {
+        return $this->belongsToMany(level::class, 'user_levels');
     }
 }

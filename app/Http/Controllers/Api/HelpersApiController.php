@@ -78,7 +78,7 @@ class HelpersApiController extends Controller
             'id',
             'name',
             'status',
-        ])->with(['coin' => function($q) {
+        ])->with(['type' => function($q) {
             $q;
         }])->get();
 

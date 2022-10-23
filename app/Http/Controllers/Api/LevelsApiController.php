@@ -94,9 +94,14 @@ class LevelsApiController extends Controller
      */
     public function show(level $level, $id)
     {
-        $level = level::where('id', $id)->with(['questions' => function($q){
-            $q->with('answers');
-        }])->get();
+        $level = level::select(
+            'id',
+            'name',
+            'rewards',
+        )->where('id', $id)->with(['questions' => function($q){
+            $q->with('type','answers');
+        }])->first();
+
         // dd($level);
 
         // $level = Product::all(
@@ -109,7 +114,8 @@ class LevelsApiController extends Controller
             'message' => "The level has been Show successfully!"
         ];
 
-        return response()->json(['level' => $level , $response , 200 ]);
+        return response()->json(["level" => $level]);
+        // return response()->json($level);
     }
 
     /**

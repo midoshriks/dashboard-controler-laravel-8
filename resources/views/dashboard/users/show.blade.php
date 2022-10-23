@@ -13,40 +13,42 @@
             </div>
         </div>
     </div>
+
     <div class="page-body">
         <div class="container-xl">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{ display('nformation') }}</h3>
+                    <h3 class="card-title">{{ display('Information' . ' ' . $user->first_name . ' ' . $user->last_name) }}
+                    </h3>
                 </div>
                 <div class="card-body">
                     <div class="datagrid">
                         <div class="datagrid-item">
-                            <div class="datagrid-title">{{ display('name user') }}</div>
-                            <div class="datagrid-content">{{ $user->first_name . ' ' . $user->last_name }}</div>
-                        </div>
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">{{ display('Name servers Role') }}</div>
-                            <div class="datagrid-content">{{ $user->role_permissions }}</div>
-                        </div>
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">{{ display('code membership') }}</div>
-                            <div class="datagrid-content">{{ $user->code_membership }}</div>
-                        </div>
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">Expiration date</div>
-                            <div class="datagrid-content">–</div>
-                        </div>
-                        <div class="datagrid-item">
                             <div class="datagrid-title">{{ display('email user') }}</div>
                             <div class="datagrid-content">
                                 <div class="d-flex align-items-center">
-                                    <span class="avatar avatar-xs me-2 avatar-rounded"
-                                        style="background-image: url({{ asset('dashboard/demo/static/avatars/000m.jpg') }}"></span>
+                                    <span class="avatar avatar-xs me-2 avatar-rounded" {{-- style="background-image: url({{ asset('dashboard/demo/static/avatars/000m.jpg') }}"></span> --}}
+                                        style="background-image: url({{ $user->getMedia('photo_user')->last()? $user->getMedia('photo_user')->last()->getUrl('mobile'): $user->photo_user }}"></span>
                                     {{ $user->email }}
                                 </div>
                             </div>
                         </div>
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">{{ display('name user') }}</div>
+                            <div class="datagrid-content">{{ $user->first_name . ' ' . $user->last_name }}</div>
+                        </div>
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">{{ display('Name servers Role') }}</div>
+                            <div class="datagrid-content">{{ $user->role_permissions }}</div>
+                        </div>
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">{{ display('code membership') }}</div>
+                            <div class="datagrid-content">{{ $user->code_membership }}</div>
+                        </div>
+
                         <div class="datagrid-item">
                             <div class="datagrid-title">{{ display('user gender') }}</div>
                             <div class="datagrid-content">
@@ -75,6 +77,12 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">{{ display('Age') }}</div>
+                            <div class="datagrid-content">{{ $user->dob_date }}</div>
+                        </div>
+
                         <div class="datagrid-item">
                             <div class="datagrid-title">{{ display('user continer') }}</div>
                             <div class="datagrid-content">
@@ -83,58 +91,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">{{ display('Age') }}</div>
-                            <div class="datagrid-content">{{ $user->dob_date }}</div>
-                        </div>
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">{{ display('Age') }}</div>
-                            <div class="datagrid-content">{{ $user->dob_date }}</div>
-                        </div>
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">{{ display('user status') }}</div>
-                            <div class="datagrid-content">
-                                @if ($user->status == 1)
-                                    <span class="status status-green">{{ display('Active') }}</span>
-                                @else
-                                    <span class="status status-red">{{ display('Non-Active') }}</span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">Avatars list</div>
-                            <div class="datagrid-content">
-                                <div class="avatar-list avatar-list-stacked">
-                                    <span class="avatar avatar-xs avatar-rounded"
-                                        style="background-image: url(./static/avatars/000m.jpg)"></span>
-                                    <span class="avatar avatar-xs avatar-rounded">JL</span>
-                                    <span class="avatar avatar-xs avatar-rounded"
-                                        style="background-image: url(./static/avatars/002m.jpg)"></span>
-                                    <span class="avatar avatar-xs avatar-rounded"
-                                        style="background-image: url(./static/avatars/003m.jpg)"></span>
-                                    <span class="avatar avatar-xs avatar-rounded"
-                                        style="background-image: url(./static/avatars/000f.jpg)"></span>
-                                    <span class="avatar avatar-xs avatar-rounded">+3</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">{{ display('user continer') }}</div>
-                            <div class="datagrid-content">
-                                <div class="datagrid-content">
-                                    {{ $user->country->name }}
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="datagrid-item">
                             <div class="datagrid-title">{{ display('user phone') }}</div>
                             <div class="datagrid-content">
                                 <div class="datagrid-content">
                                     {{ $user->phone }}
                                 </div>
-
                             </div>
                         </div>
+
                         <div class="datagrid-item">
                             <div class="datagrid-title">{{ display('Checked phone verified') }}</div>
                             <div class="datagrid-content">
@@ -155,6 +121,51 @@
                                 @endif
                             </div>
                         </div>
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">{{ display('user status') }}</div>
+                            <div class="datagrid-content">
+                                @if ($user->status == 1)
+                                    <span class="status status-green">{{ display('Active') }}</span>
+                                @else
+                                    <span class="status status-red">{{ display('Non-Active') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Avatars list</div>
+                            <div class="datagrid-content">
+                                @foreach ($levels_users as $level_user)
+                                    <div class="avatar-list avatar-list-stacked">
+                                        <span class="avatar avatar-xs avatar-rounded"
+                                            style="background-image: url({{ $level_user->getMedia('photo_level')->last()? $level_user->getMedia('photo_level')->last()->getUrl('mobile'): $level_user->photo_user }})"></span>
+                                        <span class="avatar avatar-xs avatar-rounded">{{ $level_user->name }}</span>
+                                    </div>
+                                @endforeach
+
+                            </div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">{{ display('user level') }}</div>
+                            <div class="datagrid-content">
+                                <div class="datagrid-content">
+                                    @foreach ($levels_users as $level_user)
+                                        {{ $level_user->name }}
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Expiration date</div>
+                            <div class="datagrid-content">–</div>
+                        </div>
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">{{ display('Age') }}</div>
+                            <div class="datagrid-content">{{ $user->dob_date }}</div>
+                        </div>
+
                         <div class="datagrid-item">
                             <div class="datagrid-title">Form control</div>
                             <div class="datagrid-content">

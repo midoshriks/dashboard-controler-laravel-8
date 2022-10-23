@@ -34,7 +34,7 @@ class ProductsApiController extends Controller
             'message' => "The Coins has been Get successfully!"
         ];
 
-        return response()->json(['products' => $products , $response , 200]);
+        return response()->json(['products' => $products, $response, 200]);
     }
 
     /**
@@ -66,14 +66,17 @@ class ProductsApiController extends Controller
      */
     public function show(Product $product, $id)
     {
-        // $product = Product::find($id);
+        $product = Product::find($id);
         // dd($product);
 
-        $product = Product::where('id', $id)->select([
-            'id',
-            'quantity',
-            'price',
-        ])->get();
+        // $product = Product::where('id', $id)->select(
+            // 'id'
+            // 'product.id',
+            // 'quantity',
+            // 'price',
+        // )->with(['type' => function ($q) {
+            // $q;
+        // }])->first();
 
         return response()->json(['prodect' => $product], 200);
     }

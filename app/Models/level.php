@@ -16,7 +16,12 @@ class level extends Model implements HasMedia
 
     protected $guarded = [];
 
-    protected $appends = ['photo_level']; // get photo_level Attribute
+    protected $appends = ['photo_level']; // get photo_level Attribute // 'type_name'
+
+    // public function getTypeNameAttribute()
+    // {
+    //     return $this->type->name;
+    // }
 
     public function getPhotoLevelAttribute()
     {
@@ -34,8 +39,10 @@ class level extends Model implements HasMedia
         return $this->hasMany(Question::class, 'level_id','id');
     }
 
+
     public function users() {
-        return $this->belongsToMany(User::class,);
+        return $this->belongsToMany(User::class,'user_levels');
     }
+
 
 }

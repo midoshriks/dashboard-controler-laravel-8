@@ -27,7 +27,8 @@ class LevelsApiController extends Controller
 
         $levels = level::select([
             'levels.id',
-            'levels.name as level',
+            // 'levels.name as level',
+            'levels.name',
             'rewards',
         ])->withCount('questions as questions')->get();
 

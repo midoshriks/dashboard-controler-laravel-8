@@ -121,8 +121,7 @@
                                                             style="display: inline-block;">
                                                             @csrf
                                                             @method('PUT')
-                                                            <input name="status"
-                                                                value="{{ $user->status == 1 ? 0 : 1 }}">
+                                                            <input name="status" value="{{ $user->status == 1 ? 0 : 1 }}">
                                                             <input type="submit" value="save">
                                                         </form>
                                                         {{-- form --}}
@@ -227,3 +226,11 @@
         </div>
     </div> --}}
 @endsection
+
+{{-- <script>
+    // setTimeout(() => window.open('http://google.com'), 3000);
+    setTimeout(function(){
+        window.location = "{{ route('dashboard.users.index') }}";
+        // window.location = 'https://www.newcapitalmap.com/';
+    },7000);
+</script> --}}

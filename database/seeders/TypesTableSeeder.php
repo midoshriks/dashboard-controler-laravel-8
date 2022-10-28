@@ -31,6 +31,10 @@ class TypesTableSeeder extends Seeder
             "admin" => 'user',
             "helper" => 'product',
             "coin" => 'product',
+            'pending' => "order",
+            'confirm' => "order",
+            'visa' =>  "payment_method",
+            'master' => "payment_method",
         ];
 
         foreach ($models as $key => $model) {

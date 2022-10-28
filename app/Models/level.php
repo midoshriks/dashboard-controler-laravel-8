@@ -25,7 +25,7 @@ class level extends Model implements HasMedia
 
     public function getPhotoLevelAttribute()
     {
-        return asset('uploads/levels/' . $this->image);
+        return asset(($this->getMedia('photo_level')->last() ? $this->getMedia('photo_level')->last()->getUrl('mobile') : 'uploads/levels/' . $this->image));
     }
 
     public function registerMediaConversions(Media $media = null): void
@@ -35,14 +35,14 @@ class level extends Model implements HasMedia
         $this->addMediaConversion('desktop')->fit('fill', 1351, 206);
     }
 
-    public function questions() {
-        return $this->hasMany(Question::class, 'level_id','id');
+    public function questions()
+    {
+        return $this->hasMany(Question::class, 'level_id', 'id');
     }
 
 
-    public function users() {
-        return $this->belongsToMany(User::class,'user_levels');
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_levels');
     }
-
-
 }

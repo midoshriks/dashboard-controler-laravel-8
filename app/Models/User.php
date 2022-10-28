@@ -40,7 +40,7 @@ class User extends Authenticatable implements HasMedia
 
     public function getPhotoUserAttribute() // get ['PhotoUser '] Attribute
     {
-        return asset('uploads/users/' . $this->image);
+        return asset(($this->getMedia('photo_user')->last() ? $this->getMedia('photo_user')->last()->getUrl('mobile') : 'uploads/users/' . $this->image));
     }
 
     public function registerMediaConversions(Media $media = null): void
@@ -81,5 +81,10 @@ class User extends Authenticatable implements HasMedia
     public function levels()
     {
         return $this->belongsToMany(level::class, 'user_levels');
+    }
+
+    public function wallets()
+    {
+        return $this->belongsTo(Wallets::class, 'id', 'user_id');
     }
 }

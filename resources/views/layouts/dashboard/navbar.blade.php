@@ -77,9 +77,11 @@
                     </a>
                     {{-- @mido_shriks -> prodect(coin helper)  --}}
                     @if (app()->getLocale() == 'en')
-                        <li class="nav-item {{ Request::is('en/dashboard/products*') && request()->type == 'coin' ? 'active' : '' }}">
+                        <li
+                            class="nav-item {{ Request::is('en/dashboard/products*') && request()->type == 'coin' ? 'active' : '' }}">
                         @else
-                        <li class="nav-item {{ Request::is('ar/dashboard/products*') && request()->type == 'coin' ? 'active' : '' }}">
+                        <li
+                            class="nav-item {{ Request::is('ar/dashboard/products*') && request()->type == 'coin' ? 'active' : '' }}">
                     @endif
                     <a class="nav-link" href="{{ route('dashboard.products.index', ['type' => 'coin']) }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -156,42 +158,68 @@
                     </li>
                     {{-- @mido_shriks dropdowen = {questions } --}}
 
-
-
-                    {{-- @mido_shriks dropdowen = {languages , developers} --}}
+                    {{-- @mido_shriks dropdowen = {orders } --}}
                     @if (app()->getLocale() == 'en')
-                        <li
-                            class="nav-item dropdown {{ Request::is('en/dashboard/languages*') || Request::is('en/dashboard/developers*') ? 'active' : '' }}">
+                        <li class="nav-item {{ Request::is('en/dashboard/orders*') ? 'active' : '' }}">
                         @else
-                        <li
-                            class="nav-item dropdown {{ Request::is('ar/dashboard/languages*') || Request::is('ar/dashboard/developers*') ? 'active' : '' }}">
-                            {{-- <li class="nav-item dropdown "> --}}
+                        <li class="nav-item {{ Request::is('ar/dashboard/orders*') ? 'active' : '' }}">
                     @endif
-                    <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
-                        data-bs-auto-close="outside" role="button" aria-expanded="false">
+                    <a class="nav-link" href="{{ route('dashboard.orders.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-brand-visual-studio" width="24"
-                                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M4 8l2 -1l10 13l4 -2v-12l-4 -2l-10 13l-2 -1z"></path>
+                                <rect x="3" y="4" width="18" height="4" rx="2">
+                                </rect>
+                                <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10"></path>
+                                <line x1="10" y1="12" x2="14" y2="12"></line>
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            {{ display('developer') }}
+                            {{ display('orders') }}
                         </span>
                     </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ route('dashboard.languages.index') }}">
-                            {{ display('lang developer') }}
-                        </a>
-                        <a class="dropdown-item" href="{{ route('dashboard.developers.index') }}">
-                            {{ display('Route Api') }}
-                        </a>
-                    </div>
                     </li>
+                    {{-- @mido_shriks dropdowen = {orders } --}}
+                    @if (auth()->user()->code_membership == '001')
+                        {{-- @mido_shriks dropdowen = {languages , developers} --}}
+                        @if (app()->getLocale() == 'en')
+                            <li
+                                class="nav-item dropdown {{ Request::is('en/dashboard/languages*') || Request::is('en/dashboard/developers*') ? 'active' : '' }}">
+                            @else
+                            <li
+                                class="nav-item dropdown {{ Request::is('ar/dashboard/languages*') || Request::is('ar/dashboard/developers*') ? 'active' : '' }}">
+                                {{-- <li class="nav-item dropdown "> --}}
+                        @endif
+                        <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside" role="button" aria-expanded="false">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-brand-visual-studio" width="24"
+                                    height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M4 8l2 -1l10 13l4 -2v-12l-4 -2l-10 13l-2 -1z"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-link-title">
+                                {{ display('developer') }}
+                            </span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ route('dashboard.languages.index') }}">
+                                {{ display('lang developer') }}
+                            </a>
+                            <a class="dropdown-item" href="{{ route('dashboard.developers.index') }}">
+                                {{ display('Route Api') }}
+                            </a>
+                        </div>
+                        </li>
+                    @endif
                 </ul>
+
+
                 <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
                     <form action="." method="get">
                         <div class="input-icon">

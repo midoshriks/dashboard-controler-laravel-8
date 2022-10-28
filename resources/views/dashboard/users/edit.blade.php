@@ -103,18 +103,18 @@
                                                             <div class="form-label">{{ display('Select Role') }}</div>
                                                             <select class="form-select" name="role_permissions">
                                                                 <option value="">{{ display('chooes') }}</option>
-                                                                @foreach ($types as $type)
+                                                                {{-- @foreach ($types as $type)
                                                                     <option
-                                                                        {{ $type->name == $user->role_permissions ? 'selected' : '' }}
+                                                                        {{ $type->name == $user->role_permissions  ? 'selected' : '' }}
                                                                         value="{{ $type->name }}">
                                                                         {{ display($type->name) }}</option>
-                                                                @endforeach
-                                                                {{-- <option
+                                                                @endforeach --}}
+                                                                <option
                                                                     {{ $user->role_permissions == $user->role_permissions ? 'selected' : '' }}
                                                                     value="{{ $user->role_permissions }}">
                                                                     {{ $user->role_permissions }}</option>
                                                                 <option value="gaming">{{ display('Gaming') }}</option>
-                                                                <option value="admin">{{ display('Admin') }}</option> --}}
+                                                                <option value="admin">{{ display('Admin') }}</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -188,8 +188,8 @@
                                                     </small>
                                                 </div>
                                             </div>
-
-                                            @if ($user->role_permissions == 'admin' && 'super_admin')
+                                                {{-- @dd($user->role_permissions) --}}
+                                            @if ($user->role_permissions == 'admin' || 'super_admin' || 'developer')
                                                 @php
                                                     $models = ['users', 'qoutions'];
                                                     $maps = ['create', 'read', 'update', 'delete'];

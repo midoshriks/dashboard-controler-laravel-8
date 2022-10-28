@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call(HelpersTableSeeder::class);
         $this->call(ApiCodeTableSeeder::class);
         $this->call(UsersTableSeeder::class);
+        $this->call(OrdersTableSeeder::class);
+        $this->call(WalletLogssTableSeeder::class);
         // $this->call(AnswersTableSeeder::class);
 
     }

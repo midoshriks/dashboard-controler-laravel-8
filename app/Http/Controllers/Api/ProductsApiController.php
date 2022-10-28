@@ -29,12 +29,7 @@ class ProductsApiController extends Controller
             'products.price',
         ])->get();
 
-        $response = [
-            'status' => true,
-            'message' => "The Coins has been Get successfully!"
-        ];
-
-        return response()->json(['products' => $products, $response, 200]);
+        return response()->json(['status' => 200, 'message' => "The Coins has been Get successfully!", 'products' => $products]);
     }
 
     /**

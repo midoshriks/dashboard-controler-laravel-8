@@ -18,6 +18,7 @@ return [
             // 'payments' => 'c,r,u,d',
             // 'profile' => 'r,u'
         ],
+        // 'developer' => [],
         'admin' => [],
 
     ],

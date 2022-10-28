@@ -80,8 +80,8 @@ class PassPortController extends Controller
         $success['phone'] = $user->phone;
         $success['country'] = $user->country->name;
         $success['user_photo'] = $user->photo_user;
-        $success['levels_count'] = $user->levels()->count();
-        $success['levels'] = $user->levels;
+        $success['level'] = $user->levels->last()->id;
+        // $success['levels'] = $user->levels;
 
 
         // $user_level =  UserLevel::create([
@@ -106,8 +106,8 @@ class PassPortController extends Controller
             $success['phone'] = $user->phone;
             $success['country'] = $user->country->name;
             $success['user_photo'] = $user->photo_user;
-            $success['levels_count'] = $user->levels()->count();
-            $success['levels'] = $user->levels;
+            $success['level'] = $user->levels->last()->id;
+            // $success['levels'] = $user->levels;
 
             // return response()->json(["success" => $success], 200);
             return $this->sendResponse(["user" => $success], 'User login seccussfully');

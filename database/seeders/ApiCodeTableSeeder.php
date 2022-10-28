@@ -53,6 +53,17 @@ class ApiCodeTableSeeder extends Seeder
             'route_api' => 'api/dashboard/products/helper/1',
         ]);
 
+        $api_code = developer_api::create([
+            'type' => 'show',
+            'model' => 'helpers',
+            'route_api' => 'api/login',
+        ]);
+        $api_code = developer_api::create([
+            'type' => 'show',
+            'model' => 'helpers',
+            'route_api' => 'api/register',
+        ]);
+
 
     }
 }

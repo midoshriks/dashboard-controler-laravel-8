@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PassPortController;
 use App\Http\Controllers\Api\LevelsApiController;
 use App\Http\Controllers\Api\HelpersApiController;
+use App\Http\Controllers\Api\OrdersApiController;
 use App\Http\Controllers\Api\ProductsApiController;
 
 /*
@@ -39,6 +40,9 @@ Route::group(['prefix' => 'dashboard'], function () {
 
     Route::get('products/helpers', [HelpersApiController::class, 'index']);
     Route::get('products/helper/{id}', [HelpersApiController::class, 'show']);
+
+    // Orders
+    Route::get('user/orders/{id}',[OrdersApiController::class, 'show'] );
 });
 
 

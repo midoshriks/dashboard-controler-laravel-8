@@ -7,13 +7,19 @@
         <div class="page-header d-print-none">
             <div class="row g-2 align-items-center">
                 <div class="col">
-                    <!-- Page pre-title -->
                     <div class="page-pretitle">
-                        {{ display('Overview') }}
+                        {{ display('Smart bucks') }}
                     </div>
-                    <h2 class="page-title">
-                        {{ display('Dashboard') }}\{{ display('Users') }}
-                    </h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">{{ display('Home') }}</a>
+                            </li>
+                            <li class="breadcrumb-item"><a
+                                    href="{{ route('dashboard.users.index') }}">{{ display('users') }}</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ display('Data users tables') }}</li>
+                        </ol>
+                    </nav>
                 </div>
                 <!-- Page title actions -->
                 <div class="col-12 col-md-auto ms-auto d-print-none">
@@ -99,8 +105,10 @@
                                                 {{-- Owner --}}
                                                 @if ($user->role_permissions == 'super_admin')
                                                     {{ $user->role_permissions == 'super_admin' ? 'Owner' : 'Admin' }}
-                                                @else
+                                                @elseif($user->role_permissions == 'gaming')
                                                     {{ $user->role_permissions == 'gaming' ? 'Gaming' : 'Admin' }}
+                                                @else
+                                                    {{ $user->role_permissions == 'developer' ? 'Developer' : 'Admin' }}
                                                 @endif
                                             </td>
                                             <td>
@@ -179,6 +187,7 @@
                                                         </div>
                                                     </div>
                                             </td>
+
                                         </tr>
                                     @endforeach
 

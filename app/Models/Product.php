@@ -25,7 +25,7 @@ class Product extends Model implements HasMedia
 
     public function getPhotoProductAttribute()
     {
-        return asset('uploads/products/' . $this->image);
+        return asset(($this->getMedia('photo_product')->last() ? $this->getMedia('photo_product')->last()->getUrl('mobile') : 'uploads/products/' . $this->image));
     }
 
 

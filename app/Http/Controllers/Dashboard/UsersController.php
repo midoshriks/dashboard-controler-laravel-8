@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\type;
+use App\Models\Wallets;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
 use phpDocumentor\Reflection\Types\Null_;
@@ -24,9 +25,9 @@ class UsersController extends Controller
     {
         $users = User::all();
         $select_countries = country::all();
-        $types = type::where('model','user')->get();
+        $types = type::where('model', 'user')->get();
 
-        return view('dashboard.users.index', compact('users', 'select_countries','types'));
+        return view('dashboard.users.index', compact('users', 'select_countries', 'types'));
     }
 
     /**
@@ -60,15 +61,15 @@ class UsersController extends Controller
         // dd($request->all());
         // exit;
 
-        $request_data = $request->except(['password', 'password_confirmation', 'permissions', 'code_membership', 'role_permissions','image']);
+        $request_data = $request->except(['password', 'password_confirmation', 'permissions', 'code_membership', 'role_permissions', 'image']);
         $request_data['password'] = bcrypt($request->password);
 
 
         // @mido_shrisk ++ code_membership
-        $request_data['code_membership'] = '' ;
+        $request_data['code_membership'] = '';
         if ($request_data['code_membership'] == null) {
             # code...
-            $request_data['code_membership'] =  Str::random(2) . mt_rand(1000000,10000000);
+            $request_data['code_membership'] =  Str::random(2) . mt_rand(1000000, 10000000);
 
             // var_dump($request_data['code_membership']);
             // exit;
@@ -87,8 +88,11 @@ class UsersController extends Controller
             $levelids = 1;
             $user->levels()->attach($levelids);
 
-            // dd($user);
+            Wallets::create([
+                'user_id' => $user->id,
+            ]);
 
+            // dd($user);
 
             if ($request->image) {
                 $upload_path = public_path('uploads/users/' . $request->image->hashName());
@@ -155,7 +159,7 @@ class UsersController extends Controller
         $user = User::find($user->id);
         $levels_users = $user->levels;
         // dd($user);
-        return view('dashboard.users.show',compact('user','levels_users'));
+        return view('dashboard.users.show', compact('user', 'levels_users'));
     }
 
     /**
@@ -168,7 +172,7 @@ class UsersController extends Controller
     {
         $user = User::find($user->id);
         $select_countries = country::all();
-        $types = type::where('model','user')->get();
+        $types = type::where('model', 'user')->get();
 
         // dd($user);
         return view('dashboard.users.edit', compact('user', 'select_countries', 'types'));
@@ -193,8 +197,9 @@ class UsersController extends Controller
         //     'permissions' => 'required|min:1'
         // ]);
 
-        $request_data = $request->except(['permissions', 'role_permissions','image']);
+        $request_data = $request->except(['permissions', 'role_permissions', 'image']);
         $request_data['role_permissions'] = $request->role_permissions;
+
         if ($request_data['role_permissions']  == 'gaming') {
             // var_dump($request_data);
             // var_dump($request_data['status']);

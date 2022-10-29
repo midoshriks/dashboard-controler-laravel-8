@@ -42,6 +42,7 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::get('products/helper/{id}', [HelpersApiController::class, 'show']);
 
     // Orders
+    Route::post('create/order',[OrdersApiController::class, 'store'] );
     Route::get('user/orders/{id}',[OrdersApiController::class, 'show'] );
 });
 

@@ -105,22 +105,27 @@ class OrdersController extends Controller
             $order_type->type_id = $request->type_id;
 
             $order_type->save();
+            // delete row on table confirm wallet _logs delete_wallet()
+            $delete_wallet = WalletLogs::where('order_id', $order_type->id)->delete();
+            // $delete_wallet->delete();
+
+            // dd($delete_wallet);
             // dd($order_type->type_id);
             Alert::toast('Success Order pending ' . $order->order_numper);
         } else {
             # code...
             $order_type->type_id = $request->type_id;
 
-
             $order_type->save();
             WalletLogs::create([
                 'wallet_id' => $order_type->user_id,
                 'type_id' =>  $order_type->products->type_id,
-                'order_id' => $order_type->id, 
+                'order_id' => $order_type->id,
                 'helper_id' => $order_type->products->helper_id,
                 'method' => 'debit',
                 'amount' => $order_type->amount,
             ]);
+
             // dd($order_type);
             // dd($order_type->type_id);
             Alert::toast('Success Order confirm ' . $order->order_numper);

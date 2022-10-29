@@ -117,25 +117,27 @@ class UsersTableSeeder extends Seeder
 
 
         // users gaming
+        for ($i = 0; $i < 5; $i++) {
+            # code...
+            $user = User::create([
+                'first_name' => 'gaming_'.$i,
+                'last_name' => 'gaming_'.$i,
+                'email' => 'gaming_'.$i.'@gmail.com',
+                'phone' => '01200300090'.$i,
+                'dob_date' => Carbon::parse('2022-10-20'),
+                'gender' => 'male',
+                'country_id' => '2',
+                'type_id' => '2',
+                'code_membership' => Str::random(2) . mt_rand(1000000, 10000000),
+                'role_permissions' => 'gaming',
+                'password' => bcrypt('12345678'),
+            ]);
 
-        $user = User::create([
-            'first_name' => 'gaming',
-            'last_name' => 'gaming',
-            'email' => 'gaming@gmail.com',
-            'phone' => '01200300090',
-            'dob_date' => Carbon::parse('2022-10-20'),
-            'gender' => 'male',
-            'country_id' => '2',
-            'type_id' => '2',
-            'code_membership' => Str::random(2) . mt_rand(1000000, 10000000),
-            'role_permissions' => 'gaming',
-            'password' => bcrypt('12345678'),
-        ]);
-
-        $levelids = [1, 2];
-        $user->levels()->attach($levelids);
-        $user = Wallets::create([
-            'user_id' => $user->id
-        ]);
+            $levelids = [1, 2];
+            $user->levels()->attach($levelids);
+            $user = Wallets::create([
+                'user_id' => $user->id
+            ]);
+        }
     } // end run
 }// end seeder

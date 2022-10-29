@@ -12,7 +12,8 @@
                     <div class="col">
                         <!-- Page pre-title -->
                         <div class="page-pretitle">
-                            {{ display('Overview') }}
+                            <img src="{{ asset('dashboard/src/static/smart_logo.png')}}" width="60" alt="" srcset="">
+                            {{ display('Smart bucks') }}
                         </div>
                         <h2 class="page-title">
                             {{ display('Dashboard') }} \ {{ display('answers') }}

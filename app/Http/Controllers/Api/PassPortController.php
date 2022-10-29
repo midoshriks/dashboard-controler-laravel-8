@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\UserLevel;
+use App\Models\Wallets;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -70,6 +71,10 @@ class PassPortController extends Controller
         $user = User::create($input);
         $levelids = 1;
         $user->levels()->attach($levelids);
+        Wallets::create([
+            'user_id' => $user->id,
+        ]);
+        
         $success['token'] = $user->createToken('mido')->accessToken;
         $success['first_name'] = $user->first_name;
         $success['last_name'] = $user->last_name;

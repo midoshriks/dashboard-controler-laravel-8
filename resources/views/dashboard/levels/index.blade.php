@@ -11,6 +11,7 @@
                 <div class="row g-2 align-items-center">
                     <div class="col">
                         <div class="page-pretitle">
+                            <img src="{{ asset('dashboard/src/static/smart_logo.png')}}" width="60" alt="" srcset="">
                             {{ display('Smart bucks') }}
                         </div>
                         <nav aria-label="breadcrumb">

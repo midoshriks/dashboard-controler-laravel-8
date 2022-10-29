@@ -12,6 +12,7 @@
                     <div class="col">
                         <!-- Page pre-title -->
                         <div class="page-pretitle">
+                            <img src="{{ asset('dashboard/src/static/smart_logo.png')}}" width="60" alt="" srcset="">
                             {{ display('Smart bucks') }}
                         </div>
                         <nav aria-label="breadcrumb">

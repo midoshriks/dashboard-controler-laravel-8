@@ -5,8 +5,13 @@
         </button>
         <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
             <a href="{{ route('dashboard.index') }}">
-                <img src="{{ asset('dashboard/src/static/logo.svg') }}" width="110" height="32" alt="Tabler"
-                    class="navbar-brand-image">
+                {{-- <img src="{{ asset('dashboard/src/static/logo.svg') }}" width="110" height="32" alt="Tabler"
+                    class="navbar-brand-image"> --}}
+                <div class="page-pretitle">
+                    <img src="{{ asset('dashboard/src/static/smart_logo.png') }}" width="50" alt=""
+                        srcset="">
+                    {{ display('Smart bucks') }}
+                </div>
             </a>
         </h1>
         <div class="navbar-nav flex-row order-md-last">
@@ -193,8 +198,8 @@
                     <span class="avatar avatar-sm"
                         style="background-image: url({{ Auth()->user()->getMedia('photo_user')->last()? Auth()->user()->getMedia('photo_user')->last()->getUrl('mobile'): Auth()->user()->photo_user }})"></span>
                     <div class="d-none d-xl-block ps-2">
-                        <div>{{Auth()->user()->first_name}}</div>
-                        <div class="mt-1 small text-muted">{{Auth()->user()->last_name}}r</div>
+                        <div>{{ Auth()->user()->first_name }}</div>
+                        <div class="mt-1 small text-muted">{{ Auth()->user()->last_name }}r</div>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">

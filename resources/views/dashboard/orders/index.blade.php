@@ -10,6 +10,7 @@
             <div class="row g-2 align-items-center">
                 <div class="col">
                     <div class="page-pretitle">
+                        <img src="{{ asset('dashboard/src/static/smart_logo.png')}}" width="60" alt="" srcset="">
                         {{ display('Smart bucks') }}
                     </div>
                     <nav aria-label="breadcrumb">
@@ -53,7 +54,7 @@
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $order->order_numper }}</td>
                                             <td>{{ $order->users->first_name }}</td>
-                                            <td>{{ $order->payment_method_id }}</td>
+                                            <td>{{ $order->type_method->name }}</td>
                                             {{-- @dd($order->products->helper_id == null ? $order->products->type->name : $order->products->helper->name) --}}
                                             <td>
                                                 {{-- {{ $order->products->helper_id == null ? $order->products->type->name : $order->products->helper->name }} --}}

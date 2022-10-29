@@ -2,10 +2,10 @@
 
 namespace App\Imports;
 
-use App\Models\Type;
 use App\Models\level;
 use App\Models\Answer;
 use App\Models\Question;
+use App\Models\type;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -35,11 +35,11 @@ class QuestionsImport implements
         ])->validate();
 
         foreach ($rows as $index => $row) {
-            $type = Type::where('name', $row['type'])->first();
-            $level = Level::where('name', $row['level'])->first();
+            $type = type::where('name', $row['type'])->first();
+            $level = level::where('name', $row['level'])->first();
 
             if (!$type) {
-                $type = Type::create([
+                $type = type::create([
                     'model' => 'question',
                     'name' => $row['type'],
                 ]);

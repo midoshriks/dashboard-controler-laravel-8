@@ -35,6 +35,9 @@ class TypesTableSeeder extends Seeder
             'confirm' => "order",
             'visa' =>  "payment_method",
             'master' => "payment_method",
+            'coin_buacks' => "payment_method",
+            'debit' => "wallet_status",
+            'credit' => "wallet_status",
         ];
 
         foreach ($models as $key => $model) {

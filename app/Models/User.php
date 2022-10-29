@@ -87,4 +87,14 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->belongsTo(Wallets::class, 'id', 'user_id');
     }
+
+    public function products()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    // public function types()
+    // {
+    //     return $this->belongsTo(type::class,);
+    // }
 }

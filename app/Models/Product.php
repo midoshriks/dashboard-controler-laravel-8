@@ -46,4 +46,9 @@ class Product extends Model implements HasMedia
     {
         return $this->belongsTo(Helper::class, 'helper_id', 'id');
     }
+
+    public function type_method()
+    {
+        return $this->belongsTo(type::class, 'payment_method_id', 'id');
+    }
 }

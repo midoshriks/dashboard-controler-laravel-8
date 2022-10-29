@@ -30,4 +30,9 @@ class Order extends Model
         return $this->belongsTo(type::class, 'type_id', 'id');
     }
 
+    public function type_method()
+    {
+        return $this->belongsTo(type::class, 'payment_method_id', 'id');
+    }
+
 }

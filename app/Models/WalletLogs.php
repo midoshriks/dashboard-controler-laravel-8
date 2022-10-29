@@ -11,4 +11,5 @@ class WalletLogs extends Model
 
     public $guarded = [];
 
+
 }

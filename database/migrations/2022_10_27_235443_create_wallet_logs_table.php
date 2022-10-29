@@ -19,13 +19,15 @@ class CreateWalletLogsTable extends Migration
             $table->bigInteger('type_id')->unsigned();
             $table->bigInteger('order_id')->unsigned()->nullable();
             $table->bigInteger('helper_id')->unsigned()->nullable();
-            $table->enum('method', ['debit', 'credit'])->default('debit');
+            // $table->string('method')->default('debit');
+            $table->bigInteger('method')->unsigned()->default(16);
             $table->double('amount');
-            
+
             $table->foreign('wallet_id')->references('id')->on('wallets')->onDelete('cascade');
             $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('helper_id')->references('id')->on('helpers')->onDelete('cascade');
+            $table->foreign('method')->references('id')->on('types')->onDelete('cascade');
 
             $table->timestamps();
         });

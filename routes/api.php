@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\LevelsApiController;
 use App\Http\Controllers\Api\HelpersApiController;
 use App\Http\Controllers\Api\OrdersApiController;
 use App\Http\Controllers\Api\ProductsApiController;
+use App\Http\Controllers\Api\WalletsApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,9 @@ Route::group(['prefix' => 'dashboard'], function () {
     // Orders
     Route::post('create/order',[OrdersApiController::class, 'store'] );
     Route::get('user/orders/{id}',[OrdersApiController::class, 'show'] );
+
+    // Wallets
+    Route::post('used/user/wallet', [WalletsApiController::class, 'store']);
 });
 
 

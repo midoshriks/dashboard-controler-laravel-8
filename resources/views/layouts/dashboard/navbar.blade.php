@@ -158,31 +158,37 @@
                     </li>
                     {{-- @mido_shriks dropdowen = {questions } --}}
 
-                    {{-- @mido_shriks dropdowen = {orders } --}}
-                    @if (app()->getLocale() == 'en')
-                        <li class="nav-item {{ Request::is('en/dashboard/orders*') ? 'active' : '' }}">
-                        @else
-                        <li class="nav-item {{ Request::is('ar/dashboard/orders*') ? 'active' : '' }}">
-                    @endif
-                    <a class="nav-link" href="{{ route('dashboard.orders.index') }}">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive"
-                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <rect x="3" y="4" width="18" height="4" rx="2">
-                                </rect>
-                                <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10"></path>
-                                <line x1="10" y1="12" x2="14" y2="12"></line>
-                            </svg>
-                        </span>
-                        <span class="nav-link-title">
-                            {{ display('orders') }}
-                        </span>
-                    </a>
-                    </li>
-                    {{-- @mido_shriks dropdowen = {orders } --}}
+
+
                     @if (auth()->user()->code_membership == '001')
+
+                        {{-- @mido_shriks dropdowen = {orders } --}}
+                        @if (app()->getLocale() == 'en')
+                            <li class="nav-item {{ Request::is('en/dashboard/orders*') ? 'active' : '' }}">
+                            @else
+                            <li class="nav-item {{ Request::is('ar/dashboard/orders*') ? 'active' : '' }}">
+                        @endif
+                        <a class="nav-link" href="{{ route('dashboard.orders.index') }}">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive"
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <rect x="3" y="4" width="18" height="4"
+                                        rx="2">
+                                    </rect>
+                                    <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10"></path>
+                                    <line x1="10" y1="12" x2="14" y2="12"></line>
+                                </svg>
+                            </span>
+                            <span class="nav-link-title">
+                                {{ display('orders') }}
+                            </span>
+                        </a>
+                        </li>
+                        {{-- @mido_shriks dropdowen = {orders } --}}
+
                         {{-- @mido_shriks dropdowen = {languages , developers} --}}
                         @if (app()->getLocale() == 'en')
                             <li

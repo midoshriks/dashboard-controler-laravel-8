@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CountriesTableSeeder::class);
         $this->call(TypesTableSeeder::class);
         $this->call(LevelsTableSeeder::class);
-        $this->call(ProductsTableSeeder::class);
         $this->call(QuestionsTableSeeder::class);
+        $this->call(ProductsTableSeeder::class);
         $this->call(HelpersTableSeeder::class);
         $this->call(ApiCodeTableSeeder::class);
         $this->call(UsersTableSeeder::class);

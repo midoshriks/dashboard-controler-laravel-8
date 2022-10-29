@@ -43,7 +43,6 @@ class OrdersApiController extends Controller
             'user_id' => 'required',
             'payment_method_id' => 'required',
             'product_id' => 'required',
-            'type_id' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -57,7 +56,7 @@ class OrdersApiController extends Controller
             // $order->user_id = Auth::user()->id;
             $order->payment_method_id = $request->payment_method_id;
             $order->product_id = $request->product_id;
-            $order->type_id = $request->type_id;
+            $order->type_id = 9 ; // 9 = type_id->pending
             $product = Product::where('id', $request->product_id)->first();
             // dd($product);
             $order->amount = $product->quantity;

@@ -38,6 +38,7 @@ class TypesTableSeeder extends Seeder
             'coin_buacks' => "payment_method",
             'debit' => "wallet_status",
             'credit' => "wallet_status",
+            'used' => "wallet_status",
         ];
 
         foreach ($models as $key => $model) {

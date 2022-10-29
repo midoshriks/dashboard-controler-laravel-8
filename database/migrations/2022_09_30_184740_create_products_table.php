@@ -17,8 +17,13 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('quantity');
             $table->double('price');
-            $table->integer('type_id');
-            $table->integer('helper_id')->nullable();
+            // $table->integer('type_id');
+            $table->bigInteger('type_id')->unsigned();
+
+            $table->bigInteger('helper_id')->unsigned()->nullable();
+            $table->foreign('helper_id')->references('id')->on('helpers')->onDelete('cascade');
+            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

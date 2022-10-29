@@ -31,10 +31,10 @@ class HelpersTableSeeder extends Seeder
 
         $helper_id = 1;
         $products = [
-            '100',
-            '200',
-            '300',
-            '400',
+            '1',
+            '2',
+            '3',
+            '4',
         ];
         foreach ($products as $key => $value) {
             # code...

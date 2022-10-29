@@ -116,15 +116,45 @@ class OrdersController extends Controller
             # code...
             $order_type->type_id = $request->type_id;
 
-            $order_type->save();
-            WalletLogs::create([
-                'wallet_id' => $order_type->user_id,
-                'type_id' =>  $order_type->products->type_id,
-                'order_id' => $order_type->id,
-                'helper_id' => $order_type->products->helper_id,
-                'method' => 'debit',
-                'amount' => $order_type->amount,
-            ]);
+            // $order_type->save(); // end function confirm
+
+            if (!$order_type->products->helper_id) {
+                // dd('null helper_id');
+                # code...
+                WalletLogs::create([
+                    'wallet_id' => $order_type->user_id,
+                    'type_id' =>  $order_type->products->type_id,
+                    'order_id' => $order_type->id,
+                    'helper_id' => $order_type->products->helper_id,
+                    'method' =>   14, // 'debit',
+                    'amount' => $order_type->amount,
+                ]);
+            } else {
+                $user_id = $order_type->users->id;
+                $total = WalletLogs::where('wallet_id', $user_id)->first();
+
+                // dd($total->sum('amount'));
+                // dd($total);
+
+                WalletLogs::create([
+                    'wallet_id' => $total->wallet_id,
+                    'type_id' =>  $total->type_id,
+                    'order_id' => $total->id,
+                    'helper_id' => $total->helper_id,
+                    'method' =>   15, // 'credit',
+                    'amount' => $total->amount,
+                ]);
+
+                // dd('helper_id');
+                WalletLogs::create([
+                    'wallet_id' => $order_type->user_id,
+                    'type_id' =>  $order_type->products->type_id,
+                    'order_id' => $order_type->id,
+                    'helper_id' => $order_type->products->helper_id,
+                    'method' =>   14, // 'debit'
+                    'amount' => $order_type->amount,
+                ]);
+            }
 
             // dd($order_type);
             // dd($order_type->type_id);

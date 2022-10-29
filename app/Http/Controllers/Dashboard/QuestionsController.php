@@ -24,7 +24,7 @@ class QuestionsController extends Controller
     public function index()
     {
         $title = "Questions";
-        $questions = Question::orderby('id')->paginate(20);
+        $questions = Question::orderby('id','desc')->get();
         $types = type::where('model', 'question')->get();
         $levels = level::all();
         return view('dashboard.questions.index', compact('title', 'questions', 'types', 'levels'));

@@ -76,6 +76,18 @@ class ApiCodeTableSeeder extends Seeder
             'route_api' => 'api/dashboard/create/order',
         ]);
 
+        $api_code = developer_api::create([
+            'type' => 'post',
+            'model' => 'walletlogs',
+            'route_api' => 'api/dashboard/used/user/wallet',
+        ]);
+
+        $api_code = developer_api::create([
+            'type' => 'post',
+            'model' => 'userlevels',
+            'route_api' => 'insert/level/user',
+        ]);
+
 
     }
 }

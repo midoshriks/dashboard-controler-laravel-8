@@ -6,6 +6,7 @@ use App\Models\level;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\UserLevel;
 use Illuminate\Support\Facades\Validator;
 
 class LevelsApiController extends Controller
@@ -33,7 +34,7 @@ class LevelsApiController extends Controller
         ])->withCount('questions as questions')->get();
 
 
-        return response()->json(['levels'=>$levels], $status = 200,);
+        return response()->json(['levels' => $levels], $status = 200,);
     }
 
     /**
@@ -99,8 +100,8 @@ class LevelsApiController extends Controller
             'id',
             'name',
             'rewards',
-        )->where('id', $id)->with(['questions' => function($q){
-            $q->with('type','answers');
+        )->where('id', $id)->with(['questions' => function ($q) {
+            $q->with('type', 'answers');
         }])->first();
 
         // dd($level);
@@ -183,6 +184,29 @@ class LevelsApiController extends Controller
         $response = [
             'status' => true,
             'message' => "The Level has been Deleted successfully!"
+        ];
+        return response()->json($response, 200);
+    }
+
+    // users_levels insert api
+
+    public function insertlevel(Request $request)
+    {
+        // dd($request->all());
+        $insertlevel = new UserLevel();
+        // $insertlevel->user_id = $request->user_id;
+        // $insertlevel->level_id = $request->level_id;
+
+        $insertlevel->create([
+            'user_id' => $request->user_id,
+            'level_id' => $request->level_id,
+        ]);
+
+        // dd($insertlevel);
+
+        $response = [
+            'status' => true,
+            'message' => "The Level has been Insert user successfully!"
         ];
         return response()->json($response, 200);
     }

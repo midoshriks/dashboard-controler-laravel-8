@@ -18,19 +18,17 @@ class PassPortController extends Controller
     public function sendResponse($result, $message)
     {
         $response = [
-            // $key   => value
             'success' => true,
-            'data' => $result,
             'message' => $message,
+            'user' => $result,
         ];
 
         return response()->json($response, 200);
     }
 
-    public function sendError($error, $errorMessage = [], $code = 404)
+    public function sendError($error, $errorMessage = [], $code = 200)
     {
         $response = [
-            // $key   => value
             'success' => false,
             'data' => $error,
         ];
@@ -53,11 +51,9 @@ class PassPortController extends Controller
             'gender' => 'required',
             'dob_date' => 'required|date',
             'password' => 'required|min:6',
-            // 'password_confirmation' => 'required|confirmed|min:6',
         ]);
 
         if ($validator->fails()) {
-            # code...
             return response()->json($validator->errors(), 404);
         }
 
@@ -71,51 +67,41 @@ class PassPortController extends Controller
         $user = User::create($input);
         $levelids = 1;
         $user->levels()->attach($levelids);
+
         Wallets::create([
             'user_id' => $user->id,
-        ]);
-        
-        $success['token'] = $user->createToken('mido')->accessToken;
-        $success['first_name'] = $user->first_name;
-        $success['last_name'] = $user->last_name;
-        $success['full_name'] = $user->first_name . ' ' . $user->last_name;
-        $success['gender'] = $user->gender;
-        $success['dob_date'] = $user->dob_date;
-        $success['email'] = $user->email;
-        $success['phone'] = $user->phone;
-        $success['country'] = $user->country->name;
-        $success['user_photo'] = $user->photo_user;
-        $success['level'] = $user->levels->last()->id;
-        // $success['levels'] = $user->levels;
+        ]); 
 
-
-        // $user_level =  UserLevel::create([
-        //     'user_id' => $user->id,
-        //     'level_id' => 1,
-        // ]);
-
-        return $this->sendResponse($success, 'User registered seccussfully');
+        $result['token'] = $user->createToken('mido')->accessToken;
+        $result['first_name'] = $user->first_name;
+        $result['last_name'] = $user->last_name;
+        $result['full_name'] = $user->first_name . ' ' . $user->last_name;
+        $result['gender'] = $user->gender;
+        $result['dob_date'] = $user->dob_date;
+        $result['email'] = $user->email;
+        $result['phone'] = $user->phone;
+        $result['country'] = $user->country->name;
+        $result['user_photo'] = $user->photo_user;
+        $result['level'] = $user->levels->last()->id;
+        return $this->sendResponse($result, 'User registered seccussfully');
     }
 
     public function login(Request $request)
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
-            $success['token'] = $user->createToken('mido')->accessToken;
-            $success['first_name'] = $user->first_name;
-            $success['last_name'] = $user->last_name;
-            $success['full_name'] = $user->first_name . ' ' . $user->last_name;
-            $success['gender'] = $user->gender;
-            $success['dob_date'] = $user->dob_date;
-            $success['email'] = $user->email;
-            $success['phone'] = $user->phone;
-            $success['country'] = $user->country->name;
-            $success['user_photo'] = $user->photo_user;
-            $success['level'] = $user->levels->last()->id;
-            // $success['levels'] = $user->levels;
-
-            // return response()->json(["success" => $success], 200);
-            return $this->sendResponse(["user" => $success], 'User login seccussfully');
+            $result['token'] = $user->createToken('bucks')->accessToken;
+            $result['first_name'] = $user->first_name;
+            $result['last_name'] = $user->last_name;
+            $result['full_name'] = $user->first_name . ' ' . $user->last_name;
+            $result['gender'] = $user->gender;
+            $result['dob_date'] = $user->dob_date;
+            $result['email'] = $user->email;
+            $result['phone'] = $user->phone;
+            $result['country'] = $user->country->name;
+            $result['user_photo'] = $user->photo_user;
+            $result['level'] = $user->levels->last()->id;
+            return $this->sendResponse($result, 'User login seccussfully');
         } else {
             return $this->sendError('Please check your auth', ['error' => 'unauthorised']);
         }

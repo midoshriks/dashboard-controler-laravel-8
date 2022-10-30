@@ -133,8 +133,10 @@ class UsersTableSeeder extends Seeder
                 'password' => bcrypt('12345678'),
             ]);
 
+            // user level
             $levelids = [1, 2];
             $user->levels()->attach($levelids);
+            // wallet
             $user = Wallets::create([
                 'user_id' => $user->id
             ]);

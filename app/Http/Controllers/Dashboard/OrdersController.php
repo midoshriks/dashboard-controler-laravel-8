@@ -133,13 +133,20 @@ class OrdersController extends Controller
                 $user_id = $order_type->users->id;
                 $total = WalletLogs::where('wallet_id', $user_id)->first();
 
-                // dd($total->sum('amount'));
+                // $total_amount_user = $total->sum('amount');
+                // if ($total_amount_user == $order_type->amount) {
+                //     # code...
+                // }
+
+                // dd($order_type->amount);
+                // dd($total_amount_user);
+
                 // dd($total);
 
                 WalletLogs::create([
                     'wallet_id' => $total->wallet_id,
                     'type_id' =>  $total->type_id,
-                    'order_id' => $total->id,
+                    'order_id' => $order_type->id, // order by helper
                     'helper_id' => $total->helper_id,
                     'method' =>   15, // 'credit',
                     'amount' => $total->amount,

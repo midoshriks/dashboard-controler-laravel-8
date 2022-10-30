@@ -34,6 +34,8 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::get('/level/{id}', [LevelsApiController::class, 'show']);
     Route::put('/update/level/{id}', [LevelsApiController::class, 'update']);
     Route::delete('/delete/level/{id}', [LevelsApiController::class, 'destroy']);
+    /// insert level user
+    Route::post('insert/level/user', [LevelsApiController::class, 'insertlevel']);
 
     // Prodect coin & helpers
     Route::get('/products/coins', [ProductsApiController::class, 'index']);

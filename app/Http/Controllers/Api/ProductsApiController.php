@@ -29,7 +29,8 @@ class ProductsApiController extends Controller
             'products.price',
         ])->get();
 
-        return response()->json(['status' => 200, 'message' => "The Coins has been Get successfully!", 'products' => $products]);
+        return response()->json(['message' => "The Coins has been Get successfully!", 'products' => $products], 200, [], JSON_PRESERVE_ZERO_FRACTION);
+        // return response()->json(['status' => 200, 'message' => "The Coins has been Get successfully!", 'products' => $products]);
     }
 
     /**
@@ -73,7 +74,8 @@ class ProductsApiController extends Controller
             // $q;
         // }])->first();
 
-        return response()->json(['prodect' => $product], 200);
+        return response()->json(['message' => "The Coins has been Get successfully!", 'product' => $product], 200, [], JSON_PRESERVE_ZERO_FRACTION);
+        // return response()->json(['prodect' => $product], 200);
     }
 
     /**

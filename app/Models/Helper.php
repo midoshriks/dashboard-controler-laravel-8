@@ -14,7 +14,7 @@ class Helper extends Model
 
 
     public function products(){
-        return $this->belongsTo(Product::class, 'id' , 'helper_id');
+        return $this->hasMany(Product::class, 'helper_id' , 'id');
     }
 
     public function type() {

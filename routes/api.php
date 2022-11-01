@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\LevelsApiController;
 use App\Http\Controllers\Api\HelpersApiController;
 use App\Http\Controllers\Api\OrdersApiController;
 use App\Http\Controllers\Api\ProductsApiController;
+use App\Http\Controllers\Api\UsersApiController;
 use App\Http\Controllers\Api\WalletsApiController;
 
 /*
@@ -28,14 +29,17 @@ Route::middleware('auth:api')->group(function () {
 });
 
 Route::group(['prefix' => 'dashboard'], function () {
+    // User  insert level
+    Route::post('/level/user', [UsersApiController::class, 'insertlevel']);
+    Route::post('/update/user/{id}', [UsersApiController::class, 'update']);
+
+
     // Levels
     Route::get('/levels', [LevelsApiController::class, 'index']);
     Route::post('/create/level', [LevelsApiController::class, 'store']);
     Route::get('/level/{id}', [LevelsApiController::class, 'show']);
     Route::put('/update/level/{id}', [LevelsApiController::class, 'update']);
     Route::delete('/delete/level/{id}', [LevelsApiController::class, 'destroy']);
-    /// insert level user
-    Route::post('insert/level/user', [LevelsApiController::class, 'insertlevel']);
 
     // Prodect coin & helpers
     Route::get('/products/coins', [ProductsApiController::class, 'index']);

@@ -23,22 +23,22 @@ class TypesTableSeeder extends Seeder
 
 
         $models = [
-            ["model" => "hard",  "name" => 'question'],
-            ["model" => "mediam",  "name" => 'question'],
-            ["model" => "easy",  "name" => 'question'],
-            ["model" => "low",  "name" => 'question'],
-            ["model" => "gaming",  "name" => 'user'],
-            ["model" => "admin",  "name" => 'user'],
-            ["model" => "helper",  "name" => 'product'],
-            ["model" => "coin",  "name" => 'product'],
-            ["model" => 'pending',  "name" => "order"],
-            ["model" => 'confirm',  "name" => "order"],
-            ["model" => 'visa',  "name" =>  "payment_method"],
-            ["model" => 'master',  "name" => "payment_method"],
-            ["model" => 'coin',  "name" => "payment_method"],
-            ["model" => 'debit',  "name" => "wallet_status"],
-            ["model" => 'credit',  "name" => "wallet_status"],
-            ["model" => 'used',  "name" => "wallet_status"],
+            ["name" => "hard",  "model" => 'question'],
+            ["name" => "mediam",  "model" => 'question'],
+            ["name" => "easy",  "model" => 'question'],
+            ["name" => "low",  "model" => 'question'],
+            ["name" => "gaming",  "model" => 'user'],
+            ["name" => "admin",  "model" => 'user'],
+            ["name" => "helper",  "model" => 'product'],
+            ["name" => "coin",  "model" => 'product'],
+            ["name" => 'pending',  "model" => "order"],
+            ["name" => 'confirm',  "model" => "order"],
+            ["name" => 'visa',  "model" =>  "payment_method"],
+            ["name" => 'master',  "model" => "payment_method"],
+            ["name" => 'coin',  "model" => "payment_method"],
+            ["name" => 'debit',  "model" => "wallet_status"],
+            ["name" => 'credit',  "model" => "wallet_status"],
+            ["name" => 'used',  "model" => "wallet_status"],
         ];
 
         // $models = [

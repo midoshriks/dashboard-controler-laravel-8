@@ -70,9 +70,10 @@ class PassPortController extends Controller
 
         Wallets::create([
             'user_id' => $user->id,
-        ]); 
+        ]);
 
         $result['token'] = $user->createToken('mido')->accessToken;
+        $result['id'] = $user->id;
         $result['first_name'] = $user->first_name;
         $result['last_name'] = $user->last_name;
         $result['full_name'] = $user->first_name . ' ' . $user->last_name;
@@ -91,6 +92,7 @@ class PassPortController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
             $result['token'] = $user->createToken('bucks')->accessToken;
+            $result['id'] = $user->id;
             $result['first_name'] = $user->first_name;
             $result['last_name'] = $user->last_name;
             $result['full_name'] = $user->first_name . ' ' . $user->last_name;

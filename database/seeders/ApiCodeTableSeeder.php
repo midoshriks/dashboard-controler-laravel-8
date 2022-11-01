@@ -85,7 +85,7 @@ class ApiCodeTableSeeder extends Seeder
         $api_code = developer_api::create([
             'type' => 'post',
             'model' => 'userlevels',
-            'route_api' => 'insert/level/user',
+            'route_api' => 'api/dashboard/level/user',
         ]);
 
 

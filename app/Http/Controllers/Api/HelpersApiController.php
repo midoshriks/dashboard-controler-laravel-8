@@ -25,18 +25,17 @@ class HelpersApiController extends Controller
             'helpers.id',
             'helpers.name',
             'helpers.status',
-        ])->with(['products' => function($q) {
-            $q->with('type');
+        ])->with(['products' => function ($q) {
+            $q->select(
+                'products.id',
+                'products.helper_id',
+                'products.type_id',
+                'products.quantity',
+                'products.price',
+            );
         }])->get();
 
-        // ])->with('type')->get();
-
-        $response = [
-            'status' => true,
-            'message' => "The Helpers has been Get successfully!"
-        ];
-
-        return response()->json(['helpers' => $helpers , $response , 200]);
+        return response()->json(['helpers' => $helpers,  'message' => "The Helpers has been Get successfully!"],  200, [], JSON_PRESERVE_ZERO_FRACTION);
     }
 
     /**
@@ -90,7 +89,8 @@ class HelpersApiController extends Controller
 
         // dd($helper);
 
-        return response()->json(['helper' => $helper] , 200);
+        // return response()->json(['helper' => $helper] , 200);
+        return response()->json(['helper' => $helper,  'message' => "The Helpers has been Get successfully!"],  200, [], JSON_PRESERVE_ZERO_FRACTION);
     }
 
     /**

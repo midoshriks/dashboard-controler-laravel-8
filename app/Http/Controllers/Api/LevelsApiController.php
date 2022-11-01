@@ -103,21 +103,8 @@ class LevelsApiController extends Controller
         )->where('id', $id)->with(['questions' => function ($q) {
             $q->with('type', 'answers');
         }])->first();
-
-        // dd($level);
-
-        // $level = Product::all(
-        //     'quantity',
-        //     'price',
-        // );
-
-        $response = [
-            'status' => true,
-            'message' => "The level has been Show successfully!"
-        ];
-
-        return response()->json(["level" => $level]);
-        // return response()->json($level);
+        $level['next_id'] = Level::where('id', '>', $level->id)->min('id');
+        return response()->json(["level" => $level], 200);
     }
 
     /**
@@ -192,18 +179,11 @@ class LevelsApiController extends Controller
 
     public function insertlevel(Request $request)
     {
-        // dd($request->all());
         $insertlevel = new UserLevel();
-        // $insertlevel->user_id = $request->user_id;
-        // $insertlevel->level_id = $request->level_id;
-
-        $insertlevel->create([
+        $insertlevel->firstOrCreate([
             'user_id' => $request->user_id,
             'level_id' => $request->level_id,
         ]);
-
-        // dd($insertlevel);
-
         $response = [
             'status' => true,
             'message' => "The Level has been Insert user successfully!"

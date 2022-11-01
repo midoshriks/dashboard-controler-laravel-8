@@ -88,6 +88,12 @@ class ApiCodeTableSeeder extends Seeder
             'route_api' => 'api/dashboard/level/user',
         ]);
 
+        $api_code = developer_api::create([
+            'type' => 'post',
+            'model' => 'uaser',
+            'route_api' => 'api/dashboard/update/user/5',
+        ]);
+
 
     }
 }

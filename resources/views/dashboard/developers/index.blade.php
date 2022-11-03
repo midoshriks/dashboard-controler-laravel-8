@@ -66,6 +66,8 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
+                                                <th>{{ display('file') }}</th>
+                                                <th>{{ display('example') }}</th>
                                                 <th>{{ display('type') }}</th>
                                                 <th>{{ display('model') }}</th>
                                                 <th>{{ display('Route') }}</th>
@@ -76,6 +78,12 @@
                                             @foreach ($developer_api as $index => $developer)
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
+                                                    <td>{{ $developer->file }}</td>
+                                                    <td>
+                                                        <p>
+                                                            {{ $developer->example }}
+                                                        </p>
+                                                    </td>
                                                     <td>{{ $developer->type }}</td>
                                                     <td>{{ $developer->model }}</td>
                                                     <td><a target="_blank"

@@ -108,4 +108,12 @@ class PassPortController extends Controller
             return $this->sendError('Please check your auth', ['error' => 'unauthorised']);
         }
     }
+
+    public function logout(Request $request)
+    {
+        $token = $request->user()->token();
+        // $token->revoke();
+        $token->delete();
+        return $this->sendResponse($token, 'You have logout seccussfully');
+    }
 }

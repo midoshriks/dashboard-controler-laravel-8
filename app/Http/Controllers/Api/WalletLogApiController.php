@@ -1,14 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
 use App\Http\Controllers\Controller;
-use App\Models\Order;
-use App\Models\WalletLogs;
-use App\Models\Wallets;
+use App\Models\WalletLog;
 use Illuminate\Http\Request;
 
-class WalletsApiController extends Controller
+class WalletLogApiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -38,20 +35,14 @@ class WalletsApiController extends Controller
      */
     public function store(Request $request)
     {
-        $wallet_used = new WalletLogs();
+        $wallet_used = new WalletLog();
         $wallet_used->wallet_id = $request->user_id;
         $wallet_used->type_id = $request->type_id;
         $wallet_used->order_id = $request->order_id;
         $wallet_used->helper_id = $request->helper_id;
-        $wallet_used->method = 16;
-        $wallet_used->amount = 1;
-
-        // dd($wallet_used);
-
+        $wallet_used->method = 16; // used helpers
+        $wallet_used->amount = 1; // qount
         $wallet_used->save();
-
-        // dd($wallet_used);
-        // $order_id
         $response = [
             'status' => true,
             'message' => "The Orders has been Used successfully!"
@@ -66,7 +57,7 @@ class WalletsApiController extends Controller
      * @param  \App\Models\Wallets  $wallets
      * @return \Illuminate\Http\Response
      */
-    public function show(Wallets $wallets)
+    public function show(WalletLog $walletLogs)
     {
         //
     }
@@ -77,7 +68,7 @@ class WalletsApiController extends Controller
      * @param  \App\Models\Wallets  $wallets
      * @return \Illuminate\Http\Response
      */
-    public function edit(Wallets $wallets)
+    public function edit(WalletLog $walletLogs)
     {
         //
     }
@@ -89,7 +80,7 @@ class WalletsApiController extends Controller
      * @param  \App\Models\Wallets  $wallets
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Wallets $wallets)
+    public function update(Request $request, WalletLog $walletLogs)
     {
         //
     }
@@ -100,7 +91,7 @@ class WalletsApiController extends Controller
      * @param  \App\Models\Wallets  $wallets
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Wallets $wallets)
+    public function destroy(WalletLog $walletLogs)
     {
         //
     }

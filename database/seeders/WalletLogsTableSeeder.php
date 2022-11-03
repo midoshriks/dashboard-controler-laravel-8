@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Order;
-use App\Models\WalletLogs;
+use App\Models\WalletLog;
 use Illuminate\Database\Seeder;
 
-class WalletLogssTableSeeder extends Seeder
+class WalletLogsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,7 +19,7 @@ class WalletLogssTableSeeder extends Seeder
 
         foreach ($orders_wallets as $key => $order) {
             # code...
-            $wallet_logs = WalletLogs::create([
+            $wallet_logs = WalletLog::create([
                 'wallet_id' => $order->user_id,
                 'type_id' =>  $order->products->type_id,
                 'order_id' => $order->id, // $order->users->wallets->id,

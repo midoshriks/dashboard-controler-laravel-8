@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\type;
 use App\Models\Order;
-use App\Models\WalletLogs;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\WalletLog;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class OrdersController extends Controller
@@ -106,7 +106,7 @@ class OrdersController extends Controller
 
             $order_type->save();
             // delete row on table confirm wallet _logs delete_wallet()
-            $delete_wallet = WalletLogs::where('order_id', $order_type->id)->delete();
+            $delete_wallet = WalletLog::where('order_id', $order_type->id)->delete();
             // $delete_wallet->delete();
 
             // dd($delete_wallet);
@@ -116,12 +116,12 @@ class OrdersController extends Controller
             # code...
             $order_type->type_id = $request->type_id;
 
-            // $order_type->save(); // end function confirm
+            $order_type->save(); // end function confirm
 
             if (!$order_type->products->helper_id) {
                 // dd('null helper_id');
                 # code...
-                WalletLogs::create([
+                WalletLog::create([
                     'wallet_id' => $order_type->user_id,
                     'type_id' =>  $order_type->products->type_id,
                     'order_id' => $order_type->id,
@@ -131,7 +131,7 @@ class OrdersController extends Controller
                 ]);
             } else {
                 $user_id = $order_type->users->id;
-                $total = WalletLogs::where('wallet_id', $user_id)->first();
+                $total = WalletLog::where('wallet_id', $user_id)->first();
 
                 // $total_amount_user = $total->sum('amount');
                 // if ($total_amount_user == $order_type->amount) {
@@ -143,7 +143,7 @@ class OrdersController extends Controller
 
                 // dd($total);
 
-                WalletLogs::create([
+                WalletLog::create([
                     'wallet_id' => $total->wallet_id,
                     'type_id' =>  $total->type_id,
                     'order_id' => $order_type->id, // order by helper
@@ -153,7 +153,7 @@ class OrdersController extends Controller
                 ]);
 
                 // dd('helper_id');
-                WalletLogs::create([
+                WalletLog::create([
                     'wallet_id' => $order_type->user_id,
                     'type_id' =>  $order_type->products->type_id,
                     'order_id' => $order_type->id,

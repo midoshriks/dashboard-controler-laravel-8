@@ -15,8 +15,10 @@ class CreateDeveloperApisTable extends Migration
     {
         Schema::create('developer_apis', function (Blueprint $table) {
             $table->id();
+            $table->string('file');
             $table->string('type');
             $table->string('model');
+            $table->text('example')->nullable();
             $table->string('route_api');
             $table->timestamps();
         });

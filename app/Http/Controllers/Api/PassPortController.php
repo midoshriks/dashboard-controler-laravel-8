@@ -15,8 +15,22 @@ class PassPortController extends Controller
 {
     // Stop plase make  php artisan passport:install pefor refesh seeder
     // @mido_shriks message respoans
-    public function sendResponse($result, $message)
+    public function sendResponse($user, $message)
     {
+
+        $result['token'] = $user->createToken('bucks')->accessToken;
+        $result['id'] = $user->id;
+        $result['first_name'] = $user->first_name;
+        $result['last_name'] = $user->last_name;
+        $result['full_name'] = $user->first_name . ' ' . $user->last_name;
+        $result['gender'] = $user->gender;
+        $result['dob_date'] = $user->dob_date;
+        $result['email'] = $user->email;
+        $result['phone'] = $user->phone;
+        $result['country'] = $user->country->name;
+        $result['user_photo'] = $user->photo_user;
+        $result['level'] = $user->levels->last()->id;
+
         $response = [
             'success' => true,
             'message' => $message,
@@ -71,39 +85,14 @@ class PassPortController extends Controller
         Wallets::create([
             'user_id' => $user->id,
         ]);
-
-        $result['token'] = $user->createToken('mido')->accessToken;
-        $result['id'] = $user->id;
-        $result['first_name'] = $user->first_name;
-        $result['last_name'] = $user->last_name;
-        $result['full_name'] = $user->first_name . ' ' . $user->last_name;
-        $result['gender'] = $user->gender;
-        $result['dob_date'] = $user->dob_date;
-        $result['email'] = $user->email;
-        $result['phone'] = $user->phone;
-        $result['country'] = $user->country->name;
-        $result['user_photo'] = $user->photo_user;
-        $result['level'] = $user->levels->last()->id;
-        return $this->sendResponse($result, 'User registered seccussfully');
+        return $this->sendResponse($user, 'User registered seccussfully');
     }
 
     public function login(Request $request)
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
-            $result['token'] = $user->createToken('bucks')->accessToken;
-            $result['id'] = $user->id;
-            $result['first_name'] = $user->first_name;
-            $result['last_name'] = $user->last_name;
-            $result['full_name'] = $user->first_name . ' ' . $user->last_name;
-            $result['gender'] = $user->gender;
-            $result['dob_date'] = $user->dob_date;
-            $result['email'] = $user->email;
-            $result['phone'] = $user->phone;
-            $result['country'] = $user->country->name;
-            $result['user_photo'] = $user->photo_user;
-            $result['level'] = $user->levels->last()->id;
-            return $this->sendResponse($result, 'User login seccussfully');
+            return $this->sendResponse($user, 'User login seccussfully');
         } else {
             return $this->sendError('Please check your auth', ['error' => 'unauthorised']);
         }

@@ -126,7 +126,7 @@ class OrdersController extends Controller
                     'type_id' =>  $order_type->products->type_id,
                     'order_id' => $order_type->id,
                     'helper_id' => $order_type->products->helper_id,
-                    'method' =>   14, // 'debit',
+                    'wallet_status_id' =>   14, // 'debit',
                     'amount' => $order_type->amount,
                 ]);
             } else {
@@ -148,7 +148,7 @@ class OrdersController extends Controller
                     'type_id' =>  $total->type_id,
                     'order_id' => $order_type->id, // order by helper
                     'helper_id' => $total->helper_id,
-                    'method' =>   15, // 'credit',
+                    'wallet_status_id' =>   15, // 'credit',
                     'amount' => $total->amount,
                 ]);
 
@@ -158,7 +158,7 @@ class OrdersController extends Controller
                     'type_id' =>  $order_type->products->type_id,
                     'order_id' => $order_type->id,
                     'helper_id' => $order_type->products->helper_id,
-                    'method' =>   14, // 'debit'
+                    'wallet_status_id' =>   14, // 'debit'
                     'amount' => $order_type->amount,
                 ]);
             }

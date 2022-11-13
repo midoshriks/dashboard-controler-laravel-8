@@ -98,7 +98,7 @@ class ApiCodeTableSeeder extends Seeder
             'type' => 'post',
             'model' => 'wallet',
             'example' => 'user_id , type_id , helper_id ,',
-            'route_api' => 'api/dashboard/user/level',
+            'route_api' => 'api/dashboard/wallet',
         ]);
 
         // orders

@@ -25,7 +25,7 @@ class LevelsApiController extends Controller
         // ])->with(['questions' => function($q){
         //     $q->select('level_id', 'id',  'name');
         // }])->get();
-
+        // User::inRandomOrder()->get();
         $levels = level::select([
             'levels.id',
             // 'levels.name as level',
@@ -96,12 +96,24 @@ class LevelsApiController extends Controller
      */
     public function show(level $level, $id)
     {
+        // $level = level::select(
+        //     'id',
+        //     'name',
+        //     'rewards',
+        // )->where('id', $id)->with(['questions' => function ($q) {
+        //     $q->orderBy('type_id', 'DESC')->inRandomOrder()->with('type', 'answers');
+        // }])->first();
+        // $level['next_id'] = Level::where('id', '>', $level->id)->min('id');
+        // return response()->json(["level" => $level], 200);
+
         $level = level::select(
             'id',
             'name',
             'rewards',
         )->where('id', $id)->with(['questions' => function ($q) {
-            $q->with('type', 'answers');
+            $q->orderBy('type_id', 'DESC')->inRandomOrder()->with('type')->with(['answers' => function($answer) {
+                $answer->inRandomOrder();
+            }]);
         }])->first();
         $level['next_id'] = Level::where('id', '>', $level->id)->min('id');
         return response()->json(["level" => $level], 200);

@@ -26,9 +26,11 @@ Route::post('/register', [PassPortController::class, 'register']);
 Route::post('/login', [PassPortController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
+});
 
     // user logout
     Route::post('/logout', [PassPortController::class, 'logout']);
+
     Route::group(['prefix' => 'dashboard'], function () {
         // User  insert level
         Route::group(['prefix' => 'user'], function () {
@@ -53,9 +55,11 @@ Route::middleware('auth:api')->group(function () {
         });
 
         // Wallets
-        Route::post('wallet', [WalletLogApiController::class, 'store']); // create a new walletLog
+        Route::group(['prefix' => 'wallet'], function () {
+            Route::get('{id}', [WalletLogApiController::class, 'show']); // get jas an wallet
+        });
+        Route::resource('wallet', WalletLogApiController::class); // create a new walletLog
     });
-});
 
 
 // Route::group(['prefix' => 'dashboard'], function () {

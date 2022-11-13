@@ -39,7 +39,6 @@ if (!function_exists('display')) {
                         return $row->$language;
                     }
                 }
-
             });
         } else {
             return $orig_text;
@@ -74,3 +73,50 @@ if (!function_exists('display')) {
 //         return null;
 //     }
 // }
+
+if (!function_exists('send_notification')) {
+
+    function send_notification($token_fcm, $title, $body)
+    {
+        if (!defined('API_ACCESS_KEY')) define('API_ACCESS_KEY', 'AAAA4INLL48:APA91bHB5Lt0o2G5ZSANTFfMnQFXvNod4Uvq57LcSb0Ogc6zUE1fjGoCub5ibrpoTkD2juu50NTXfb0h7h8pTCcGfFOSQo-OWsBqCPJLnJX5n28kBAqADw8ot6yVBWLbPYNY8Es-KHQT');
+
+        if (!empty($token_fcm)) {
+            $registrationIds = $token_fcm;
+
+            #prep the bundle
+            $msg = array(
+                'title' => $title,
+                'body' => $body,
+                'sound' => "default",
+                // 'click_action' => '.OPEN_ACTIVITY_CHAT',
+                'icon-large' => "logorounded"
+            );
+
+            $fields = array(
+                'registration_ids' => $registrationIds,
+                'notification' => $msg,
+                'data' => $msg,
+            );
+
+            $headers = array(
+                'Authorization: key=' . API_ACCESS_KEY,
+                'Content-Type: application/json'
+            );
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+            $result = curl_exec($ch);
+            curl_close($ch);
+            dd($result);
+            return $result;
+
+            // echo $result;
+
+        }
+    }
+}

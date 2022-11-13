@@ -39,6 +39,11 @@ class TypesTableSeeder extends Seeder
             ["name" => 'debit',  "model" => "wallet_status"],
             ["name" => 'credit',  "model" => "wallet_status"],
             ["name" => 'used',  "model" => "wallet_status"],
+            ["name" => 'rewards',  "model" => "wallet_status"],
+            ["name" => 'coin',  "model" => "wallet"],
+            ["name" => 'helper',  "model" => "wallet"],
+            ["name" => 'bucks',  "model" => "wallet"],
+
         ];
 
         // $models = [

@@ -114,16 +114,39 @@ class UsersTableSeeder extends Seeder
             'user_id' => $user->id
         ]);
 
+        // balance account
+        $user = User::create([
+            'first_name' => 'balance' ,
+            'last_name' => 'balance' ,
+            'email' => 'balance@gmail.com',
+            'phone' => '0120030009' ,
+            'dob_date' => Carbon::parse('2022-10-20'),
+            'gender' => 'male',
+            'country_id' => '2',
+            'type_id' => '2',
+            'code_membership' => Str::random(2) . mt_rand(1000000, 10000000),
+            'role_permissions' => 'balance',
+            'password' => bcrypt('12345678'),
+        ]);
+
+        // user level
+        $levelids = [1, 2];
+        $user->levels()->attach($levelids);
+        // wallet
+        $user = Wallets::create([
+            'user_id' => $user->id
+        ]);
+
 
 
         // users gaming
         for ($i = 0; $i < 5; $i++) {
             # code...
             $user = User::create([
-                'first_name' => 'gaming_'.$i,
-                'last_name' => 'gaming_'.$i,
-                'email' => 'gaming_'.$i.'@gmail.com',
-                'phone' => '01200300090'.$i,
+                'first_name' => 'gaming_' . $i,
+                'last_name' => 'gaming_' . $i,
+                'email' => 'gaming_' . $i . '@gmail.com',
+                'phone' => '01200300090' . $i,
                 'dob_date' => Carbon::parse('2022-10-20'),
                 'gender' => 'male',
                 'country_id' => '2',

@@ -10,15 +10,37 @@ use App\Http\Controllers\Dashboard\LevelsController;
 use App\Http\Controllers\Dashboard\OrdersController;
 use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\QuestionsController;
+use App\Http\Controllers\Dashboard\SendMailslController;
+use App\Http\Controllers\Dashboard\SettingslController;
 use App\Http\Controllers\Dashboard\UsersController;
+use App\Mail\SendMailAds;
+use App\Mail\SendMailAuth;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
+// function IPtoLocation($ip)
+// {
+//     $ipData = @unserialize(file_get_contents('http://ip-api.com/php/' . $ip));
+//     return !empty($ipData) && $ipData['status'] == 'success' ? $ipData : false;
+// }
 
-// welcome page Starat Login dahboard
+// welcome page Starat Login dashboard
 Route::get('/', function () {
+    // dd(IPtoLocation($_SERVER['REMOTE_ADDR']));
     return view('auth.login');
 });
+
+// Route::get('/send', function () {
+//     $name = 'mido';
+//     $title = 'mido';
+//     $body = 'body oooooooooooooooo';
+//     Mail::to('midoshriks36@gmail.com') //samirasaeed660@gmail.com // mom.enlsyd@gmail.com
+//     // ->send(new SendMailAuth($name));
+//     ->send(new SendMailAds($name,$title,$body));
+//     return "send ";
+// });
+
 
 Route::group(
     [
@@ -39,6 +61,9 @@ Route::group(
             // Users
             Route::resource('/users', 'UsersController');
             Route::put('/user/active/{id}', 'UsersController@updatestatus')->name('user.active');
+            // show blade wite role users
+            Route::get('/user/admin', 'UsersController@admin')->name('users.admin');
+            Route::get('/user/gaming', 'UsersController@gaming')->name('users.gaming');
 
             // Levels
             Route::resource('/levels', 'LevelsController');
@@ -58,6 +83,12 @@ Route::group(
             // Orders
             Route::resource('/orders', 'OrdersController');
             Route::put('/order/active/{id}', 'OrdersController@updatetype')->name('order.active');
+
+            // Settings
+            Route::resource('/settings', 'SettingslController');
+
+            // Send Mails All Users
+            Route::resource('send/mail','SendMailslController');
 
 
             // Route::get('/tables', function() {

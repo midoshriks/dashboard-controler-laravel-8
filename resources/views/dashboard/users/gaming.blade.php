@@ -79,7 +79,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $user)
+                                    @foreach ($gaming as $user)
                                         <tr>
                                             <td>
                                                 <div class="d-flex py-1 align-items-center">

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Models\Wallets;
+use App\Models\UserLevel;
+use App\Mail\SendMailAuth;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\UserLevel;
-use App\Models\Wallets;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class PassPortController extends Controller
@@ -30,6 +32,20 @@ class PassPortController extends Controller
         $result['country'] = $user->country->name;
         $result['user_photo'] = $user->photo_user;
         $result['level'] = $user->levels->last()->id;
+
+        $wallet = Wallets::where('user_id', $user->id)->first();
+        $result['coins'] = $wallet->balance('coin');
+        $result['bucks'] = $wallet->balance('bucks');
+        // dd($wallet->walletLogs()->pluck('helper_id'));
+        // $helper_id = $wallet->walletLogs()->pluck('helper_id');
+        $result['helpers'] = [];
+        for ($i = 1; $i < 5; $i++) {
+            $result['helpers'][$i] = $wallet->balance('helper', $i);
+        }
+
+        // send mail welcome to smartbackus
+        Mail::to($user->email)
+        ->send(new SendMailAuth($user->first_name));
 
         $response = [
             'success' => true,

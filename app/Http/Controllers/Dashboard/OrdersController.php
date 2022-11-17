@@ -123,7 +123,7 @@ class OrdersController extends Controller
                 # code...
                 WalletLog::create([
                     'wallet_id' => $order_type->user_id,
-                    'type_id' =>  $order_type->products->type_id,
+                    'type_id' =>  18, // in table types model = wallet => id
                     'order_id' => $order_type->id,
                     'helper_id' => $order_type->products->helper_id,
                     'wallet_status_id' =>   14, // 'debit',
@@ -145,7 +145,7 @@ class OrdersController extends Controller
 
                 WalletLog::create([
                     'wallet_id' => $total->wallet_id,
-                    'type_id' =>  $total->type_id,
+                    'type_id' =>  18, // in table types model = wallet => id
                     'order_id' => $order_type->id, // order by helper
                     'helper_id' => $total->helper_id,
                     'wallet_status_id' =>   15, // 'credit',
@@ -155,7 +155,7 @@ class OrdersController extends Controller
                 // dd('helper_id');
                 WalletLog::create([
                     'wallet_id' => $order_type->user_id,
-                    'type_id' =>  $order_type->products->type_id,
+                    'type_id' =>  19, // in table types model = wallet => id
                     'order_id' => $order_type->id,
                     'helper_id' => $order_type->products->helper_id,
                     'wallet_status_id' =>   14, // 'debit'

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\type;
+use App\Models\Helper;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class WalletLog extends Model
 {
@@ -16,12 +18,12 @@ class WalletLog extends Model
 
     public function type()
     {
-        return $this->belongsTo(Type::class, 'type_id');
+        return $this->belongsTo(type::class, 'type_id');
     }
 
     public function walletStatus()
     {
-        return $this->belongsTo(Type::class, 'wallet_status_id');
+        return $this->belongsTo(type::class, 'wallet_status_id');
     }
 
     public function Helper()

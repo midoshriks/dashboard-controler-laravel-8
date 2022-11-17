@@ -18,7 +18,7 @@ class WalletLogsTableSeeder extends Seeder
     {
         $user_balance = User::where('role_permissions', 'balance')->get();
 
-        for ($i = 1; $i < 5; $i++) {
+        for ($i = 1; $i < 6; $i++) {
             # code...
             if ($i == 1) {
                 # code...
@@ -65,7 +65,7 @@ class WalletLogsTableSeeder extends Seeder
                         'type_id' =>  20, // get types => model = wallet , name = bucks;
                         'order_id' => null,
                         'helper_id' => null, // get products helpers add time = id => 1;
-                        'wallet_status_id' => 15, // get types => model = wallet_stauts , name = debit;
+                        'wallet_status_id' => 14, // get types => model = wallet_stauts , name = debit;
                         'amount' => '1',
                     ]);
                 }

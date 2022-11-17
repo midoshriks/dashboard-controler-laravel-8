@@ -27,7 +27,9 @@ class ProductsApiController extends Controller
             'products.type_id', // stop mo2men look this
             'products.quantity',
             'products.price',
-        ])->get();
+        ])->whereHas('type', function ($q) {
+            $q->where('name', 'coin');
+        })->get();
 
         return response()->json(['message' => "The Coins has been Get successfully!", 'products' => $products], 200, [], JSON_PRESERVE_ZERO_FRACTION);
         // return response()->json(['status' => 200, 'message' => "The Coins has been Get successfully!", 'products' => $products]);
@@ -66,12 +68,12 @@ class ProductsApiController extends Controller
         // dd($product);
 
         // $product = Product::where('id', $id)->select(
-            // 'id'
-            // 'product.id',
-            // 'quantity',
-            // 'price',
+        // 'id'
+        // 'product.id',
+        // 'quantity',
+        // 'price',
         // )->with(['type' => function ($q) {
-            // $q;
+        // $q;
         // }])->first();
 
         return response()->json(['message' => "The Coins has been Get successfully!", 'product' => $product], 200, [], JSON_PRESERVE_ZERO_FRACTION);

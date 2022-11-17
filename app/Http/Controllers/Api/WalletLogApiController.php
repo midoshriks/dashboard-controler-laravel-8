@@ -64,15 +64,16 @@ class WalletLogApiController extends Controller
      */
     public function show(WalletLog $walletLogs, $id)
     {
-
+        // send_notification code test
         // send_notification(['djPVhJ0fTE-BZ0QxPV1xAT:APA91bE3ziX-RxOHfGRMvOzfPHeOTWMJGkmnCJAr8liQrrhUKwU-2-oxGIRgijSAbl3bIaLxQEb9mAD8CFnQRigJ01XCG8YEmOghQnVxLq4ii5XR2nNhFjjsKijzzsMY5E2uyLHSTSWI'], 'test', 'laravel');
+
         $wallet = Wallets::find($id);
         $coins = $wallet->balance('coin');
         $bucks = $wallet->balance('bucks');
         // dd($wallet->walletLogs()->pluck('helper_id'));
         // $helper_id = $wallet->walletLogs()->pluck('helper_id');
         $helpers = [];
-       for ($i=1; $i < 5; $i++) {
+        for ($i = 1; $i < 5; $i++) {
             $helpers[$i] = $wallet->balance('helper', $i);
         }
         // dd($helpers);
@@ -80,7 +81,7 @@ class WalletLogApiController extends Controller
         // $helper_2 = $wallet->balance('helper', 2);
         // $helper_3 = $wallet->balance('helper', 3);
         // $helper_4 = $wallet->balance('helper', 4);
-        return response()->json(['message' => "The wallet has been Get successfully!", 'coins' => $coins, 'bucks' => $bucks,'helpers' => $helpers], 200, [], JSON_PRESERVE_ZERO_FRACTION);
+        return response()->json(['message' => "The wallet has been Get successfully!", 'coins' => $coins, 'bucks' => $bucks, 'helpers' => $helpers], 200, [], JSON_PRESERVE_ZERO_FRACTION);
     }
 
     /**

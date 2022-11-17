@@ -47,7 +47,7 @@ class UsersTableSeeder extends Seeder
         $user = User::create([
             'first_name' => 'mo2men',
             'last_name' => 'elsyd',
-            'email' => 'mom.enlsyd@gmail.com',
+            'email' => 'momen.elsyd@gmail.com',
             'phone' => '01200300002',
             'dob_date' => Carbon::parse('2022-09-20'),
             'gender' => 'male',
@@ -125,7 +125,7 @@ class UsersTableSeeder extends Seeder
             'country_id' => '2',
             'type_id' => '2',
             'code_membership' => Str::random(2) . mt_rand(1000000, 10000000),
-            'role_permissions' => 'balance',
+            'role_permissions' => 'admin',
             'password' => bcrypt('12345678'),
         ]);
 

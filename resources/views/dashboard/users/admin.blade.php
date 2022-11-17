@@ -79,7 +79,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $user)
+                                    @foreach ($admins as $user)
                                         <tr>
                                             <td>
                                                 <div class="d-flex py-1 align-items-center">

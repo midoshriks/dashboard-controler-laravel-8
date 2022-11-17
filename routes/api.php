@@ -35,7 +35,8 @@ Route::middleware('auth:api')->group(function () {
         // User  insert level
         Route::group(['prefix' => 'user'], function () {
             Route::post('level', [UsersApiController::class, 'insertlevel']); // insert level to user
-            Route::put('{id}', [UsersApiController::class, 'update']); // update user
+            Route::put('/', [UsersApiController::class, 'update']); // update user
+            // Route::put('{id}', [UsersApiController::class, 'update']); // update user
         });
 
         // Levels

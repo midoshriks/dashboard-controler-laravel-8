@@ -32,9 +32,9 @@ class HelpersTableSeeder extends Seeder
         $helper_id = 1;
         $products = [
             '1',
-            '2',
-            '3',
-            '4',
+            '1',
+            '1',
+            '1',
         ];
         foreach ($products as $key => $value) {
             # code...

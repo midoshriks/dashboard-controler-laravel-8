@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Role;
+use App\Models\type;
 use App\Models\User;
 use App\Models\country;
+use App\Models\Wallets;
+use App\Mail\SendMailAuth;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\type;
-use App\Models\Wallets;
+use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
 use phpDocumentor\Reflection\Types\Null_;
@@ -24,10 +26,40 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::all();
+        $admins = User::where('role_permissions', 'admin')->get();
         $select_countries = country::all();
         $types = type::where('model', 'user')->get();
 
         return view('dashboard.users.index', compact('users', 'select_countries', 'types'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function admin()
+    {
+        // $users = User::all();
+        $admins = User::where('role_permissions', 'admin')->get();
+        $select_countries = country::all();
+        $types = type::where('model', 'user')->get();
+
+        return view('dashboard.users.admin', compact('admins', 'select_countries', 'types'));
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function gaming()
+    {
+        // $users = User::all();
+        $gaming = User::where('role_permissions', 'gaming')->get();
+        $select_countries = country::all();
+        $types = type::where('model', 'user')->get();
+
+        return view('dashboard.users.gaming', compact('gaming', 'select_countries', 'types'));
     }
 
     /**
@@ -103,6 +135,9 @@ class UsersController extends Controller
                 // dd($request->all());
                 // exit;
             }
+            // send mail welcome to smartbackus
+            Mail::to($user->email)
+                ->send(new SendMailAuth($user->first_name));
 
             Alert::success('Success Title', 'Success Save  gaming ' .  $user->first_name);
             return redirect()->route('dashboard.users.index');
@@ -142,6 +177,10 @@ class UsersController extends Controller
             // var_dump($request_data['role_permissions']);
             // dd($request->all());
             // exit;
+
+            // send mail welcome to smartbackus
+            Mail::to($user->email)
+                ->send(new SendMailAuth($user->first_name));
 
             Alert::success('Success Title', 'Success Save ' . $user->role_permissions . ' ' .  $user->first_name);
             return redirect()->route('dashboard.users.index');

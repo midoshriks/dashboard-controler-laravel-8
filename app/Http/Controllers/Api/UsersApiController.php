@@ -72,14 +72,12 @@ class UsersApiController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user = User::find($request->id);
+        $user = $request->user();
         $rules = [
             'first_name' => 'required',
             'last_name' => 'required',
             'dob_date' => 'required',
             'gender' => 'required',
-            'country_id' => 'required',
-            'password' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);

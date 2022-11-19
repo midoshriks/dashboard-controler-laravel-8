@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\PassPortController;
 use App\Http\Controllers\Api\LevelsApiController;
 use App\Http\Controllers\Api\HelpersApiController;
 use App\Http\Controllers\Api\OrdersApiController;
+use App\Http\Controllers\Api\PagesApiController;
 use App\Http\Controllers\Api\ProductsApiController;
 use App\Http\Controllers\Api\UsersApiController;
 use App\Http\Controllers\Api\WalletLogApiController;
@@ -60,6 +61,8 @@ Route::middleware('auth:api')->group(function () {
             Route::get('{id}', [WalletLogApiController::class, 'show']); // get jas an wallet
         });
         Route::resource('wallet', WalletLogApiController::class); // create a new walletLog
+
+        Route::resource('pages', PagesApiController::class); // view pages in app 
     });
 
 

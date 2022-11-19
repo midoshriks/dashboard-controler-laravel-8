@@ -102,7 +102,7 @@
             }).then(result => {
                 if (result.value) {
                     $('#' + form_id).submit();
-                    swal("Active User !", "Your imaginary file has been actived." + name_val, "success");
+                    swal("Active !", "Your imaginary file has been actived." + name_val, "success");
                 } else {
                     swal("Cancelled", "Your imaginary file is safe " + name_val, "error");
                 }

@@ -8,6 +8,8 @@
 <script src="{{ asset('dashboard/dist/libs/jsvectormap/dist/maps/world.js') }}" defer></script>
 <script src="{{ asset('dashboard/dist/libs/jsvectormap/dist/maps/world-merc.js') }}" defer></script>
 
+<script src="{{ asset('dashboard/dist/libs/tinymce/tinymce.min.js')}}" defer></script>
+
 {{-- @mido_shriks use btn animation by sweetalert2 --}}
 {{-- Jquery --}}
 <script src="{{ asset('dashboard/src/js/sweet-alert/jquery.min.js') }}"></script>
@@ -31,5 +33,33 @@
     $(document).ready(function() {
         $('#dataTable').DataTable();
     });
+</script>
+
+<script>
+    // @formatter:off
+    document.addEventListener("DOMContentLoaded", function() {
+        let options = {
+            selector: '#tinymce-mytextarea',
+            height: 300,
+            menubar: false,
+            statusbar: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | ' +
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat',
+            content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; -webkit-font-smoothing: antialiased; }'
+        }
+        if (localStorage.getItem("tablerTheme") === 'dark') {
+            options.skin = 'oxide-dark';
+            options.content_css = 'dark';
+        }
+        tinyMCE.init(options);
+    })
+    // @formatter:on
 </script>
 {{-- @mido_shriks script data table --}}

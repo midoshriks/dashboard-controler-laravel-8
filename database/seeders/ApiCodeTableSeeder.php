@@ -118,6 +118,14 @@ class ApiCodeTableSeeder extends Seeder
             'route_api' => 'api/dashboard/order',
         ]);
 
+        $api_code = developer_api::create([
+            'file' => 'pages',
+            'type' => 'get',
+            'model' => 'Page',
+            'example' => '',
+            'route_api' => 'api/dashboard/pages',
+        ]);
+
 
 
 

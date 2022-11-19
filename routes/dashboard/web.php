@@ -8,6 +8,7 @@ use App\Http\Controllers\Dashboard\HelpersController;
 use App\Http\Controllers\Dashboard\LanguagesController;
 use App\Http\Controllers\Dashboard\LevelsController;
 use App\Http\Controllers\Dashboard\OrdersController;
+use App\Http\Controllers\Dashboard\PagesController;
 use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\QuestionsController;
 use App\Http\Controllers\Dashboard\SendMailslController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\Dashboard\SettingslController;
 use App\Http\Controllers\Dashboard\UsersController;
 use App\Mail\SendMailAds;
 use App\Mail\SendMailAuth;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +32,12 @@ Route::get('/', function () {
     // dd(IPtoLocation($_SERVER['REMOTE_ADDR']));
     return view('auth.login');
 });
+
+// Route::get('/run', function () {
+//     $run = Artisan::call('schedule:run');
+//     dd($run);
+//     return 'run backub';
+// });
 
 // Route::get('/send', function () {
 //     $name = 'mido';
@@ -89,6 +97,11 @@ Route::group(
 
             // Send Mails All Users
             Route::resource('send/mail','SendMailslController');
+
+            // Pages
+            Route::resource('pages', 'PagesController');
+            Route::put('/page/active/{id}', 'PagesController@stauts')->name('page.active');
+
 
 
             // Route::get('/tables', function() {

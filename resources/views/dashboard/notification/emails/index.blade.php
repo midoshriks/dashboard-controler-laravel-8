@@ -17,6 +17,7 @@
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">{{ display('Dshboard') }}</li>
                             <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">{{ display('Home') }}</a>
+                            </li>
                             <li class="breadcrumb-item"><a
                                     href="{{ route('dashboard.mail.index') }}">{{ display('send mail') }}</a>
                             </li>
@@ -32,7 +33,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="col-md-12">
-                        <form class="card" action="{{ route('dashboard.mail.store')}}" method="POST">
+                        <form class="card" action="{{ route('dashboard.mail.store') }}" method="POST">
                             @csrf
                             @method('POST')
                             <div class="card-header">
@@ -42,14 +43,14 @@
                                 <div class="mb-3">
                                     <label class="form-label required">{{ display('title button') }}</label>
                                     <div>
-                                        <input type="text" class="form-control" name="title" placeholder="Enter title">
+                                        <input type="text" class="form-control" name="title" placeholder="Enter title" value="go pay">
                                         <small class="form-hint">We'll never share your title with anyone else.</small>
                                     </div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label required">{{ display('body message mail') }}</label>
-                                    <textarea class="form-control" name="body" rows="5"></textarea>
+                                    <textarea class="form-control" name="body" rows="5">body maessge</textarea>
                                 </div>
 
                             </div>
@@ -61,4 +62,5 @@
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection

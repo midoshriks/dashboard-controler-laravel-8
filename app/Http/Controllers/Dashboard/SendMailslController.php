@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Mail\SendMailAds;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendMailAdsJop;
 use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -39,20 +40,46 @@ class SendMailslController extends Controller
      */
     public function store(Request $request)
     {
-        $users = User::all();
+        // $users = User::all();
+        $data = User::select('email')->get();
 
-        foreach ($users as $key => $user) {
-            # code...
-            Mail::to($user->email) //midoshriks36@gmail.com
-                ->send(new SendMailAds(
-                    $user->first_name,
-                    $request->title,
-                    $request->body,
-                ));
-        }
+        // $emails = User::select('email')->get();
+        $emails = User::pluck('email')->toArray();
 
+        // dd($users);
+
+        // $users = User::pluck('email')->toArray();
+        // foreach ($users as $key => $user) {
+        //     # code...
+        //     Mail::to($user->email) //midoshriks36@gmail.com
+        //         ->send(new SendMailAds(
+        //             $user->first_name,
+        //             $request->title,
+        //             $request->body,
+        //         ));
+        // }
+
+        // dd($emails);
+
+        // foreach ($emails as $key => $value) {
+        //     # code...
+        //     SendMailAdsJop::dispatch(
+        //         $value->email,
+        //         $request->title,
+        //         $request->body,
+        //     );
+        // }
+
+        SendMailAdsJop::dispatch(
+            $emails,
+            $request->title,
+            $request->body,
+        );
+
+
+        // dd($data->count('email'));
         // dd($request->all());
-        Alert::toast('Success send all mail ' . $users->count('id'));
+        Alert::toast('Success send all mail ' . $data->count('email')); //.  dd($data->count('email'));
         return redirect()->route('dashboard.index');
     }
 

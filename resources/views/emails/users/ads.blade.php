@@ -7,7 +7,7 @@
 {{-- The body of your message. --}}
 
 @component('mail::button', ['url' => ''])
-Get {{$title}}
+    {{$title}}
 @endcomponent
 
 Thanks,<br>

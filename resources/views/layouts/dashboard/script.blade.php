@@ -21,6 +21,7 @@
 {{-- @mido_shriks script data table --}}
 
 <script type="text/javascript" src="{{ asset('dashboard/datatables/datatables.min.js') }}"></script>
+<script src="{{ asset('dashboard/ckeditor/ckeditor.js')}}"></script>
 {{-- // cdn --}}
 
 {{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>

@@ -45,7 +45,7 @@ class PassPortController extends Controller
 
         // send mail welcome to smartbackus
         Mail::to($user->email)
-        ->send(new SendMailAuth($user->first_name));
+            ->send(new SendMailAuth($user->first_name));
 
         $response = [
             'success' => true,
@@ -82,10 +82,41 @@ class PassPortController extends Controller
             'dob_date' => 'required|date',
             'password' => 'required|min:6',
         ]);
+        foreach ($validator->errors()->getMessages() as $key => $error) {
+            # code...
+            switch ($key) {
+                case 'first_name':
+                    # code...
+                    return response()->json(['status' => false, 'error' => 'FIRSTNAME_REPEAT'], 401);
+                    break;
+                case 'last_name':
+                    return response()->json(['status' => false, 'error' => 'LASTNAME_REPEAT'], 401);
+                    break;
+                case 'email':
+                    return response()->json(['status' => false, 'error' => 'EMAIL_REPEAT'], 401);
+                    break;
+                case 'phone':
+                    return response()->json(['status' => false, 'error' => 'PHONE_REPEAT'], 401);
+                    break;
+                case 'gender':
+                    return response()->json(['status' => false, 'error' => 'gender'], 401);
+                    break;
+                case 'dob_date':
+                    return response()->json(['status' => false, 'error' => 'dob_date'], 401);
+                    break;
+                case 'password':
+                    return response()->json(['status' => false, 'error' => 'password'], 401);
+                    break;
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 404);
+                    // default:
+                    //     # code...
+                    //     break;
+            }
         }
+
+        // if ($validator->fails()) {
+        //     return response()->json($validator->errors(), 404);
+        // }
 
         $input = $request->all();
         $input['role_permissions'] = 'gaming';

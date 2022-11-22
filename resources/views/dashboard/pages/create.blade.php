@@ -42,7 +42,8 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">{{ display('Description') }}</label>
-                            <textarea id="tinymce-mytextarea" name="description">Hello, <b>Tabler</b>!</textarea>
+                            <textarea class="ckeditor" id="description" name="description">Hello, <b>Tabler</b>!</textarea>
+                            {{-- <textarea id="tinymce-mytextarea" name="description">Hello, <b>Tabler</b>!</textarea> --}}
                             {{-- <textarea id="tinymce-mytextarea" name="description">Hello, <b>Tabler</b>!</textarea> --}}
                         </div>
                     </div>

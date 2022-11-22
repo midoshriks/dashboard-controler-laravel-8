@@ -73,6 +73,7 @@ class SendMailAdsJop implements ShouldQueue
                     // 'test',
                 ));
         }
+
         dd('success');
 
     }

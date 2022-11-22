@@ -27,7 +27,7 @@ Route::post('/register', [PassPortController::class, 'register']);
 Route::post('/login', [PassPortController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
-});
+    // });
 
     // user logout
     Route::post('/logout', [PassPortController::class, 'logout']);
@@ -62,8 +62,9 @@ Route::middleware('auth:api')->group(function () {
         });
         Route::resource('wallet', WalletLogApiController::class); // create a new walletLog
 
-        Route::resource('pages', PagesApiController::class); // view pages in app 
+        Route::resource('pages', PagesApiController::class); // view pages in app
     });
+});
 
 
 // Route::group(['prefix' => 'dashboard'], function () {

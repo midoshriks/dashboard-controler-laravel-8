@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
 use App\Models\type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TypesController extends Controller
 {
@@ -15,7 +17,10 @@ class TypesController extends Controller
      */
     public function index()
     {
-        //
+        $types = type::all();
+        $models = type::groupBy('model')->select('model', DB::raw('count(*) as total'))->get();
+        // dd($models);
+        return view('dashboard.types.index', compact('types', 'models'));
     }
 
     /**
@@ -70,7 +75,15 @@ class TypesController extends Controller
      */
     public function update(Request $request, type $type)
     {
-        //
+        $type = type::findOrFail($type->id);
+        $type->name = $request->name;
+        // dd($type);
+        $type->update();
+        // return $type;
+
+        Alert::toast('Success Update Type '.  $type->model);
+        return redirect()->route('dashboard.types.index');
+
     }
 
     /**

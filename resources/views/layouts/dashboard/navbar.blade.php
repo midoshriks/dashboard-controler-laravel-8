@@ -419,6 +419,9 @@
                             <a class="dropdown-item" href="{{ route('dashboard.developers.index') }}">
                                 {{ display('Route Api') }}
                             </a>
+                            <a class="dropdown-item" href="{{ route('dashboard.types.index') }}">
+                                {{ display('Types') }}
+                            </a>
                         </div>
                         </li>
                     @endif

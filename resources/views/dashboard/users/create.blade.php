@@ -72,7 +72,7 @@
                                                 <select class="form-select" name="role_permissions">
                                                     <option value="">chooes</option>
                                                     @foreach ($types as $type)
-                                                        <option value="{{ $type->name }}">{{ display($type->name) }}
+                                                        <option value="{{ $type->id }}">{{ display($type->name) }}
                                                         </option>
                                                     @endforeach
                                                 </select>

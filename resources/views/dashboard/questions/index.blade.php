@@ -144,103 +144,117 @@
         </div>
     </div>
 
+
     <div class="page-body">
         <div class="container-xl">
             <div class="row row-cards">
                 <div class="col-12">
                     <div class="card">
                         <div class="col-12">
-                            <div class="table-responsive">
-                                <table id="dataTable" class="table table-vcenter card-table">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>{{ display('name') }}</th>
-                                            <th>{{ display('type') }}</th>
-                                            <th>{{ display('level') }}</th>
-                                            <th>{{ display('answer 1') }}</th>
-                                            <th>{{ display('answer 2') }}</th>
-                                            <th>{{ display('answer 3') }}</th>
-                                            <th>{{ display('answer 4') }}</th>
-                                            <th>{{ display('action') }}</th>
-                                            {{-- <th class="w-1"></th> --}}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($questions as $index => $question)
+                            <form action="{{ route('dashboard.questions.delets') }}" method="post">
+                                @csrf
+                                @method('POST')
+                                <div class="table-responsive">
+                                    <table id="dataTable" class="table table-vcenter card-table">
+                                        <thead>
                                             <tr>
-                                                <td>{{ $index + 1 }}</td>
-                                                <td>{{ $question->name }}</td>
-                                                <td>{{ display($question->type->name) }}</td>
-                                                <td>{{ display($question->level->name) }}</td>
-                                                @foreach ($question->answers as $answer)
-                                                    {{-- @dd($answer) --}}
-                                                    <td>
-                                                        <div class="datagrid-item">
-                                                            <div class="datagrid-content">
-                                                                @if ($answer->correct == 1)
-                                                                    <span
-                                                                        class="status status-green">{{ $answer->answer }}</span>
-                                                                @else
-                                                                    <span
-                                                                        class="status status-red">{{ $answer->answer }}</span>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                        {{-- {{$answer->correct == 1 ? "style=background:green;" : ''}}>{{ $answer->answer }} --}}
-                                                    </td>
-                                                @endforeach
-                                                <td>
-                                                    <div class="col-auto">
-                                                        <div class="dropdown">
-                                                            <a href="#" class="btn-action"
-                                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                                <!-- Download SVG icon from http://tabler-icons.io/i/dots-vertical -->
-                                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon"
-                                                                    width="24" height="24" viewBox="0 0 24 24"
-                                                                    stroke-width="2" stroke="currentColor" fill="none"
-                                                                    stroke-linecap="round" stroke-linejoin="round">
-                                                                    <path stroke="none" d="M0 0h24v24H0z"
-                                                                        fill="none" />
-                                                                    <circle cx="12" cy="12"
-                                                                        r="1" />
-                                                                    <circle cx="12" cy="19"
-                                                                        r="1" />
-                                                                    <circle cx="12" cy="5"
-                                                                        r="1" />
-                                                                </svg>
-                                                            </a>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a href="{{ route('dashboard.questions.edit', $question->id) }}"
-                                                                    class="dropdown-item">Edit</a>
-
-                                                                <a href="javascript:;"
-                                                                    class="dropdown-item text-danger btn-delet"
-                                                                    data-form-id="question-delete-{{ $question->id }}"
-                                                                    data-name-item="{{ $question->name }}">
-                                                                    {{ display('Delete') }}
-                                                                </a>
-
-                                                                <form id="question-delete-{{ $question->id }}"
-                                                                    action="{{ route('dashboard.questions.destroy', $question->id) }}"
-                                                                    method="POST" style="display: inline-block;">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                </td>
+                                                <th>#</th>
+                                                <th>{{ display('checked') }}</th>
+                                                <th>{{ display('name') }}</th>
+                                                <th>{{ display('type') }}</th>
+                                                <th>{{ display('level') }}</th>
+                                                <th>{{ display('answer 1') }}</th>
+                                                <th>{{ display('answer 2') }}</th>
+                                                <th>{{ display('answer 3') }}</th>
+                                                <th>{{ display('answer 4') }}</th>
+                                                <th>{{ display('action') }}</th>
+                                                {{-- <th class="w-1"></th> --}}
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                <div class="">
-                                    {{-- {{ $questions->links('pagination::bootstrap-4') }} --}}
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($questions as $index => $question)
+                                                <tr>
+                                                    <td>{{ $index + 1 }}</td>
+                                                    <td>
+                                                        <input class="form-check-input" name="ids[{{ $question->id }}]"
+                                                            type="checkbox" value="{{ $question->id }}">
+                                                    </td>
+                                                    <td>{{ $question->name }}</td>
+                                                    <td>{{ display($question->type->name) }}</td>
+                                                    <td>{{ display($question->level->name) }}</td>
+                                                    @foreach ($question->answers as $answer)
+                                                        {{-- @dd($answer) --}}
+                                                        <td>
+                                                            <div class="datagrid-item">
+                                                                <div class="datagrid-content">
+                                                                    @if ($answer->correct == 1)
+                                                                        <span
+                                                                            class="status status-green">{{ $answer->answer }}</span>
+                                                                    @else
+                                                                        <span
+                                                                            class="status status-red">{{ $answer->answer }}</span>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                            {{-- {{$answer->correct == 1 ? "style=background:green;" : ''}}>{{ $answer->answer }} --}}
+                                                        </td>
+                                                    @endforeach
+                                                    <td>
+                                                        <div class="col-auto">
+                                                            <div class="dropdown">
+                                                                <a href="#" class="btn-action"
+                                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    <!-- Download SVG icon from http://tabler-icons.io/i/dots-vertical -->
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon"
+                                                                        width="24" height="24" viewBox="0 0 24 24"
+                                                                        stroke-width="2" stroke="currentColor" fill="none"
+                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                            fill="none" />
+                                                                        <circle cx="12" cy="12"
+                                                                            r="1" />
+                                                                        <circle cx="12" cy="19"
+                                                                            r="1" />
+                                                                        <circle cx="12" cy="5"
+                                                                            r="1" />
+                                                                    </svg>
+                                                                </a>
+                                                                <div class="dropdown-menu dropdown-menu-end">
+                                                                    <a href="{{ route('dashboard.questions.edit', $question->id) }}"
+                                                                        class="dropdown-item">Edit</a>
+
+                                                                    <a href="javascript:;"
+                                                                        class="dropdown-item text-danger btn-delet"
+                                                                        data-form-id="question-delete-{{ $question->id }}"
+                                                                        data-name-item="{{ @$question->name }}">
+                                                                        {{ display('Delete') }}
+                                                                    </a>
+
+                                                                    <form id="question-delete-{{ $question->id }}"
+                                                                        action="{{ route('dashboard.questions.destroy', $question->id) }}"
+                                                                        method="POST" style="display: inline-block;">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+
+                                        <div class="card-footer text-end">
+                                            <button type="submit"
+                                                class="btn btn-red">{{ display('Make deletes quetions') }}</button>
+                                        </div>
+                                    </table>
+
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection

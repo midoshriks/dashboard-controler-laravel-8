@@ -13,6 +13,7 @@ use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\QuestionsController;
 use App\Http\Controllers\Dashboard\SendMailslController;
 use App\Http\Controllers\Dashboard\SettingslController;
+use App\Http\Controllers\Dashboard\TypesController;
 use App\Http\Controllers\Dashboard\UsersController;
 use App\Mail\SendMailAds;
 use App\Mail\SendMailAuth;
@@ -72,6 +73,8 @@ Route::group(
             // show blade wite role users
             Route::get('/user/admin', 'UsersController@admin')->name('users.admin');
             Route::get('/user/gaming', 'UsersController@gaming')->name('users.gaming');
+            Route::get('/user/export', 'UsersController@export')->name('users.export');
+
 
             // Levels
             Route::resource('/levels', 'LevelsController');
@@ -86,21 +89,25 @@ Route::group(
             // Questions
             Route::resource('/questions', 'QuestionsController');
             Route::post('questions/imoprt', 'QuestionsController@import')->name('questions.import');
-            Route::get('qouestions/export/', 'QuestionsController@export')->name('questions.export');
+            Route::get('/qouestions/export/', 'QuestionsController@export')->name('questions.export');
+            Route::delete('/qouestions/delets/', 'QuestionsController@delets')->name('questions.delets');
 
             // Orders
             Route::resource('/orders', 'OrdersController');
-            Route::put('/order/active/{id}', 'OrdersController@updatetype')->name('order.active');
+            Route::put('/order/active/{id}', 'OrdersController@active_order')->name('order.active');
 
             // Settings
             Route::resource('/settings', 'SettingslController');
 
             // Send Mails All Users
-            Route::resource('send/mail','SendMailslController');
+            Route::resource('send/mail', 'SendMailslController');
 
             // Pages
             Route::resource('pages', 'PagesController');
             Route::put('/page/active/{id}', 'PagesController@stauts')->name('page.active');
+
+            // Types
+            Route::resource('/types', 'TypesController');
 
 
 

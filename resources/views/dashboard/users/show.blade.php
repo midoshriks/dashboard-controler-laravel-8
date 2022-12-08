@@ -6,9 +6,24 @@
         <div class="page-header d-print-none">
             <div class="row g-2 align-items-center">
                 <div class="col">
-                    <h2 class="page-title">
-                        {{ display('Data grid') }} \ {{ display($user->first_name) }}
-                    </h2>
+                    <div class="page-pretitle">
+                        {{ display('Smart bucks') }}
+                    </div>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{ route('dashboard.index') }}">{{ display('Home') }}</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ display('Data') }}</li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ route('dashboard.users.index') }}">{{ display('users') }}</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a
+                                    href="{{ route('dashboard.users.show', $user->id) }}">{{ display($user->first_name) }}</a>
+                            </li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -18,11 +33,13 @@
         <div class="container-xl">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{ display('Information' . ' ' . $user->first_name . ' ' . $user->last_name) }}
+                    <h3 class="card-title">
+                        {{ display('Information by ' . $user->role_permissions . ':' . ' ' . $user->first_name . ' ' . $user->last_name) }}
                     </h3>
                 </div>
                 <div class="card-body">
                     <div class="datagrid">
+
                         <div class="datagrid-item">
                             <div class="datagrid-title">{{ display('email user') }}</div>
                             <div class="datagrid-content">
@@ -37,16 +54,6 @@
                         <div class="datagrid-item">
                             <div class="datagrid-title">{{ display('name user') }}</div>
                             <div class="datagrid-content">{{ $user->first_name . ' ' . $user->last_name }}</div>
-                        </div>
-
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">{{ display('Name servers Role') }}</div>
-                            <div class="datagrid-content">{{ $user->role_permissions }}</div>
-                        </div>
-
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">{{ display('code membership') }}</div>
-                            <div class="datagrid-content">{{ $user->code_membership }}</div>
                         </div>
 
                         <div class="datagrid-item">
@@ -132,27 +139,22 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">Avatars list</div>
-                            <div class="datagrid-content">
-                                @foreach ($levels_users as $level_user)
-                                    <div class="avatar-list avatar-list-stacked">
-                                        <span class="avatar avatar-xs avatar-rounded"
-                                            style="background-image: url({{ $level_user->getMedia('photo_level')->last()? $level_user->getMedia('photo_level')->last()->getUrl('mobile'): $level_user->photo_user }})"></span>
-                                        <span class="avatar avatar-xs avatar-rounded">{{ $level_user->name }}</span>
-                                    </div>
-                                @endforeach
 
-                            </div>
-                        </div>
                         <div class="datagrid-item">
-                            <div class="datagrid-title">{{ display('user level') }}</div>
+                            <div class="datagrid-title">{{ display('Name servers Role') }}</div>
+                            <div class="datagrid-content">{{ $user->role_permissions }}</div>
+                        </div>
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">{{ display('code membership') }}</div>
+                            <div class="datagrid-content">{{ $user->code_membership }}</div>
+                        </div>
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">{{ display('Payment details') }}</div>
                             <div class="datagrid-content">
-                                <div class="datagrid-content">
-                                    @foreach ($levels_users as $level_user)
-                                        {{ $level_user->name }}
-                                    @endforeach
-                                </div>
+                                <input type="text" class="form-control form-control-flush"
+                                    placeholder="Payment details">
                             </div>
                         </div>
 
@@ -162,25 +164,65 @@
                         </div>
 
                         <div class="datagrid-item">
-                            <div class="datagrid-title">{{ display('Age') }}</div>
-                            <div class="datagrid-content">{{ $user->dob_date }}</div>
+                            <div class="datagrid-title">{{ 'balacne wallet coin' }}</div>
+                            <div class="datagrid-content">coins {{ $user->wallets->balance('coin') }} </div>
                         </div>
 
                         <div class="datagrid-item">
-                            <div class="datagrid-title">Form control</div>
+                            <div class="datagrid-title">{{ 'balacne wallet bucks' }}</div>
+                            <div class="datagrid-content">bucks {{ $user->wallets->balance('bucks') }} </div>
+                        </div>
+
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">{{ 'balacne wallet helper' }}</div>
                             <div class="datagrid-content">
-                                <input type="text" class="form-control form-control-flush"
-                                    placeholder="Input placeholder">
+                                helpers
+                                @for ($i = 1; $i < 5; $i++)
+                                    {{ $user->wallets->balance('helper', $i) }}
+                                @endfor
                             </div>
                         </div>
+
                         <div class="datagrid-item">
+                            <div class="datagrid-title">{{ display('list LEVELS USER') }}</div>
+                            <div class="datagrid-content">
+                                @foreach ($levels_users as $level_user)
+                                    <div class="avatar-list avatar-list-stacked">
+                                        <span class="avatar avatar-xm avatar-rounded"
+                                            style="background-image: url({{ $level_user->getMedia('photo_level')->last()? $level_user->getMedia('photo_level')->last()->getUrl('mobile'): $level_user->photo_level }})"></span>
+                                        <span class="avatar avatar-xm avatar-rounded">{{ $level_user->name }}</span>
+                                    </div>
+                                @endforeach
+
+                            </div>
+                        </div>
+
+                        {{-- <div class="datagrid-item">
                             <div class="datagrid-title">Longer description</div>
                             <div class="datagrid-content">
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                             </div>
-                        </div>
+                        </div> --}}
+
                     </div>
                 </div>
+
+                <div class="card-footer text-end">
+                    <button type="submit" onclick="window.print()" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-printer"
+                            width="34" height="34" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2">
+                            </path>
+                            <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4"></path>
+                            <rect x="7" y="13" width="10" height="8" rx="2">
+                            </rect>
+                        </svg>
+                        {{ display('Make Print') }}
+                    </button>
+                </div>
+
             </div>
         </div>
     </div>

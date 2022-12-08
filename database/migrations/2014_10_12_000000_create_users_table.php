@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\type;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class CreateUsersTable extends Migration
 {
@@ -13,6 +15,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');
@@ -22,14 +25,16 @@ class CreateUsersTable extends Migration
             $table->date('dob_date')->nullable();
             $table->string('gender');
             $table->integer('country_id')->nullable();
-            $table->integer('type_id')->nullable()->default(1);
             $table->string('status')->default(1);
             $table->string('code_membership')->nullable();
-            $table->string('role_permissions')->default('user');
+            $table->integer('type_id')->nullable();
+            $table->string('role_permissions')->default('gaming');
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('phone_verified_at')->nullable();
             $table->string('password');
+            $table->string('image')->nullable()->default('user.png');
             $table->rememberToken();
+            $table->text('device_token')->nullable();
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ class level extends Model implements HasMedia
 
     protected $guarded = [];
 
-    protected $appends = ['photo_level']; // get photo_level Attribute // 'type_name'
+    protected $appends = ['photo_level', 'questions']; // get photo_level Attribute // 'type_name'
 
     // public function getTypeNameAttribute()
     // {
@@ -35,9 +35,20 @@ class level extends Model implements HasMedia
         $this->addMediaConversion('desktop')->fit('fill', 1351, 206);
     }
 
+    public function getQuestionsAttribute()
+    {
+        return $this->questions()->count();
+    }
+
     public function questions()
     {
         return $this->hasMany(Question::class, 'level_id', 'id');
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class, 'question_id', 'id');
+        // return $this->belongsTo(Answer::class, 'question_id', 'id');
     }
 
 

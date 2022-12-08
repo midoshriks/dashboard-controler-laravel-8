@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('quantity');
             $table->float('price', 8, 2);
-            // $table->integer('type_id');
+            $table->string('image')->nullable()->default('coin.png');
             $table->bigInteger('type_id')->unsigned();
 
             $table->bigInteger('helper_id')->unsigned()->nullable();

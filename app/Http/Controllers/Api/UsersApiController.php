@@ -89,8 +89,9 @@ class UsersApiController extends Controller
             $user->last_name = $request->last_name;
             $user->dob_date = $request->dob_date;
             $user->gender = $request->gender;
-            $user->country_id = $request->country_id;
-            $user->password = bcrypt($request->password);
+            // stop just server online
+            // $user->country_id = $request->country_id;
+            // $user->password = bcrypt($request->password);
         }
         $user->update();
 

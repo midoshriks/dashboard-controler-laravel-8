@@ -24,7 +24,7 @@ class QuestionsController extends Controller
     public function index()
     {
         $title = "Questions";
-        $questions = Question::orderby('id','desc')->get();
+        $questions = Question::orderby('id', 'desc')->get();
         $types = type::where('model', 'question')->get();
         $levels = level::all();
         return view('dashboard.questions.index', compact('title', 'questions', 'types', 'levels'));
@@ -121,7 +121,7 @@ class QuestionsController extends Controller
 
 
         for ($i = 1; $i <= 4; $i++) {
-           Answer::create([
+            Answer::create([
                 'answer' => $request["answer_$i"],
                 'question_id' => $question->id,
                 'correct' => ($request['correct'] == $i) ? 1 : 0,
@@ -144,6 +144,7 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
+        // dd($question);
         // @mido_shriks لمسح الأسئلة المتعلقة با رقم تعريف با لسؤال
         $question->answers()->delete();
         // @mido_shriks لمسح الأسئلة المتعلقة با رقم تعريف با لسؤال
@@ -152,6 +153,22 @@ class QuestionsController extends Controller
         Alert::toast('deleted successfully question',);
         return redirect()->route('dashboard.questions.index');
     }
+
+
+    public function delets(Request $request)
+    {
+        $ids = $request->ids;
+        // dd($request->ids);
+
+        Answer::whereIn('question_id', $ids)->delete();
+        Question::whereIn('id', $ids)->delete();
+        // $ids->answers()->delete();
+
+        Alert::toast('deleted successfully question all selected',);
+        return redirect()->route('dashboard.questions.index');
+    }
+
+
 
     public function export()
     {

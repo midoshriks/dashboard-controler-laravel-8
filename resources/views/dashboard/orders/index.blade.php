@@ -10,7 +10,8 @@
             <div class="row g-2 align-items-center">
                 <div class="col">
                     <div class="page-pretitle">
-                        <img src="{{ asset('dashboard/src/static/smart_logo.png')}}" width="60" alt="" srcset="">
+                        <img src="{{ asset('dashboard/src/static/smart_logo.png') }}" width="60" alt=""
+                            srcset="">
                         {{ display('Smart bucks') }}
                     </div>
                     <nav aria-label="breadcrumb">
@@ -158,19 +159,20 @@
                                                         <!-- Rounded switch -->
                                                         <label class="switch">
                                                             <input class="form-check-input btn-active" type="checkbox"
-                                                                {{ $order->type->name == 'confirm' ? 'checked' : '' }}
+                                                                {{ $order->type->name == $confirm_id->name ? 'checked' : '' }}
+                                                                {{-- {{ $order->type->name == 'confirm' ? 'checked' : '' }} --}}
                                                                 data-form-id="order-active-{{ $order->id }}"
                                                                 data-name-item="{{ $order->order_numper }}">
                                                         </label>
 
                                                         <form id="order-active-{{ $order->id }}" style="display: none"
                                                             action="{{ route('dashboard.order.active', $order->id) }}"
-                                                            {{-- action="{{ route('dashboard.users.update', $user->id) }}" --}} method="POST"
-                                                            style="display: inline-block;">
+                                                            method="POST" style="display: inline-block;">
                                                             @csrf
                                                             @method('PUT')
                                                             <input name="type_id"
-                                                                value="{{ $order->type->name == 'confirm' ? 9 : 10 }}">
+                                                                value="{{ $order->type->name == $confirm_id->name ? $pending_id->id : $confirm_id->id }}">
+                                                            {{-- value="{{ $order->type->name == 'confirm' ? 9 : 10 }}"> --}}
                                                             <input type="submit" value="save">
                                                         </form>
                                                     </label>

@@ -26,12 +26,22 @@ class LevelsApiController extends Controller
         //     $q->select('level_id', 'id',  'name');
         // }])->get();
         // User::inRandomOrder()->get();
+
+        // $levels = level::select([
+        //     'levels.id',
+        //     // 'levels.name as level',
+        //     'levels.name',
+        //     'rewards',
+        // ])->withCount('questions as questions')->get();
+
+        // return response()->json(['levels' => $levels], $status = 200,);
+
+
         $levels = level::select([
             'levels.id',
-            // 'levels.name as level',
             'levels.name',
             'rewards',
-        ])->withCount('questions as questions')->get();
+        ])->get();
 
 
         return response()->json(['levels' => $levels], $status = 200,);
@@ -96,27 +106,28 @@ class LevelsApiController extends Controller
      */
     public function show(level $level, $id)
     {
-        // $level = level::select(
-        //     'id',
-        //     'name',
-        //     'rewards',
-        // )->where('id', $id)->with(['questions' => function ($q) {
-        //     $q->orderBy('type_id', 'DESC')->inRandomOrder()->with('type', 'answers');
-        // }])->first();
-        // $level['next_id'] = Level::where('id', '>', $level->id)->min('id');
-        // return response()->json(["level" => $level], 200);
 
         $level = level::select(
             'id',
             'name',
             'rewards',
         )->where('id', $id)->with(['questions' => function ($q) {
-            $q->orderBy('type_id', 'DESC')->inRandomOrder()->with('type')->with(['answers' => function($answer) {
-                $answer->inRandomOrder();
-            }]);
+            $q->with('type', 'answers');
         }])->first();
         $level['next_id'] = Level::where('id', '>', $level->id)->min('id');
         return response()->json(["level" => $level], 200);
+
+        // $level = level::select(
+        //     'id',
+        //     'name',
+        //     'rewards',
+        // )->where('id', $id)->with(['questions' => function ($q) {
+        //     $q->orderBy('type_id', 'DESC')->inRandomOrder()->with('type')->with(['answers' => function($answer) {
+        //         $answer->inRandomOrder();
+        //     }]);
+        // }])->first();
+        // $level['next_id'] = Level::where('id', '>', $level->id)->min('id');
+        // return response()->json(["level" => $level], 200);
     }
 
     /**

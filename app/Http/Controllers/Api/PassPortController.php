@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Models\Country;
 use App\Models\Wallets;
 use App\Models\UserLevel;
 use App\Mail\SendMailAuth;
@@ -121,7 +122,7 @@ class PassPortController extends Controller
         $input = $request->all();
         $input['role_permissions'] = 'gaming';
         $input['code_membership'] = Str::random(2) . mt_rand(1000000, 10000000);
-        $input['country_id'] = 1;
+        $input['country_id'] = Country::where('name',IPtoLocation($_SERVER['REMOTE_ADDR'])['country'])->first()->id;
         $input['password'] = bcrypt($input['password']);
 
 

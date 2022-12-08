@@ -6,6 +6,7 @@ use App\Models\level;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class LevelsController extends Controller
@@ -20,7 +21,7 @@ class LevelsController extends Controller
         // $data = Employee::orderby('id', 'desc')->paginate(15);
         $title = 'Levels';
         $levels = level::orderby('id')->paginate(5);
-        return view('dashboard.levels.index', compact( 'title','levels'));
+        return view('dashboard.levels.index', compact('title', 'levels'));
     }
 
     /**
@@ -41,10 +42,10 @@ class LevelsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'name' => 'required|min:3|unique:levels,name',
-            'rewards' => 'required|max:1000',
-        ]);
+        // $this->validate($request, [
+        //     'name' => 'required|min:3|unique:levels,name',
+        //     'rewards' => 'required|max:1000',
+        // ]);
 
         // dd($request->all());
 
@@ -59,12 +60,14 @@ class LevelsController extends Controller
             Image::make($request->image)->save($upload_path);
             $level->addMedia($upload_path)->toMediaCollection('photo_level', 'levels');
 
-            // var_dump($level->id);
-            // dd($request->all());
-            // exit;
+            //save image im local & data
+            $level->image = $request->image->getClientOriginalName();
+            $request->file('image')->move('uploads/levels/', $request->file('image')->getClientOriginalName());
+            // dd($level->image , $level);
+            $level->update();
         }
 
-        Alert::success('Success Save level'.' '.$level->name);
+        Alert::success('Success Save level' . ' ' . $level->name);
         return redirect()->route('dashboard.levels.index');
     }
 
@@ -89,7 +92,7 @@ class LevelsController extends Controller
     {
         $title = 'Level';
         $level = level::find($level->id);
-        return view('dashboard.levels.edit', compact( 'title','level'));
+        return view('dashboard.levels.edit', compact('title', 'level'));
     }
 
     /**
@@ -114,12 +117,14 @@ class LevelsController extends Controller
             $level->clearMediaCollection('photo_level');
             $level->addMedia($upload_path)->toMediaCollection('photo_level', 'levels');
 
-            // var_dump($level->id);
-            // dd($request->all());
-            // exit;
+            //save image im local & data
+            $level->image = $request->image->getClientOriginalName();
+            $request->file('image')->move('uploads/levels/', $request->file('image')->getClientOriginalName());
+            // dd($level->image , $level);
+            $level->update();
         }
 
-        Alert::success('Success Update level'.' '.$level->name);
+        Alert::success('Success Update level' . ' ' . $level->name);
         return redirect()->route('dashboard.levels.index');
     }
 
@@ -131,6 +136,11 @@ class LevelsController extends Controller
      */
     public function destroy(level $level)
     {
+        if ($level->image != 'level.png') {
+            Storage::disk('public_uploads')->delete('/levels/' . $level->image);
+        } //end of if
+
+        $level->questions()->delete();
         $level->delete();
 
         Alert::toast('deleted successfully level',);

@@ -7,14 +7,21 @@
         <div class="page-header d-print-none">
             <div class="row g-2 align-items-center">
                 <div class="col">
-                    <!-- Page pre-title -->
-                    <div class="page-pretitle">
-                        {{ display('Overview') }}
-                    </div>
-                    <h2 class="page-title">
-                        {{ display('Dashboard') }} \ {{ display('Users') }} \ {{ display('edit') }} \
-                        {{ $user->first_name }}
-                    </h2>
+                    <img class="mt-0" src="{{ asset('dashboard/src/static/smart_logo.png') }}" width="40" alt=""
+                        srcset="">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <div class="page-pretitle">
+                                    {{ display('Smart bucks') }}
+                                </div>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ display('Dshboard') }}</li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">{{ display('Home') }}</a>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard.users.edit',$user->id) }}">{{ display('Edit') }}</a>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard.users.edit',$user->id) }}">{{ display($user->first_name) }}</a>
+                        </ol>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -27,7 +34,7 @@
                     <div class="modal-header mb-1">
                         <h5 class="modal-title">
                             {{ $user->role_permissions == 'admin' ? display('edit admin : ') : display('edit user : ') }}
-                            {{ $user->first_name }} </h5>
+                            {{ $user->first_name .' '. $user->last_name}} </h5>
                     </div>
                 </div>
                 <div class="row">
@@ -96,29 +103,49 @@
                                                 </div>
                                             </div>
 
+
                                             <div class="form-group mb-3 col-md-12 d-flex">
-                                                <div class="col-md-6 me-2">
-                                                    <div>
-                                                        <div class="mb-3">
-                                                            <div class="form-label">{{ display('Select Role') }}</div>
-                                                            <select class="form-select" name="role_permissions">
-                                                                <option value="">{{ display('chooes') }}</option>
-                                                                {{-- @foreach ($types as $type)
+                                                {{-- @dd($user->role_permissions) --}}
+                                                @if ($user->role_permissions == 'super_admin')
+                                                    <div class="col-md-6 me-2">
+                                                        <div>
+                                                            <div class="mb-3">
+                                                                <div class="form-label">{{ display('Select Role') }}</div>
+                                                                <select class="form-select" name="role_permissions">
+                                                                    <option value="">{{ display('chooes') }}
+                                                                    </option>
                                                                     <option
-                                                                        {{ $type->name == $user->role_permissions  ? 'selected' : '' }}
-                                                                        value="{{ $type->name }}">
-                                                                        {{ display($type->name) }}</option>
-                                                                @endforeach --}}
-                                                                <option
-                                                                    {{ $user->role_permissions == $user->role_permissions ? 'selected' : '' }}
-                                                                    value="{{ $user->role_permissions }}">
-                                                                    {{ $user->role_permissions }}</option>
-                                                                <option value="gaming">{{ display('Gaming') }}</option>
-                                                                <option value="admin">{{ display('Admin') }}</option>
-                                                            </select>
+                                                                        {{ $user->role_permissions == 'super_admin' ? 'selected' : '' }}
+                                                                        value="">
+                                                                        {{ display($user->role_permissions) }}
+                                                                    </option>
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                @else
+                                                    <div class="col-md-6 me-2">
+                                                        <div>
+                                                            <div class="mb-3">
+                                                                <div class="form-label">{{ display('Select Role') }}</div>
+                                                                <select class="form-select" name="role_permissions">
+                                                                    <option value="">{{ display('chooes') }}
+                                                                    </option>
+                                                                    @foreach ($types as $type)
+                                                                        <option
+                                                                            {{ $type->name == $user->role_permissions ? 'selected' : '' }}
+                                                                            value="{{ $type->id }}">
+                                                                            {{ display($type->name) }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+
+
+
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <div class="form-label">{{ display('Select gender') }}</div>
@@ -148,47 +175,51 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="form-group mb-3 ">
-                                                <label class="form-label required">{{ display('Email address') }}</label>
-                                                <div>
-                                                    <input type="email" class="form-control"
-                                                        aria-describedby="emailHelp" name="email"
-                                                        placeholder="Enter email" value="{{ $user->email }}">
-                                                    <small
-                                                        class="form-hint">{{ display("We'll never share your email with anyone else.") }}</small>
-                                                </div>
-                                            </div>
-                                            <div class="form-group mb-3 ">
-                                                <label class="form-label required">{{ display('Password') }}</label>
-                                                <div>
-                                                    <input type="password" class="form-control" placeholder="Password"
-                                                        name="password" value="{{ $user->password }}">
-                                                    <small class="form-hint">
-                                                        {{ display('Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.') }}
-                                                    </small>
-                                                </div>
-                                            </div>
 
-                                            <div class="form-group mb-3 ">
-                                                <label class="form-label required">{{ display('Re Password') }}</label>
-                                                <div>
-                                                    <input type="password" class="form-control"
-                                                        placeholder="Retype Password" name=""
-                                                        value="{{ $user->password }}">
-                                                </div>
+                                            {{-- <div class="form-group mb-3 ">
+                                            <label class="form-label required">{{ display('Email address') }}</label>
+                                            <div>
+                                                <input type="email" class="form-control"
+                                                    aria-describedby="emailHelp" name="email"
+                                                    placeholder="Enter email" value="{{ $user->email }}">
+                                                <small
+                                                    class="form-hint">{{ display("We'll never share your email with anyone else.") }}</small>
                                             </div>
+                                        </div> --}}
+
+                                            {{-- <div class="form-group mb-3 ">
+                                            <label class="form-label required">{{ display('Password') }}</label>
+                                            <div>
+                                                <input type="password" class="form-control" placeholder="Password"
+                                                    name="password" value="{{ $user->password }}">
+                                                <small class="form-hint">
+                                                    {{ display('Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.') }}
+                                                </small>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mb-3 ">
+                                            <label class="form-label required">{{ display('Re Password') }}</label>
+                                            <div>
+                                                <input type="password" class="form-control"
+                                                    placeholder="Retype Password" name=""
+                                                    value="{{ $user->password }}">
+                                            </div>
+                                        </div> --}}
 
                                             <div class="form-group mb-3 ">
                                                 <label class="form-label required">{{ display('image user') }}</label>
                                                 <div>
                                                     <input type="file" class="form-control" name="image">
                                                     <small class="form-hint">
-                                                        <img src="{{ $user->getFirstMediaUrl('photo') }}" alt=""
-                                                            srcset="" width="160">
+                                                        <img src="{{ $user->getMedia('photo_user')->last()? $user->getMedia('photo_user')->last()->getUrl('mobile'): $user->photo_user }}"
+                                                            alt="" srcset="" width="160">
                                                     </small>
                                                 </div>
                                             </div>
-                                                {{-- @dd($user->role_permissions) --}}
+
+
+                                            {{-- @dd($user->role_permissions) --}}
                                             @if ($user->role_permissions == 'admin' || 'super_admin' || 'developer')
                                                 @php
                                                     $models = ['users', 'qoutions'];
@@ -214,8 +245,12 @@
                                                                         id="{{ $model }}">
                                                                         @foreach ($maps as $map)
                                                                             <label style="margin-right: 20px;">
-                                                                                <input type="checkbox" name="permissions[]" {{ $user->hasPermission($model . '_' . $map) ? 'checked' : '' }} value="{{ $model . '_' . $map }}" id="{{ $model . ' ' . $map }}">
-                                                                                    {{ $model . ' ' . $map }}
+                                                                                <input type="checkbox"
+                                                                                    name="permissions[]"
+                                                                                    {{ $user->hasPermission($model . '_' . $map) ? 'checked' : '' }}
+                                                                                    value="{{ $model . '_' . $map }}"
+                                                                                    id="{{ $model . ' ' . $map }}">
+                                                                                {{ $model . ' ' . $map }}
                                                                             </label>
                                                                         @endforeach
                                                                     </div>
@@ -245,4 +280,5 @@
             </div>
         </div>
     </div>
+
 @endsection

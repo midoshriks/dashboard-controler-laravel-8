@@ -20,7 +20,7 @@
                         </ol>
                     </nav>
                 </div>
-                <!-- Page title actions -->
+                {{-- <!-- Page title actions -->
                 <div class="col-12 col-md-auto ms-auto d-print-none">
                     <div class="btn-list">
                         <span class="d-none d-sm-inline">
@@ -52,7 +52,7 @@
                             </svg>
                         </a>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

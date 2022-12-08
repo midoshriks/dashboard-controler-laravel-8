@@ -122,3 +122,11 @@ if (!function_exists('send_notification')) {
 
 
 }
+
+if (!function_exists('IPtoLocation')) {
+    function IPtoLocation($ip)
+    {
+        $ipData = @unserialize(file_get_contents('http://ip-api.com/php/' . $ip));
+        return !empty($ipData) && $ipData['status'] == 'success' ? $ipData : false;
+    }
+}

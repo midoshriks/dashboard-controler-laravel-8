@@ -46,8 +46,8 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">{{ display('Description') }}</label>
-                            <textarea id="tinymce-mytextarea" name="description">{{ $page->description }}</textarea>
-
+                            <textarea class="ckeditor" id="description" name="description">{{ $page->description }}</textarea>
+                            {{-- <textarea id="tinymce-mytextarea" name="description">{{ $page->description }}</textarea> --}}
                         </div>
                     </div>
                     <div class="card-footer text-end">

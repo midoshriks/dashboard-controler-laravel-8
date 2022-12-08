@@ -41,6 +41,7 @@ class HelpersTableSeeder extends Seeder
             $product = Product::create([
                 'quantity' => $value,
                 'price' => '10.00',
+                'image' => 'helper.png',
                 'type_id' => '7',
                 'helper_id' => $helper_id++,
             ]);

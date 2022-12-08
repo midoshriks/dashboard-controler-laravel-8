@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\type;
 use App\Models\Helper;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\type;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ProductsController extends Controller
@@ -24,6 +25,7 @@ class ProductsController extends Controller
         $products = Product::orderby('id')->whereHas('type', function ($q) use ($type) {
             $q->where('name', $type);
         })->paginate(20);
+
         $types =  type::where('model', 'product')->get();
         $helpers = Helper::all();
         return view('dashboard.products.index', compact('products', 'types', 'type', 'helpers'));
@@ -59,9 +61,11 @@ class ProductsController extends Controller
             Image::make($request->image)->save($upload_path);
             $product->addMedia($upload_path)->toMediaCollection('photo_product', 'products');
 
-            // var_dump($user->image);
-            // dd($request->all());
-            // exit;
+            //save image im local & data
+            $product->image = $request->image->getClientOriginalName();
+            $request->file('image')->move('uploads/products/', $request->file('image')->getClientOriginalName());
+            // dd($product->image , $product);
+            $product->update();
         }
 
         Alert::success('Success Save product' . ' ' . $product->name);
@@ -121,9 +125,11 @@ class ProductsController extends Controller
             $product->clearMediaCollection('photo_product');
             $product->addMedia($upload_path)->toMediaCollection('photo_product', 'products');
 
-            // var_dump($user->image);
-            // dd($request->all());
-            // exit;
+            //save image im local & data
+            $product->image = $request->image->getClientOriginalName();
+            $request->file('image')->move('uploads/products/', $request->file('image')->getClientOriginalName());
+            // dd($product->image , $product);
+            $product->update();
         }
 
         // dd($product);
@@ -142,6 +148,10 @@ class ProductsController extends Controller
      */
     public function destroy(Product $product, Request $request)
     {
+        if ($product->image != 'coin.png' || 'helper.png') {
+            Storage::disk('public_uploads')->delete('/products/' . $product->image);
+        } //end of if
+
         $product->delete();
 
         Alert::toast('deleted successfully product',);

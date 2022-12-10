@@ -256,10 +256,10 @@
                         {{-- =========================NOTIFICATION=========================== --}}
                         @if (app()->getLocale() == 'en')
                             <li
-                                class="nav-item dropdown {{ Request::is('en/dashboard/settings*') || Request::is('en/dashboard/languages*') ? 'active' : '' }}">
+                                class="nav-item dropdown {{ Request::is('en/dashboard/send/mail*') ? 'active' : '' }}">
                             @else
                             <li
-                                class="nav-item dropdown {{ Request::is('ar/dashboard/settings*') || Request::is('ar/dashboard/languages*') ? 'active' : '' }}">
+                                class="nav-item dropdown {{ Request::is('ar/dashboard/send/mail*') ? 'active' : '' }}">
                                 {{-- <li class="nav-item dropdown "> --}}
                         @endif
                         <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"

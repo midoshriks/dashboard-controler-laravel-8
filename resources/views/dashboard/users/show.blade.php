@@ -163,25 +163,28 @@
                             <div class="datagrid-content">–</div>
                         </div>
 
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">{{ 'balacne wallet coin' }}</div>
-                            <div class="datagrid-content">coins {{ $user->wallets->balance('coin') }} </div>
-                        </div>
-
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">{{ 'balacne wallet bucks' }}</div>
-                            <div class="datagrid-content">bucks {{ $user->wallets->balance('bucks') }} </div>
-                        </div>
-
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">{{ 'balacne wallet helper' }}</div>
-                            <div class="datagrid-content">
-                                helpers
-                                @for ($i = 1; $i < 5; $i++)
-                                    {{ $user->wallets->balance('helper', $i) }}
-                                @endfor
+                        @if ($user->code_membership == 'gaming')
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">{{ 'balacne wallet coin' }}</div>
+                                <div class="datagrid-content">coins {{ $user->wallets->balance('coin') }} </div>
                             </div>
-                        </div>
+
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">{{ 'balacne wallet bucks' }}</div>
+                                <div class="datagrid-content">bucks {{ $user->wallets->balance('bucks') }} </div>
+                            </div>
+
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">{{ 'balacne wallet helper' }}</div>
+                                <div class="datagrid-content">
+                                    helpers
+                                    @for ($i = 1; $i < 5; $i++)
+                                        {{ $user->wallets->balance('helper', $i) }}
+                                    @endfor
+                                </div>
+                            </div>
+                        @endif
+
 
                         <div class="datagrid-item">
                             <div class="datagrid-title">{{ display('list LEVELS USER') }}</div>

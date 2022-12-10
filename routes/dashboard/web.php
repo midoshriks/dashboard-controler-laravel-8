@@ -10,6 +10,7 @@ use App\Http\Controllers\Dashboard\LevelsController;
 use App\Http\Controllers\Dashboard\OrdersController;
 use App\Http\Controllers\Dashboard\PagesController;
 use App\Http\Controllers\Dashboard\ProductsController;
+use App\Http\Controllers\Dashboard\ProfilesController;
 use App\Http\Controllers\Dashboard\QuestionsController;
 use App\Http\Controllers\Dashboard\SendMailslController;
 use App\Http\Controllers\Dashboard\SettingslController;
@@ -75,6 +76,9 @@ Route::group(
             Route::get('/user/gaming', 'UsersController@gaming')->name('users.gaming');
             Route::get('/user/export', 'UsersController@export')->name('users.export');
 
+            // Profile
+            Route::get('/profile/show/{id}', 'ProfilesController@index')->name('profiles.show');
+
 
             // Levels
             Route::resource('/levels', 'LevelsController');
@@ -90,6 +94,7 @@ Route::group(
             Route::resource('/questions', 'QuestionsController');
             Route::post('questions/imoprt', 'QuestionsController@import')->name('questions.import');
             Route::get('/qouestions/export/', 'QuestionsController@export')->name('questions.export');
+            Route::get('/qouestions/export/demo/', 'QuestionsController@export_demo')->name('questions.export.demo');
             Route::delete('/qouestions/delets/', 'QuestionsController@delets')->name('questions.delets');
 
             // Orders

@@ -306,19 +306,29 @@ class UsersController extends Controller
     {
         $user = User::find($user->id);
         $levels_users = $user->levels;
-        // $checked_notifiaction = DB::table('notifications')->where('notifiable_id', $user->id)->get();
 
-        // dd($checked_notifiaction);
-        // if ($checked_notifiaction) {
-        //     # code...
-        // }
+
+        $checked_notifiaction = DB::table('notifications')->where('notifiable_id', $user->id)->pluck('id');
+
+        if ($checked_notifiaction != null) {
+            // dd($checked_notifiaction);
+            # code...
+            DB::table('notifications')->where('id', $checked_notifiaction)->update(['read_at' => now()]);
+            return view('dashboard.users.show', compact('user', 'levels_users'));
+        } else {
+
+            $user = User::find($user->id);
+            $levels_users = $user->levels;
+            return view('dashboard.users.show', compact('user', 'levels_users'));
+        }
+
         // $getIDnotifiaction = DB::table('notifications')->where('notifiable_id', $user->id)->pluck('id');
-        // // return $getIDnotifiaction;
+        // return $getIDnotifiaction;
         // DB::table('notifications')->where('id', $getIDnotifiaction)->update(['read_at' => now()]);
 
 
         // dd($user);
-        return view('dashboard.users.show', compact('user', 'levels_users'));
+        // return view('dashboard.users.show', compact('user', 'levels_users'));
     }
 
     /**

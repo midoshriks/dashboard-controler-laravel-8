@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Exports\QuestionsDemoExport;
 use App\Exports\QuestionsExport;
 use App\Models\type;
 use App\Models\level;
@@ -173,8 +174,14 @@ class QuestionsController extends Controller
     public function export()
     {
         Alert::toast('successfully download file',);
-        return Excel::download(new QuestionsExport, 'questions_answers.xlsx');
+        return Excel::download(new QuestionsDemoExport, 'questions_answers.xlsx');
     } // end of function export
+
+    public function export_demo()
+    {
+        Alert::toast('successfully download file',);
+        return Excel::download(new QuestionsDemoExport, 'questions_answers.xlsx');
+    } // end of function export demo
 
     public function import(Request $request)
     {

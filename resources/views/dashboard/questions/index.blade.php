@@ -74,6 +74,19 @@
                                     </span>
                                     {{ 'download file' }}
                                 </a>
+
+                                {{-- ==== --}}
+                                <a href="{{ route('dashboard.questions.export.demo') }}" class="btn btn-white">
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <circle cx="12" cy="12" r="9"></circle>
+                                            <path d="M9 12l2 2l4 -4"></path>
+                                        </svg>
+                                    </span>
+                                    {{ 'download file demo' }}
+                                </a>
+
                                 <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-success">
                                     <span>
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-upload"
@@ -88,7 +101,7 @@
                                     </span>
                                     {{ 'uplaode file' }}
                                 </a>
-                                {{-- ==== --}}
+
                                 <div class="modal modal-blur fade" id="modal-success" tabindex="-1" role="dialog"
                                     aria-hidden="true">
                                     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
@@ -151,15 +164,16 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="col-12">
+
                             <form action="{{ route('dashboard.questions.delets') }}" method="post">
                                 @csrf
                                 @method('POST')
+
                                 <div class="table-responsive">
                                     <table id="dataTable" class="table table-vcenter card-table">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>{{ display('checked') }}</th>
                                                 <th>{{ display('name') }}</th>
                                                 <th>{{ display('type') }}</th>
                                                 <th>{{ display('level') }}</th>
@@ -167,18 +181,16 @@
                                                 <th>{{ display('answer 2') }}</th>
                                                 <th>{{ display('answer 3') }}</th>
                                                 <th>{{ display('answer 4') }}</th>
+                                                <th>{{ display('checked') }}</th>
                                                 <th>{{ display('action') }}</th>
                                                 {{-- <th class="w-1"></th> --}}
                                             </tr>
                                         </thead>
+
                                         <tbody>
                                             @foreach ($questions as $index => $question)
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
-                                                    <td>
-                                                        <input class="form-check-input" name="ids[{{ $question->id }}]"
-                                                            type="checkbox" value="{{ $question->id }}">
-                                                    </td>
                                                     <td>{{ $question->name }}</td>
                                                     <td>{{ display($question->type->name) }}</td>
                                                     <td>{{ display($question->level->name) }}</td>
@@ -196,9 +208,13 @@
                                                                     @endif
                                                                 </div>
                                                             </div>
-                                                            {{-- {{$answer->correct == 1 ? "style=background:green;" : ''}}>{{ $answer->answer }} --}}
                                                         </td>
                                                     @endforeach
+                                                    <td>
+                                                        <input class="form-check-input" name="ids[{{ $question->id }}]"
+                                                            type="checkbox" value="{{ $question->id }}">
+                                                    </td>
+
                                                     <td>
                                                         <div class="col-auto">
                                                             <div class="dropdown">
@@ -207,8 +223,9 @@
                                                                     <!-- Download SVG icon from http://tabler-icons.io/i/dots-vertical -->
                                                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon"
                                                                         width="24" height="24" viewBox="0 0 24 24"
-                                                                        stroke-width="2" stroke="currentColor" fill="none"
-                                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                                        stroke-width="2" stroke="currentColor"
+                                                                        fill="none" stroke-linecap="round"
+                                                                        stroke-linejoin="round">
                                                                         <path stroke="none" d="M0 0h24v24H0z"
                                                                             fill="none" />
                                                                         <circle cx="12" cy="12"
@@ -223,12 +240,12 @@
                                                                     <a href="{{ route('dashboard.questions.edit', $question->id) }}"
                                                                         class="dropdown-item">Edit</a>
 
-                                                                    <a href="javascript:;"
+                                                                    {{-- <a href="javascript:;"
                                                                         class="dropdown-item text-danger btn-delet"
                                                                         data-form-id="question-delete-{{ $question->id }}"
                                                                         data-name-item="{{ @$question->name }}">
                                                                         {{ display('Delete') }}
-                                                                    </a>
+                                                                    </a> --}}
 
                                                                     <form id="question-delete-{{ $question->id }}"
                                                                         action="{{ route('dashboard.questions.destroy', $question->id) }}"
@@ -239,6 +256,7 @@
                                                                 </div>
                                                             </div>
                                                     </td>
+
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -247,10 +265,10 @@
                                             <button type="submit"
                                                 class="btn btn-red">{{ display('Make deletes quetions') }}</button>
                                         </div>
+
                                     </table>
 
                                 </div>
-                            </form>
                         </div>
                     </div>
                 </div>

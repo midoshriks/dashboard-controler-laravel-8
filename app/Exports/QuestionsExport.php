@@ -2,15 +2,15 @@
 
 namespace App\Exports;
 
+use App\Models\type;
 use App\Models\level;
-use App\Models\Type;
 use App\Models\Answer;
 use App\Models\Question;
-use Illuminate\Contracts\View\View as ViewView;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Illuminate\Contracts\View\View as ViewView;
 
 class QuestionsExport implements
     // FromCollection,
@@ -30,8 +30,8 @@ class QuestionsExport implements
     public function view(): ViewView
     {
         return view('dashboard.questions.export', [
-            'questions' => Question::all(),
-            'types' => Type::all(),
+            'questions' => Question::select('name')->where('id', 1)->first(),
+            'types' => type::all(),
             'levels' => level::all(),
             'answers' => Answer::all(),
         ]);

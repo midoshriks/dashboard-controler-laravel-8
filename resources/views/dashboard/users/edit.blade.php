@@ -18,8 +18,10 @@
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">{{ display('Dshboard') }}</li>
                             <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">{{ display('Home') }}</a>
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard.users.edit',$user->id) }}">{{ display('Edit') }}</a>
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard.users.edit',$user->id) }}">{{ display($user->first_name) }}</a>
+                            <li class="breadcrumb-item"><a
+                                    href="{{ route('dashboard.users.edit', $user->id) }}">{{ display('Edit') }}</a>
+                            <li class="breadcrumb-item"><a
+                                    href="{{ route('dashboard.users.edit', $user->id) }}">{{ display($user->first_name) }}</a>
                         </ol>
                     </nav>
                 </div>
@@ -34,7 +36,7 @@
                     <div class="modal-header mb-1">
                         <h5 class="modal-title">
                             {{ $user->role_permissions == 'admin' ? display('edit admin : ') : display('edit user : ') }}
-                            {{ $user->first_name .' '. $user->last_name}} </h5>
+                            {{ $user->first_name . ' ' . $user->last_name }} </h5>
                     </div>
                 </div>
                 <div class="row">
@@ -103,27 +105,8 @@
                                                 </div>
                                             </div>
 
-
                                             <div class="form-group mb-3 col-md-12 d-flex">
-                                                {{-- @dd($user->role_permissions) --}}
                                                 @if ($user->role_permissions == 'super_admin')
-                                                    <div class="col-md-6 me-2">
-                                                        <div>
-                                                            <div class="mb-3">
-                                                                <div class="form-label">{{ display('Select Role') }}</div>
-                                                                <select class="form-select" name="role_permissions">
-                                                                    <option value="">{{ display('chooes') }}
-                                                                    </option>
-                                                                    <option
-                                                                        {{ $user->role_permissions == 'super_admin' ? 'selected' : '' }}
-                                                                        value="">
-                                                                        {{ display($user->role_permissions) }}
-                                                                    </option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @else
                                                     <div class="col-md-6 me-2">
                                                         <div>
                                                             <div class="mb-3">
@@ -133,7 +116,26 @@
                                                                     </option>
                                                                     @foreach ($types as $type)
                                                                         <option
-                                                                            {{ $type->name == $user->role_permissions ? 'selected' : '' }}
+                                                                            {{ $user->role_permissions == $type->name ? 'selected' : '' }}
+                                                                            value="{{ $type->id }}">
+                                                                            {{ display($type->name) }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @else
+                                                    <div class="col-md-6 me-2">
+                                                        <div>
+                                                            <div class="mb-3">
+                                                                <div class="form-label">{{ display('Select Role') }}</div>
+                                                                <select class="form-select" name="role_permissions">
+                                                                    <option value="">{{ display('chooes') }}
+                                                                    </option>
+                                                                    @foreach ($types as $type)
+                                                                        <option
+                                                                            {{ $user->role_permissions == $type->name ? 'selected' : '' }}
                                                                             value="{{ $type->id }}">
                                                                             {{ display($type->name) }}
                                                                         </option>
@@ -159,6 +161,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+
 
                                             <div>
                                                 <div class="mb-3">

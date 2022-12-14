@@ -25,7 +25,11 @@ class level extends Model implements HasMedia
 
     public function getPhotoLevelAttribute()
     {
-        return asset(($this->getMedia('photo_level')->last() ? $this->getMedia('photo_level')->last()->getUrl('mobile') : 'uploads/levels/' . $this->image));
+        return asset(($this->getMedia('photo_level')->last() ? $this->getMedia('photo_level')->last()->getUrl() : 'uploads/levels/' . $this->image));
+
+        // return asset(($this->getMedia('photo_level')->last() ? $this->getMedia('photo_level')->last()->getUrl('mobile') : 'uploads/levels/' . $this->image));
+        // return asset(($this->getMedia('photo_user')->last() ? $this->getMedia('photo_user')->last()->getUrl() : 'uploads/users/' . $this->image));
+
     }
 
     public function registerMediaConversions(Media $media = null): void

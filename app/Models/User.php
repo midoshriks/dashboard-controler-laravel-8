@@ -38,10 +38,14 @@ class User extends Authenticatable implements HasMedia
 
     protected $appends = ['photo_user'];
 
+    // mo2men@url
     public function getPhotoUserAttribute() // get ['PhotoUser '] Attribute
     {
-        return asset(($this->getMedia('photo_user')->last() ? $this->getMedia('photo_user')->last()->getUrl('mobile') : 'uploads/users/' . $this->image));
+        return asset(($this->getMedia('photo_user')->last() ? $this->getMedia('photo_user')->last()->getUrl() : 'uploads/users/' . $this->image));
     }
+    // endEdit@url
+
+
 
     public function registerMediaConversions(Media $media = null): void
     {

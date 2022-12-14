@@ -32,6 +32,7 @@ class HelpersApiController extends Controller
                 'products.type_id',
                 'products.quantity',
                 'products.price',
+                'products.image',
             );
         }])->get();
 
@@ -65,7 +66,7 @@ class HelpersApiController extends Controller
      * @param  \App\Models\Helper  $helper
      * @return \Illuminate\Http\Response
      */
-    public function show(Helper $helper , $id)
+    public function show(Helper $helper, $id)
     {
         // $helper = Helper::where('id' , $id)->select([
         //     'id',
@@ -73,11 +74,11 @@ class HelpersApiController extends Controller
         //     'status',
         // ])->get();
 
-        $helper = Helper::where('id' , $id)->select([
+        $helper = Helper::where('id', $id)->select([
             'id',
             'name',
             'status',
-        ])->with(['type' => function($q) {
+        ])->with(['type' => function ($q) {
             $q;
         }])->get();
 

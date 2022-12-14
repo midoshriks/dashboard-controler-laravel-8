@@ -140,6 +140,8 @@ class LevelsController extends Controller
             Storage::disk('public_uploads')->delete('/levels/' . $level->image);
         } //end of if
 
+        // dd($level->answers());
+        $level->answers()->delete();
         $level->questions()->delete();
         $level->delete();
 

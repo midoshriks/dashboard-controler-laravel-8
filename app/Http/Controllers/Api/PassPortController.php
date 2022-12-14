@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
+use Log;
 use App\Models\User;
+use App\Models\level;
 use App\Models\Country;
 use App\Models\Wallets;
 use App\Models\UserLevel;
 use App\Mail\SendMailAuth;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -31,9 +34,13 @@ class PassPortController extends Controller
         $result['email'] = $user->email;
         $result['phone'] = $user->phone;
         $result['country'] = $user->country->name;
-        $result['user_photo'] = $user->photo_user;
-        $result['level'] = $user->levels->last()->id;
-
+        $result['photo_user'] = $user->photo_user;
+        $level = $user->levels->last() ? $user->levels->last() : level::first();
+        // mo2men@level
+        $result['level'] = $level->id;
+        $result['level_name'] = $level->name;
+        $result['level_photo'] = $level->photo_level;
+        // endEdit@level
         $wallet = Wallets::where('user_id', $user->id)->first();
         $result['coins'] = $wallet->balance('coin');
         $result['bucks'] = $wallet->balance('bucks');
@@ -43,10 +50,6 @@ class PassPortController extends Controller
         for ($i = 1; $i < 5; $i++) {
             $result['helpers'][$i] = $wallet->balance('helper', $i);
         }
-
-        // send mail welcome to smartbackus
-        Mail::to($user->email)
-            ->send(new SendMailAuth($user->first_name));
 
         $response = [
             'success' => true,
@@ -119,20 +122,29 @@ class PassPortController extends Controller
         //     return response()->json($validator->errors(), 404);
         // }
 
-        $input = $request->all();
-        $input['role_permissions'] = 'gaming';
-        $input['code_membership'] = Str::random(2) . mt_rand(1000000, 10000000);
-        $input['country_id'] = Country::where('name',IPtoLocation($_SERVER['REMOTE_ADDR'])['country'])->first()->id;
-        $input['password'] = bcrypt($input['password']);
+        // mo2men@registeration
+        DB::beginTransaction();
+        try {
+            $input = $request->all();
+            $input['role_permissions'] = 'gaming';
+            $input['code_membership'] = Str::random(2) . mt_rand(1000000, 10000000);
+            // mo2men@country
+            $input['country_id'] = country::where('name', IPtoLocation($_SERVER['REMOTE_ADDR'])['country'])->first()->id;
+            // mo2men@country
+            $input['password'] = bcrypt($input['password']);
+            $user = User::create($input);
+            $levelids = level::first()->id;
+            $user->levels()->attach($levelids);
 
-
-        $user = User::create($input);
-        $levelids = 1;
-        $user->levels()->attach($levelids);
-
-        Wallets::create([
-            'user_id' => $user->id,
-        ]);
+            Wallets::create([
+                'user_id' => $user->id,
+            ]);
+            DB::commit();
+        } catch (\Exception $e) {
+            Log::error($e);
+            DB::rollback();
+        }
+        // mo2men@registeration
         return $this->sendResponse($user, 'User registered seccussfully');
     }
 

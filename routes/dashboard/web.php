@@ -78,6 +78,7 @@ Route::group(
 
             // Profile
             Route::get('/profile/show/{id}', 'ProfilesController@index')->name('profiles.show');
+            Route::put('/profile/update/{id}', 'ProfilesController@update')->name('profiles.update');
 
 
             // Levels

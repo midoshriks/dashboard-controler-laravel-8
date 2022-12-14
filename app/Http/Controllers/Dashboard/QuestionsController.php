@@ -158,8 +158,11 @@ class QuestionsController extends Controller
 
     public function delets(Request $request)
     {
+        $this->validate($request, [
+            'ids' => 'required',
+        ]);
+
         $ids = $request->ids;
-        // dd($request->ids);
 
         Answer::whereIn('question_id', $ids)->delete();
         Question::whereIn('id', $ids)->delete();

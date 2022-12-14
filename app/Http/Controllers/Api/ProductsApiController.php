@@ -27,6 +27,7 @@ class ProductsApiController extends Controller
             'products.type_id', // stop mo2men look this
             'products.quantity',
             'products.price',
+            'products.image',
         ])->whereHas('type', function ($q) {
             $q->where('name', 'coin');
         })->get();

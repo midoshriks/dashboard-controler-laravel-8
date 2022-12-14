@@ -78,7 +78,10 @@
                                 {{-- ==== --}}
                                 <a href="{{ route('dashboard.questions.export.demo') }}" class="btn btn-white">
                                     <span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="icon icon-tabler icon-tabler-circle-check" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <circle cx="12" cy="12" r="9"></circle>
                                             <path d="M9 12l2 2l4 -4"></path>
@@ -89,10 +92,10 @@
 
                                 <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-success">
                                     <span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-upload"
-                                            width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                                            stroke="currentColor" fill="none" stroke-linecap="round"
-                                            stroke-linejoin="round">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="icon icon-tabler icon-tabler-upload" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path>
                                             <polyline points="7 9 12 4 17 9"></polyline>
@@ -166,8 +169,10 @@
                         <div class="col-12">
 
                             <form action="{{ route('dashboard.questions.delets') }}" method="post">
+                                {{-- @csrf
+                                @method('POST') --}}
                                 @csrf
-                                @method('POST')
+                                @method('DELETE')
 
                                 <div class="table-responsive">
                                     <table id="dataTable" class="table table-vcenter card-table">
@@ -211,8 +216,9 @@
                                                         </td>
                                                     @endforeach
                                                     <td>
-                                                        <input class="form-check-input" name="ids[{{ $question->id }}]"
-                                                            type="checkbox" value="{{ $question->id }}">
+                                                        <input class="form-check-input ids"
+                                                            name="ids[{{ $question->id }}]" type="checkbox"
+                                                            value="{{ $question->id }}">
                                                     </td>
 
                                                     <td>
@@ -247,12 +253,12 @@
                                                                         {{ display('Delete') }}
                                                                     </a> --}}
 
-                                                                    <form id="question-delete-{{ $question->id }}"
+                                                                    {{-- <form id="question-delete-{{ $question->id }}"
                                                                         action="{{ route('dashboard.questions.destroy', $question->id) }}"
                                                                         method="POST" style="display: inline-block;">
                                                                         @csrf
                                                                         @method('DELETE')
-                                                                    </form>
+                                                                    </form> --}}
                                                                 </div>
                                                             </div>
                                                     </td>
@@ -263,12 +269,15 @@
 
                                         <div class="card-footer text-end">
                                             <button type="submit"
-                                                class="btn btn-red">{{ display('Make deletes quetions') }}</button>
+                                                class="btn btn-red">{{ display('delete all mark quetions') }}</button>
+                                            <input class="btn btn-ghost-danger" type="button" onclick="selects()" value="Select All" />
+                                            <input class="btn btn-ghost-green" type="button" onclick="deSelect()" value="Deselect All" />
                                         </div>
 
                                     </table>
 
                                 </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -276,3 +285,19 @@
         </div>
     </div>
 @endsection
+
+<script type="text/javascript">
+    function selects() {
+        var ele = document.getElementsByClassName("ids");
+        for (var i = 0; i < ele.length; i++) {
+            if (ele[i].type == "checkbox") ele[i].checked = true;
+        }
+    }
+
+    function deSelect() {
+        var ele = document.getElementsByClassName("ids");
+        for (var i = 0; i < ele.length; i++) {
+            if (ele[i].type == "checkbox") ele[i].checked = false;
+        }
+    }
+</script>

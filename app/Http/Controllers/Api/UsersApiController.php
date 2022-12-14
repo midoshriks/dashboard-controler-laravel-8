@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Models\level;
 use App\Models\UserLevel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
 
 class UsersApiController extends Controller
@@ -89,15 +92,21 @@ class UsersApiController extends Controller
             $user->last_name = $request->last_name;
             $user->dob_date = $request->dob_date;
             $user->gender = $request->gender;
-            // stop just server online
             // $user->country_id = $request->country_id;
             // $user->password = bcrypt($request->password);
         }
         $user->update();
-
+        // mo2men@image
+        if ($request->base64_image) {
+            $upload_path = public_path('uploads/users/' . uniqid());
+            Image::make(file_get_contents($request->base64_image))->save($upload_path);
+            $user->addMedia($upload_path)->toMediaCollection('photo_user', 'users');
+        }
+        // endEdit@image
         // dd($user);
         $response = [
             'status' => true,
+            'user' => $user,
             'message' => "The User has been Update successfully!"
         ];
 
@@ -121,19 +130,31 @@ class UsersApiController extends Controller
     {
         // dd($request->all());
         $insertlevel = new UserLevel();
-        // $insertlevel->user_id = $request->user_id;
-        // $insertlevel->level_id = $request->level_id;
+        $insertlevel->user_id = $request->user_id;
+        $insertlevel->level_id = $request->level_id;
+        $insertlevel->save();
 
-        $insertlevel->create([
-            'user_id' => $request->user_id,
-            'level_id' => $request->level_id,
-        ]);
+        // $insertlevel->create([
+        //     'user_id' => $request->user_id,
+        //     'level_id' => $request->level_id,
+        // ]);
 
         // dd($insertlevel);
 
+        // var_dump(DB::table('levels')->where('id', $insertlevel->level_id)->get());
+        // exit;
+
         $response = [
             'status' => true,
-            'message' => "The Level has been Insert user successfully!"
+            'message' => "The Level has been Insert user successfully!",
+            'next_level' => level::select(
+                [
+                    'levels.id',
+                    'levels.name',
+                    // 'rewards',
+                    'levels.image',
+                ]
+            )->where('id', $insertlevel->level_id)->first(),
         ];
         return response()->json($response, 200);
     }

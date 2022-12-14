@@ -41,6 +41,7 @@ class LevelsApiController extends Controller
             'levels.id',
             'levels.name',
             'rewards',
+            'levels.image',
         ])->get();
 
 

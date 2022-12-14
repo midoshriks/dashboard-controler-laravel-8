@@ -32,8 +32,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        $admins = User::where('role_permissions', 'admin')->get();
+        // $users = User::all();
+        $users = User::where('role_permissions', 'super_admin')->get();
         $select_countries = country::all();
         $types = type::where('model', 'user')->get();
 
@@ -101,10 +101,20 @@ class UsersController extends Controller
 
         // create token device
         $user->device_token = $user->createToken('bucks')->accessToken;
+        // dd($request->all(), $request->role_permissions);
 
         // get type_user where table types
-        $types = type::where('id', $request->role_permissions)->first(); // role_permissions = id => type
-        $user->type_id = $request->role_permissions;
+        $types = type::where('id', $request->role_permissions)->first(); // role_permissions = name => type
+        if (!$types) {
+            $type = type::create([
+                'model' => 'user',
+                'name' => $request->role_permissions,
+            ]);
+        }
+        $user->type_id = $types->id;
+
+        // dd($request->all(), $user->role_permissions, $types);
+
 
         if (DB::table('types')->where('name', $types->name)->get()) {
             // save type user by select table types
@@ -135,10 +145,10 @@ class UsersController extends Controller
                 $user->syncPermissions($request->permissions);
 
                 // send Notification in dashboard
-                $admins = User::where('role_permissions', 'admin')->where('id',  '!=', Auth::user()->id)->get();
-                $data_send = auth()->user();
-                $message = 'create new admin with you';
-                Notification::send($admins, new send_notification($data_send->id, $data_send->first_name, $user->first_name, $message));
+                // $admins = User::where('role_permissions', 'admin')->where('id',  '!=', Auth::user()->id)->get();
+                // $data_send = auth()->user();
+                // $message = 'create new admin with you';
+                // Notification::send($admins, new send_notification($data_send->id, $data_send->first_name, $user->first_name, $message));
 
                 // send mail welcome to smartbackus
                 Mail::to($user->email)
@@ -307,28 +317,13 @@ class UsersController extends Controller
         $user = User::find($user->id);
         $levels_users = $user->levels;
 
-
-        $checked_notifiaction = DB::table('notifications')->where('notifiable_id', $user->id)->pluck('id');
-
-        if ($checked_notifiaction != null) {
-            // dd($checked_notifiaction);
-            # code...
-            DB::table('notifications')->where('id', $checked_notifiaction)->update(['read_at' => now()]);
-            return view('dashboard.users.show', compact('user', 'levels_users'));
-        } else {
-
-            $user = User::find($user->id);
-            $levels_users = $user->levels;
-            return view('dashboard.users.show', compact('user', 'levels_users'));
-        }
-
-        // $getIDnotifiaction = DB::table('notifications')->where('notifiable_id', $user->id)->pluck('id');
-        // return $getIDnotifiaction;
-        // DB::table('notifications')->where('id', $getIDnotifiaction)->update(['read_at' => now()]);
+        // // $getIDnotifiaction = DB::table('notifications')->where('notifiable_id', $user->id)->pluck('id');
+        // // return $getIDnotifiaction;
+        // // DB::table('notifications')->where('id', $getIDnotifiaction)->update(['read_at' => now()]);
 
 
         // dd($user);
-        // return view('dashboard.users.show', compact('user', 'levels_users'));
+        return view('dashboard.users.show', compact('user', 'levels_users'));
     }
 
     /**
@@ -365,15 +360,18 @@ class UsersController extends Controller
         $user->dob_date = $request->dob_date;
         $user->gender = $request->gender;
         $user->country_id = $request->country_id;
-        $user->code_membership =  Str::random(2) . mt_rand(1000000, 10000000);
+        $user->code_membership =  $user->code_membership;
         // $user->password = bcrypt($request->password);
 
         // create token device
-        $user->device_token = $user->createToken('bucks')->accessToken;
+        $user->device_token = $user->device_token;
+
+        // dd($request->all(), $user);
 
         // get type_user where table types
-        $types = type::where('id', $request->role_permissions)->first(); // role_permissions = id => type
-        $user->type_id = $request->role_permissions;
+        $types = type::where('id', $request->role_permissions)->first(); // role_permissions = name => type
+
+        $user->type_id = $types->id;
 
         if (DB::table('types')->where('name', $types->name)->get()) {
             // update type user by select table types

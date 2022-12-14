@@ -12,14 +12,18 @@
                     <div class="col">
                         <!-- Page pre-title -->
                         <div class="page-pretitle">
-                            <img src="{{ asset('dashboard/src/static/smart_logo.png')}}" width="60" alt="" srcset="">
+                            <img src="{{ asset('dashboard/src/static/smart_logo.png') }}" width="60" alt=""
+                                srcset="">
                             {{ display('Smart bucks') }}
                         </div>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('dashboard.index')}}">{{ display('Home')}}</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('dashboard.products.index')}}">{{ display($type) }}</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">{{ display('Data '.$type.' tables')}}</li>
+                                <li class="breadcrumb-item"><a
+                                        href="{{ route('dashboard.index') }}">{{ display('Home') }}</a></li>
+                                <li class="breadcrumb-item"><a
+                                        href="{{ route('dashboard.products.index') }}">{{ display($type) }}</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    {{ display('Data ' . $type . ' tables') }}</li>
                             </ol>
                         </nav>
                     </div>
@@ -78,7 +82,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($products as $index => $product)
-                                        {{-- @dd($product->helper); --}}
+                                            {{-- @dd($product->helper); --}}
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>{{ $product->quantity }}</td>
@@ -102,6 +106,7 @@
                                                             </div>
                                                         </div>
                                                     </td>
+
                                                 @endif
                                                 <td>
                                                     {{-- @dd($product->photo_product) --}}
@@ -121,14 +126,18 @@
                                                                     width="24" height="24" viewBox="0 0 24 24"
                                                                     stroke-width="2" stroke="currentColor" fill="none"
                                                                     stroke-linecap="round" stroke-linejoin="round">
-                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                                    <circle cx="12" cy="12" r="1" />
-                                                                    <circle cx="12" cy="19" r="1" />
-                                                                    <circle cx="12" cy="5" r="1" />
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none" />
+                                                                    <circle cx="12" cy="12"
+                                                                        r="1" />
+                                                                    <circle cx="12" cy="19"
+                                                                        r="1" />
+                                                                    <circle cx="12" cy="5"
+                                                                        r="1" />
                                                                 </svg>
                                                             </a>
                                                             <div class="dropdown-menu dropdown-menu-end">
-                                                                <a href="{{ route('dashboard.products.edit', ['product'=>$product->id, 'type'=>$product->type->name]) }}"
+                                                                <a href="{{ route('dashboard.products.edit', ['product' => $product->id, 'type' => $product->type->name]) }}"
                                                                     class="dropdown-item">Edit</a>
 
                                                                 <a href="javascript:;"
@@ -139,7 +148,7 @@
                                                                 </a>
 
                                                                 <form id="product-delete-{{ $product->id }}"
-                                                                    action="{{ route('dashboard.products.destroy', ['product'=>$product->id, 'type'=>$product->type->name]) }}"
+                                                                    action="{{ route('dashboard.products.destroy', ['product' => $product->id, 'type' => $product->type->name]) }}"
                                                                     method="POST" style="display: inline-block;">
                                                                     @csrf
                                                                     @method('DELETE')

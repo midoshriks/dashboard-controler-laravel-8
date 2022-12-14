@@ -100,7 +100,8 @@
                                         <select class="form-select" name="country_id">
                                             <option value="">{{ display('chooes') }}</option>
                                             @foreach ($select_countries as $select_country)
-                                                <option value="{{ $select_country->id }}">{{ $select_country->name }}
+                                                <option value="{{ $select_country->id }}">
+                                                    {{ $select_country->name }}
                                                 </option>
                                             @endforeach
                                         </select>

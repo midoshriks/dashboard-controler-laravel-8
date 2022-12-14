@@ -72,7 +72,7 @@
                     </svg>
                 </a>
 
-                <div class="nav-item dropdown d-none d-md-flex me-3">
+                {{-- <div class="nav-item dropdown d-none d-md-flex me-3">
                     <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
                         aria-label="Show notifications">
                         <!-- Download SVG icon from http://tabler-icons.io/i/bell -->
@@ -84,12 +84,9 @@
                                 d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
                             <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
                         </svg>
-                        {{-- @dd(Auth::user()->unreadNotifications->count() >= 1) --}}
 
                         @if (Auth::user()->unreadNotifications->count() >= 1)
                             <span class="badge bg-red"></span>
-                        @else
-                            {{-- <span class="badge"></span> --}}
                         @endif
                     </a>
                     <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
@@ -108,7 +105,6 @@
                                                     class="status-dot status-dot-animated bg-green d-block"></span>
                                             </div>
                                             <div class="col text-truncate">
-                                                {{-- @dd($notification->data['data_send_id']) --}}
                                                 <a href="{{ route('dashboard.users.show', $notification->data['data_send_id']) }}"
                                                     class="text-body d-block">
                                                     {{ $notification->data['data_send_name'] }}
@@ -134,7 +130,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 {{-- <div class="nav-item dropdown d-none d-md-flex me-3">
                     <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
@@ -272,11 +268,11 @@
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 
                     <a href="{{ route('dashboard.profiles.show', auth()->user()->id) }}" class="dropdown-item">
-                        Profile& account
+                        {{ display('Profile & account')}}
                     </a>
                     <div class="dropdown-divider"></div>
 
-                    <a href="{{ route('dashboard.settings.index') }}" class="dropdown-item">
+                    {{-- <a href="{{ route('dashboard.settings.index') }}" class="dropdown-item">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings"
                                 width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -289,7 +285,7 @@
                             </svg>
                         </span>
                         {{ display('Settings') }}
-                    </a>
+                    </a> --}}
                     <a href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                                   document.getElementById('logout-form').submit();"

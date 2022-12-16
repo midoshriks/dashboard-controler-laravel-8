@@ -128,34 +128,25 @@ class UsersApiController extends Controller
 
     public function insertlevel(Request $request)
     {
-        // dd($request->all());
-        $insertlevel = new UserLevel();
-        $insertlevel->user_id = $request->user_id;
-        $insertlevel->level_id = $request->level_id;
-        $insertlevel->save();
-
-        // $insertlevel->create([
-        //     'user_id' => $request->user_id,
-        //     'level_id' => $request->level_id,
-        // ]);
-
-        // dd($insertlevel);
-
-        // var_dump(DB::table('levels')->where('id', $insertlevel->level_id)->get());
-        // exit;
-
+        if (DB::table('user_levels')->where('user_id', $request->user_id)->where('level_id', $request->level_id)->count() == 0) {
+            $insertlevel = new UserLevel();
+            $insertlevel->user_id = $request->user_id;
+            $insertlevel->level_id = $request->level_id;
+            $insertlevel->save();
+        }
+        $lastLevel = User::find($request->user_id)->levels->last();
         $response = [
             'status' => true,
             'message' => "The Level has been Insert user successfully!",
-            'next_level' => level::select(
+            'level' => level::select(
                 [
                     'levels.id',
                     'levels.name',
-                    // 'rewards',
                     'levels.image',
                 ]
-            )->where('id', $insertlevel->level_id)->first(),
+            )->where('id', $lastLevel->id)->first(),
         ];
         return response()->json($response, 200);
     }
+
 }

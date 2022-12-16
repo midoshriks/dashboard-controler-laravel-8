@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use Log;
 use App\Models\User;
 use App\Models\level;
-use App\Models\Country;
+use App\Models\country;
 use App\Models\Wallets;
 use App\Models\UserLevel;
 use App\Mail\SendMailAuth;

@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\HelpersApiController;
 use App\Http\Controllers\Api\OrdersApiController;
 use App\Http\Controllers\Api\PagesApiController;
 use App\Http\Controllers\Api\ProductsApiController;
+use App\Http\Controllers\Api\TranslateController;
 use App\Http\Controllers\Api\UsersApiController;
 use App\Http\Controllers\Api\WalletLogApiController;
 
@@ -27,7 +28,7 @@ Route::post('/register', [PassPortController::class, 'register']);
 Route::post('/login', [PassPortController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
-    // });
+    });
 
     // user logout
     Route::post('/logout', [PassPortController::class, 'logout']);
@@ -63,8 +64,10 @@ Route::middleware('auth:api')->group(function () {
         Route::resource('wallet', WalletLogApiController::class); // create a new walletLog
 
         Route::resource('pages', PagesApiController::class); // view pages in app
+
+        Route::resource('translate', TranslateController::class); // view all languages
     });
-});
+// });
 
 
 // Route::group(['prefix' => 'dashboard'], function () {

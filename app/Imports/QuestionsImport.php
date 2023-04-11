@@ -24,6 +24,7 @@ class QuestionsImport implements
     //  */
     public function collection(Collection $rows)
     {
+
         // @mido_shriks validator excel
         validator::make($rows->toArray(), [
             '*.type' => 'required',
@@ -32,6 +33,7 @@ class QuestionsImport implements
             '*.question' => 'required|min:10|unique:questions,name',
             // '*.answer_'.$i => 'required|min:10|unique:answers,answer',
             '*.correct' => 'required',
+            '*.type_status' => 'required',
         ])->validate();
 
         foreach ($rows as $index => $row) {
@@ -53,11 +55,18 @@ class QuestionsImport implements
             }
 
 
+            if ($row['type_status']) {
+                $status = get_type('question_status',$row['type_status']);
+            }
+
+            // dd($rows,$status->id);
+
             # code...
             $question = Question::create([
                 'name' => $row['question'],
                 'type_id' => $type->id,
                 'level_id' => $level->id,
+                'type_status' => $status->id,
             ]);
 
             for ($i = 1; $i <= 4; $i++) {

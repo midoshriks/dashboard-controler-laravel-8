@@ -27,8 +27,9 @@ class QuestionsController extends Controller
         $title = "Questions";
         $questions = Question::orderby('id', 'desc')->get();
         $types = type::where('model', 'question')->get();
+        $type_status = type::where('model', 'question_status')->get();
         $levels = level::all();
-        return view('dashboard.questions.index', compact('title', 'questions', 'types', 'levels'));
+        return view('dashboard.questions.index', compact('title', 'questions', 'types', 'levels', 'type_status'));
     }
 
     /**
@@ -54,6 +55,10 @@ class QuestionsController extends Controller
         $question->name = $request->name;
         $question->type_id = $request->type_id;
         $question->level_id = $request->level_id;
+        $question->type_status = $request->type_status;
+
+        // dd($question, $question->type_status);
+
         $question->save();
         // dd($question->id);
         for ($i = 1; $i <= 4; $i++) {
@@ -91,9 +96,10 @@ class QuestionsController extends Controller
     {
         $title = "Questions";
         $types = Type::where('model', 'question')->get();
+        $type_status = type::where('model', 'question_status')->get();
         $levels = level::all();
         // dd($question);
-        return view('dashboard.questions.edit', compact('title', 'question', 'types', 'levels'));
+        return view('dashboard.questions.edit', compact('title', 'question', 'types', 'levels','type_status'));
     }
 
     /**
@@ -111,9 +117,11 @@ class QuestionsController extends Controller
         $question->name = $request->name;
         $question->type_id = $request->type_id;
         $question->level_id = $request->level_id;
+        $question->type_status = $request->type_status;
 
         $question->update();
-        // dd($question);
+
+        // dd($question,$question->status);
 
         // لحذف جميع الأسؤلة لتعديل وأضافة عليا من جديد
         $question->answers()->delete();

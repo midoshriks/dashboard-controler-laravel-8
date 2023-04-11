@@ -186,6 +186,7 @@
                                                 <th>{{ display('answer 2') }}</th>
                                                 <th>{{ display('answer 3') }}</th>
                                                 <th>{{ display('answer 4') }}</th>
+                                                <th>{{ display('status') }}</th>
                                                 <th>{{ display('checked') }}</th>
                                                 <th>{{ display('action') }}</th>
                                                 {{-- <th class="w-1"></th> --}}
@@ -215,6 +216,25 @@
                                                             </div>
                                                         </td>
                                                     @endforeach
+
+                                                    <td>
+                                                        {{-- {{ display($question->status) }} --}}
+                                                        <div class="datagrid-item">
+                                                            <div class="datagrid-content">
+                                                                @php
+                                                                    $type_status = get_type('question_status', 'basic');
+                                                                @endphp
+
+                                                                @if ($question->type_status == $type_status->id)
+                                                                    <span
+                                                                        class="status status-primary">{{ display('Basic') }}</span>
+                                                                @else
+                                                                    <span
+                                                                        class="status status-secondary">{{ display('additional') }}</span>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                     <td>
                                                         <input class="form-check-input ids"
                                                             name="ids[{{ $question->id }}]" type="checkbox"
@@ -270,8 +290,10 @@
                                         <div class="card-footer text-end">
                                             <button type="submit"
                                                 class="btn btn-red">{{ display('delete all mark quetions') }}</button>
-                                            <input class="btn btn-ghost-danger" type="button" onclick="selects()" value="Select All" />
-                                            <input class="btn btn-ghost-green" type="button" onclick="deSelect()" value="Deselect All" />
+                                            <input class="btn btn-ghost-danger" type="button" onclick="selects()"
+                                                value="Select All" />
+                                            <input class="btn btn-ghost-green" type="button" onclick="deSelect()"
+                                                value="Deselect All" />
                                         </div>
 
                                     </table>

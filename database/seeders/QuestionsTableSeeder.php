@@ -33,6 +33,7 @@ class QuestionsTableSeeder extends Seeder
 
         $type_id = 1;
         $level_id = 1;
+        $type_status_id = get_type('question_status','basic');
 
         foreach ($questions as $key => $value) {
             # code...
@@ -41,6 +42,8 @@ class QuestionsTableSeeder extends Seeder
                 'name' => $value,
                 'type_id' => $type_id++,
                 'level_id' => $level_id++,
+                // 'type_status' => 21, // ? basic
+                'type_status' => $type_status_id->id, // ? basic
             ]);
 
             foreach ($answers as $key => $value) {
@@ -78,6 +81,7 @@ class QuestionsTableSeeder extends Seeder
                 'name' => $value,
                 'type_id' => $type_id++,
                 'level_id' => $level_id,
+                'type_status' => $type_status_id->id, // ? basic
             ]);
 
             foreach ($answers as $key => $value) {
@@ -115,6 +119,7 @@ class QuestionsTableSeeder extends Seeder
                 'name' => $value,
                 'type_id' => $type_id++,
                 'level_id' => $level_id,
+                'type_status' => $type_status_id->id, // ? basic
             ]);
 
             foreach ($answers as $key => $value) {
@@ -151,6 +156,7 @@ class QuestionsTableSeeder extends Seeder
                 'name' => $value,
                 'type_id' => $type_id++,
                 'level_id' => $level_id,
+                'type_status' => $type_status_id->id, // ? basic
             ]);
 
             foreach ($answers as $key => $value) {
@@ -188,6 +194,7 @@ class QuestionsTableSeeder extends Seeder
                 'name' => $value,
                 'type_id' => $type_id++,
                 'level_id' => $level_id,
+                'type_status' => $type_status_id->id, // ? basic
             ]);
 
             foreach ($answers as $key => $value) {

@@ -111,15 +111,15 @@
                                     {{-- @mido_shriks function get countr number answer --}}
 
 
-                                    @foreach ($question->answers as $key=>$answer)
+                                    @foreach ($question->answers as $key => $answer)
                                         <div class="form-group mb-3 col-md-12 d-flex">
                                             <div class="col-sm-12 m-1">
                                                 <label
-                                                    class="form-label required">{{ display('answer ' . $key+1) }}</label>
+                                                    class="form-label required">{{ display('answer ' . $key + 1) }}</label>
                                                 <div>
                                                     <input type="text" class="form-control"
-                                                        name="{{ 'answer_' . $key+1 }}"
-                                                        value="{{ $answer->answer }}" placeholder="answer">
+                                                        name="{{ 'answer_' . $key + 1 }}" value="{{ $answer->answer }}"
+                                                        placeholder="answer">
                                                 </div>
                                             </div>
                                         </div>
@@ -144,6 +144,30 @@
                                                     <option value="3"> 3</option>
                                                     <option value="4"> 4 </option>
                                                 </select> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- @dd($question->status) --}}
+
+                                    <div class="form-group mb-3 col-md-12 d-flex">
+                                        <div class="col-sm-12 m-1">
+                                            <label class="form-label required">{{ display('status') }}</label>
+                                            <div class="">
+                                                <select class="form-select" name="type_status">
+                                                    <option value="">{{ display('chooes') }}</option>
+                                                    @foreach ($type_status as $type)
+                                                        <option
+                                                            {{ $type->id == $question->type_status ? 'selected' : '' }}
+                                                            value="{{ $type->id }}"> {{ display($type->name) }}
+                                                        </option>
+                                                    @endforeach
+                                                    {{-- <option {{ $question->status == 0 ? 'selected' : '' }} value="0">
+                                                        {{ display('Basic') }}</option>
+                                                    <option {{ $question->status == 1 ? 'selected' : '' }} value="1">
+                                                        {{ display('additional') }}
+                                                    </option> --}}
+                                                </select>
                                             </div>
                                         </div>
                                     </div>

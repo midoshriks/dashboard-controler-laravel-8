@@ -1,27 +1,30 @@
 <?php
 // <!-- // @mido_shriks -->
 
-use App\Http\Controllers\Dashboard\AnswersController;
-use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Dashboard\DeveloperController;
-use App\Http\Controllers\Dashboard\HelpersController;
-use App\Http\Controllers\Dashboard\LanguagesController;
-use App\Http\Controllers\Dashboard\LevelsController;
-use App\Http\Controllers\Dashboard\OrdersController;
-use App\Http\Controllers\Dashboard\PagesController;
-use App\Http\Controllers\Dashboard\ProductsController;
-use App\Http\Controllers\Dashboard\ProfilesController;
-use App\Http\Controllers\Dashboard\QuestionsController;
-use App\Http\Controllers\Dashboard\SendMailslController;
-use App\Http\Controllers\Dashboard\SettingslController;
-use App\Http\Controllers\Dashboard\TypesController;
-use App\Http\Controllers\Dashboard\UsersController;
+use App\Models\type;
 use App\Mail\SendMailAds;
 use App\Mail\SendMailAuth;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\Dashboard\PagesController;
+use App\Http\Controllers\Dashboard\TypesController;
+use App\Http\Controllers\Dashboard\UsersController;
+use App\Http\Controllers\Dashboard\LevelsController;
+use App\Http\Controllers\Dashboard\OrdersController;
+use App\Http\Controllers\Dashboard\AnswersController;
+use App\Http\Controllers\Dashboard\HelpersController;
+use App\Http\Controllers\Dashboard\ProductsController;
+use App\Http\Controllers\Dashboard\ProfilesController;
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\DeveloperController;
+use App\Http\Controllers\Dashboard\LanguagesController;
+use App\Http\Controllers\Dashboard\QuestionsController;
+use App\Http\Controllers\Dashboard\SettingslController;
+use App\Http\Controllers\Dashboard\SendMailslController;
+use App\Models\Question;
 
 // function IPtoLocation($ip)
 // {
@@ -60,6 +63,18 @@ Route::group(
     function () {
         Route::prefix('dashboard')->name('dashboard.')->middleware(['auth'])->group(function () {
             Auth::routes();
+
+            Route::get('/developer', function () {
+                $id = get_type('question_status','basic');
+                // dd($id->id);
+
+                $que = Question::all();
+                foreach ($que as $key => $value) {
+                    # code...
+                    dd($value->type_status == $id->id);
+                }
+
+            });
 
             // Dahsbboard
             Route::get('/index', 'DashboardController@index')->name('index');

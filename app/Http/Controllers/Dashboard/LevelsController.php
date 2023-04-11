@@ -42,12 +42,6 @@ class LevelsController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request, [
-        //     'name' => 'required|min:3|unique:levels,name',
-        //     'rewards' => 'required|max:1000',
-        // ]);
-
-        // dd($request->all());
 
         $level = new level();
         $level->name = $request->name;
@@ -59,11 +53,8 @@ class LevelsController extends Controller
             $upload_path = public_path('uploads/levels/' . $request->image->hashName());
             Image::make($request->image)->save($upload_path);
             $level->addMedia($upload_path)->toMediaCollection('photo_level', 'levels');
-
-            //save image im local & data
             $level->image = $request->image->getClientOriginalName();
             $request->file('image')->move('uploads/levels/', $request->file('image')->getClientOriginalName());
-            // dd($level->image , $level);
             $level->update();
         }
 

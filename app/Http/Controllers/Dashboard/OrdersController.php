@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Models\WalletLog;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Repositories\Order\OrderRepositoryInterface;
+
 
 class OrdersController extends Controller
 {
@@ -18,6 +20,13 @@ class OrdersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $orderInterface;
+
+     public function __construct(OrderRepositoryInterface $orderInterface)
+     {
+         $this->orderInterface = $orderInterface;
+     }
+
     public function index()
     {
         $types = type::where('model', 'order');

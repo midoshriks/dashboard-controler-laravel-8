@@ -1,10 +1,9 @@
 <?php
 // <!-- @mo2men -->
 
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use App\Models\type;
 
 if (!function_exists('display')) {
-
     // $lang = app()->getLocale();
     // dd($lang);
 
@@ -119,8 +118,6 @@ if (!function_exists('send_notification')) {
 
         }
     }
-
-
 }
 
 if (!function_exists('IPtoLocation')) {
@@ -128,5 +125,13 @@ if (!function_exists('IPtoLocation')) {
     {
         $ipData = @unserialize(file_get_contents('http://ip-api.com/php/' . $ip));
         return !empty($ipData) && $ipData['status'] == 'success' ? $ipData : false;
+    }
+}
+
+
+if (!function_exists('get_type')) {
+    function get_type($model, $name)
+    {
+        return type::where('model', $model)->where('name', $name)->first();
     }
 }

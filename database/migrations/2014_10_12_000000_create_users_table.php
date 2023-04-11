@@ -33,6 +33,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('phone_verified_at')->nullable();
             $table->string('password');
             $table->string('image')->nullable()->default('user.png');
+            $table->string('login_via')->nullable()->default('mail');
             $table->rememberToken();
             $table->text('device_token')->nullable();
             $table->timestamps();

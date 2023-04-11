@@ -15,7 +15,6 @@ class level extends Model implements HasMedia
     use HasFactory;
 
     protected $guarded = [];
-
     protected $appends = ['photo_level', 'questions']; // get photo_level Attribute // 'type_name'
 
     // public function getTypeNameAttribute()
@@ -46,7 +45,14 @@ class level extends Model implements HasMedia
 
     public function questions()
     {
-        return $this->hasMany(Question::class, 'level_id', 'id');
+        $type_status =  get_type('question_status','basic');
+        return $this->hasMany(Question::class, 'level_id', 'id')->where('type_status', $type_status->id);
+    }
+
+    public function additions()
+    {
+        $type_status =  get_type('question_status','additional');
+        return $this->hasMany(Question::class, 'level_id', 'id')->where('type_status', $type_status->id);
     }
 
     public function answers()

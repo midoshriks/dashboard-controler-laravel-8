@@ -16,6 +16,7 @@ class PagesApiController extends Controller
     public function index()
     {
         $pages = Page::select([
+            'id',
             'name',
             'description',
             'status',

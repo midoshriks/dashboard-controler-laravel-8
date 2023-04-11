@@ -84,7 +84,7 @@ class PassPortController extends Controller
             'phone' => 'required',
             'gender' => 'required',
             'dob_date' => 'required|date',
-            'password' => 'required|min:6',
+            'password' => 'required|min:3',
         ]);
         foreach ($validator->errors()->getMessages() as $key => $error) {
             # code...
@@ -126,16 +126,23 @@ class PassPortController extends Controller
         DB::beginTransaction();
         try {
             $input = $request->all();
+            $input['login_via'] = ($input['password'] == 'facebook') ? 'facebook' : (($input['password'] == 'google') ? 'google' : 'mail');
+            if ($input['login_via'] != 'mail') {
+                $request->merge(['login' => 'third_party']);
+                $account = $this->login($request);
+                if ($account)
+                    $user = $account;
+            }
             $input['role_permissions'] = 'gaming';
             $input['code_membership'] = Str::random(2) . mt_rand(1000000, 10000000);
             // mo2men@country
-            $input['country_id'] = country::where('name', IPtoLocation($_SERVER['REMOTE_ADDR'])['country'])->first()->id;
+            // $input['country_id'] = country::where('name', IPtoLocation($_SERVER['REMOTE_ADDR'])['country'])->first()->id;
+            $input['country_id'] = 1;
             // mo2men@country
             $input['password'] = bcrypt($input['password']);
             $user = User::create($input);
             $levelids = level::first()->id;
             $user->levels()->attach($levelids);
-
             Wallets::create([
                 'user_id' => $user->id,
             ]);
@@ -150,10 +157,24 @@ class PassPortController extends Controller
 
     public function login(Request $request)
     {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        $login_via = isset($request->login) && $request->login ? $request->password : 'mail';
+
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'login_via' => $login_via])) {
+
             $user = Auth::user();
-            return $this->sendResponse($user, 'User login seccussfully');
+            if (isset($request->login) && $request->login == 'third_party') {
+                if ($user) {
+                    return $user;
+                } else {
+                    return null;
+                }
+            } else {
+                return $this->sendResponse($user, 'User login seccussfully');
+            };
         } else {
+            if (isset($request->login) && $request->login == 'third_party') {
+                return null;
+            }
             return $this->sendError('Please check your auth', ['error' => 'unauthorised']);
         }
     }

@@ -6,6 +6,7 @@ use App\Models\level;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Question;
 use App\Models\UserLevel;
 use Illuminate\Support\Facades\Validator;
 
@@ -105,33 +106,24 @@ class LevelsApiController extends Controller
      * @param  \App\Models\level  $level
      * @return \Illuminate\Http\Response
      */
-    public function show(level $level, $id)
+    public function show(level $level)
     {
 
-        // none Random
-
-        // $level = level::select(
-        //     'id',
-        //     'name',
-        //     'rewards',
-        // )->where('id', $id)->with(['questions' => function ($q) {
-        //     $q->with('type', 'answers');
-        // }])->first();
-        // $level['next_id'] = Level::where('id', '>', $level->id)->min('id');
-        // return response()->json(["level" => $level], 200);
-
-        // use all Random
-
-        $level = level::select(
-            'id',
-            'name',
-            'rewards',
-        )->where('id', $id)->with(['questions' => function ($q) {
-            $q->orderBy('type_id', 'DESC')->inRandomOrder()->with('type')->with(['answers' => function($answer) {
-                $answer->inRandomOrder();
-            }]);
-        }])->first();
-        $level['next_id'] = Level::where('id', '>', $level->id)->min('id');
+        $level->load([
+            'questions' => function ($q) {
+                $q->orderBy('type_id', 'DESC')->inRandomOrder()->with('type')->with(['answers' => function ($answer) {
+                    $answer->inRandomOrder();
+                }]);
+            },
+            'additions' => function ($q) {
+                $q->orderBy('type_id', 'DESC')->inRandomOrder()->with('type')->with(['answers' => function ($answer) {
+                    $answer->inRandomOrder();
+                }]);
+            },
+        ]);
+        $next_level = Level::where('id', '>', $level->id);
+        $level['next_id'] = $next_level->min('id');
+        //! $level['additions'] = Question::where('level_id', $level['next_id'])->with('answers')->get();
         return response()->json(["level" => $level], 200);
     }
 

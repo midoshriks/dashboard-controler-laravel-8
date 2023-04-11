@@ -590,7 +590,7 @@
                                             </svg>
 
                                             {{ display('total') }}
-                                            {{ display('qouetions') }}
+                                            {{ display('questions') }}
 
                                             <span class="badge bg-green">
                                                 {{ $level->questions()->count() }}

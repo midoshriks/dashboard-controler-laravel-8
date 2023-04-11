@@ -22,17 +22,17 @@ class QuestionsDemoExport implements
 {
     // public function headings(): array
     // {
-    //     return ["questios", "type", "level", "answer 1", "answer 2", "answer 3", "answer 4", "correct"];
+    //     return ["question", "type", "level", "answer 1", "answer 2", "answer 3", "answer 4", "correct"];
     // }
 
     public function headings(): array
     {
         return [
-            ["questios", "type", "level", "answer_1", "answer_2", "answer_3", "answer_4", "correct"],
-            ['ما هى عملة مصر؟', 'Easy', 'one', 'دولار', 'ريال', 'جنيه', 'درهم', '3'],
-            ['ما هى عملة مصر؟', 'Easy', 'one', 'دولار', 'ريال', 'جنيه', 'درهم', '3'],
-            ['ما هى عملة مصر؟', 'Easy', 'one', 'دولار', 'ريال', 'جنيه', 'درهم', '3'],
-            ['ما هى عملة مصر؟', 'Easy', 'one', 'دولار', 'ريال', 'جنيه', 'درهم', '3'],
+            ["question", "type", "level", "answer_1", "answer_2", "answer_3", "answer_4", "correct", "type_status"],
+            ['ما هى عملة مصر؟', 'Easy', 'one', 'دولار', 'ريال', 'جنيه', 'درهم', '3', 'basic'],
+            ['ما هى عملة سعودية ؟', 'Easy', 'one', 'دولار', 'ريال', 'جنيه', 'درهم', '2', 'basic'],
+            ['ما هى عملة امريكا ؟', 'Easy', 'one', 'دولار', 'ريال', 'جنيه', 'درهم', '1', 'additional'],
+            ['ما هى عملة لبنان ؟', 'Easy', 'one', 'دولار', 'ريال', 'جنيه', 'ليرة', '4', 'additional'],
         ];
     }
 

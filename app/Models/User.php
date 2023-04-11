@@ -36,14 +36,31 @@ class User extends Authenticatable implements HasMedia
     //     'password',
     // ];
 
-    protected $appends = ['photo_user'];
+    protected $appends = ['photo_user', 'helpers', 'coins', 'bucks'];
 
-    // mo2men@url
     public function getPhotoUserAttribute() // get ['PhotoUser '] Attribute
     {
         return asset(($this->getMedia('photo_user')->last() ? $this->getMedia('photo_user')->last()->getUrl() : 'uploads/users/' . $this->image));
     }
-    // endEdit@url
+
+    public function getHelpersAttribute()
+    {
+        $helpers = [];
+        for ($i = 1; $i < 5; $i++) {
+            $helpers[$i] = $this->wallets->balance('helper', $i);
+        }
+        return $helpers;
+    }
+
+    public function getCoinsAttribute()
+    {
+        return ($this->wallets) ? $this->wallets->balance('coin') : 0;
+    }
+
+    public function getBucksAttribute()
+    {
+        return ($this->wallets) ? $this->wallets->balance('bucks') : 0;
+    }
 
 
 

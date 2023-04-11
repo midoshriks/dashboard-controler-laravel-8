@@ -6,11 +6,23 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\type;
+use App\Repositories\Order\OrderRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class OrdersApiController extends Controller
 {
+
+
+
+    private $orderRepository;
+
+    public function __construct(OrderRepositoryInterface $orderRepository)
+    {
+        $this->orderRepository = $orderRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -40,8 +52,8 @@ class OrdersApiController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'user_id' => 'required',
-            'payment_method_id' => 'required',
+            // 'user_id' => 'required',
+            // 'payment_method_id' => 'required',
             'product_id' => 'required',
         ];
 
@@ -50,25 +62,39 @@ class OrdersApiController extends Controller
         if ($validator->fails()) {
             return $validator->errors();
         } else {
+            $user = Auth::user();
             $order = new Order();
             $order->order_numper =  '1000' . $order->count('order_numper') + 1;
-            $order->user_id = $request->user_id;
-            // $order->user_id = Auth::user()->id;
-            $order->payment_method_id = $request->payment_method_id;
+            $order->user_id = $user->id;
+            $order->payment_method_id = $request->payment_method_id ?? 11;
             $order->product_id = $request->product_id;
-            $order->type_id = 9 ; // 9 = type_id->pending
+            //* $order->type_id = type::TYPE_ORDER_PENDING ; // 9 => pending | 10 => confirm
+            //! $order->type_id = 9; // 9 => pending | 10 => confirm
+
+            // ?=======================Test Function==========================
+            $type_id = get_type('order','pending');
+            $order->type_id = $type_id->id; // 9 => pending | 10 => confirm
+            // ?=======================Test Function==========================
             $product = Product::where('id', $request->product_id)->first();
-            // dd($product);
             $order->amount = $product->quantity;
             $order->total = $product->price;
-
             // dd($order);
             $order->save();
+
+            $this->orderRepository->conferm_order($order);
+        };
+        // dd($user);
+
+        $helpers = [];
+        for ($i = 1; $i < 5; $i++) {
+            $helpers[$i] = $user->wallets->balance('helper', $i);
         }
 
         $response = [
             'status' => true,
-            'message' => "The Orders has been Creared successfully!"
+            'message' => "The Orders has been Creared successfully!",
+            'coins' =>  $user->wallets->balance('coin'),
+            'helpers' =>  $helpers
         ];
 
         return response()->json($response, 200);
@@ -80,31 +106,13 @@ class OrdersApiController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order, $id)
+    public function show(Order $order)
     {
-        $order = Order::select([
-            'order_numper',
-            'user_id',
-            'payment_method_id',
-            'product_id',
-            'amount',
-            'total',
-        ])->where('id', $id)->with('type_method', 'users')->with([
+        $order = $order->with('type_method', 'users')->with([
             'products' => function ($q) {
                 $q->with('type');
             }
         ])->first();
-
-        // $date = [
-        //     $order->order_numper,
-        //     $order->users->first_name,
-        //     $order->type_method->name,
-        //     $order->type->name,
-        //     $order->amount,
-        //     $order->products->price,
-        // ];
-        // dd($order);
-
         return response()->json(['order' => $order], 200);
     }
 

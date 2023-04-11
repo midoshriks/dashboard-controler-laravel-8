@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\type;
 use App\Models\User;
 use App\Models\level;
 use App\Models\UserLevel;
+use App\Models\WalletLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
 
@@ -52,7 +55,15 @@ class UsersApiController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $user = $user;
+        $user['coins'] = $user->wallets->balance('coin');
+        $user['bucks'] = $user->wallets->balance('bucks');
+        $helpers = [];
+        for ($i = 1; $i < 5; $i++) {
+            $helpers[$i] = $user->wallets->balance('helper', $i);
+        }
+        // $user['helpers'] = $helpers;
+        return response()->json(["user" => $user], 200);
     }
 
     /**
@@ -128,13 +139,32 @@ class UsersApiController extends Controller
 
     public function insertlevel(Request $request)
     {
+        $user = Auth::user();
+
         if (DB::table('user_levels')->where('user_id', $request->user_id)->where('level_id', $request->level_id)->count() == 0) {
             $insertlevel = new UserLevel();
             $insertlevel->user_id = $request->user_id;
             $insertlevel->level_id = $request->level_id;
             $insertlevel->save();
         }
-        $lastLevel = User::find($request->user_id)->levels->last();
+        $lastLevel = $user->levels->last();
+
+        //? coins rewards
+        $Wallet_coins = new WalletLog();
+        $Wallet_coins->wallet_id = $user->wallets->id;
+        $Wallet_coins->amount = @$request->new_coins;
+        $Wallet_coins->type_id = type::TYPE_WALLET_COIN;
+        $Wallet_coins->wallet_status_id = type::TYPE_WALLET_STATUS_REWARDS;
+        $Wallet_coins->save();
+
+        //? bucks rewards
+        $Wallet_coins = new WalletLog();
+        $Wallet_coins->wallet_id = $user->wallets->id;
+        $Wallet_coins->amount = @$request->bucks;
+        $Wallet_coins->type_id = type::TYPE_WALLET_BUCKS;
+        $Wallet_coins->wallet_status_id = type::TYPE_WALLET_STATUS_REWARDS;
+        $Wallet_coins->save();
+        
         $response = [
             'status' => true,
             'message' => "The Level has been Insert user successfully!",
@@ -145,8 +175,9 @@ class UsersApiController extends Controller
                     'levels.image',
                 ]
             )->where('id', $lastLevel->id)->first(),
+            'coins' => $user->coins,
+            'bucks' => $user->bucks
         ];
         return response()->json($response, 200);
     }
-
 }

@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Wallets;
 use App\Models\WalletLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WalletLogApiController extends Controller
 {
@@ -39,18 +40,22 @@ class WalletLogApiController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
         $wallet_used = new WalletLog();
-        $wallet_used->wallet_id = $request->user_id;
+        $wallet_used->wallet_id = $user->wallets->id;
+        $wallet_used->amount = $request->amount;
         $wallet_used->type_id = $request->type_id;
-        $wallet_used->order_id = $request->order_id;
-        $get_prodeuct = Product::where('id', $request->type_id)->first(); // get qount
-        $wallet_used->helper_id = $get_prodeuct->helper_id;
-        $wallet_used->wallet_status_id = $request->wallet_status_id; // used helpers
-        $wallet_used->amount = $get_prodeuct->quantity;
+        $wallet_used->helper_id = $request->helper_id != 'null' ? $request->helper_id : null;
+        $wallet_used->wallet_status_id = $request->wallet_status_id; // used helpers        
         $wallet_used->save();
+
+
+
         $response = [
             'status' => true,
-            'message' => "The Orders has been Used successfully!"
+            'message' => "The Orders has been Used successfully!",
+            'coins' => $user->coins,
+            'helpers' => $user->helpers
         ];
 
         return response()->json($response, 200);

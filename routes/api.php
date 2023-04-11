@@ -9,7 +9,6 @@ use App\Http\Controllers\Api\HelpersApiController;
 use App\Http\Controllers\Api\OrdersApiController;
 use App\Http\Controllers\Api\PagesApiController;
 use App\Http\Controllers\Api\ProductsApiController;
-use App\Http\Controllers\Api\TranslateController;
 use App\Http\Controllers\Api\UsersApiController;
 use App\Http\Controllers\Api\WalletLogApiController;
 
@@ -28,7 +27,7 @@ Route::post('/register', [PassPortController::class, 'register']);
 Route::post('/login', [PassPortController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
-    });
+    // });
 
     // user logout
     Route::post('/logout', [PassPortController::class, 'logout']);
@@ -40,34 +39,27 @@ Route::middleware('auth:api')->group(function () {
             Route::put('/', [UsersApiController::class, 'update']); // update user
             // Route::put('{id}', [UsersApiController::class, 'update']); // update user
         });
+        Route::apiResource('user', UsersApiController::class);
 
         // Levels
-        Route::group(['prefix' => 'level'], function () {
-            Route::get('/', [LevelsApiController::class, 'index']); // get all levels
-            Route::get('{id}', [LevelsApiController::class, 'show']); // get just a level
-        });
+        Route::apiResource('level', LevelsApiController::class);
 
         // Prodect coin & helpers
-        Route::get('coin', [ProductsApiController::class, 'index']); // get coins
-        Route::get('helper', [HelpersApiController::class, 'index']); // get helpers
+        Route::apiResource('coin', ProductsApiController::class); // get coins
+        Route::apiResource('helper', HelpersApiController::class); // get helpers
 
         // Orders
-        Route::group(['prefix' => 'order'], function () {
-            Route::get('{id}', [OrdersApiController::class, 'show']); // get jas an order
-            Route::post('/', [OrdersApiController::class, 'store']); // create a new order
-        });
+        Route::apiResource('order', OrdersApiController::class); // order
 
         // Wallets
         Route::group(['prefix' => 'wallet'], function () {
             Route::get('{id}', [WalletLogApiController::class, 'show']); // get jas an wallet
         });
-        Route::resource('wallet', WalletLogApiController::class); // create a new walletLog
 
+        Route::resource('walletLog', WalletLogApiController::class); // create a new walletLog
         Route::resource('pages', PagesApiController::class); // view pages in app
-
-        Route::resource('translate', TranslateController::class); // view all languages
     });
-// });
+});
 
 
 // Route::group(['prefix' => 'dashboard'], function () {

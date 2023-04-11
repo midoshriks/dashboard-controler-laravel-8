@@ -127,6 +127,22 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group mb-3 col-md-12 d-flex">
+                                    <div class="col-sm-12 m-1">
+                                        <label class="form-label required">{{ display('status') }}</label>
+                                        <div class="">
+                                            <select class="form-select" name="type_status">
+                                                <option value="">chooes</option>
+                                                @foreach ($type_status as $type)
+                                                    <option value="{{$type->id}}"> {{ display($type->name) }} </option>
+                                                @endforeach
+                                                {{-- <option value="0"> {{ display('Basic')}} </option>
+                                                <option value="1"> {{ display('additional')}} </option> --}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

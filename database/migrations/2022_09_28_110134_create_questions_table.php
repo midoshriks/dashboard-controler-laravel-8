@@ -18,9 +18,11 @@ class CreateQuestionsTable extends Migration
             $table->string('name');
             $table->bigInteger('level_id')->unsigned();
             $table->bigInteger('type_id')->unsigned();
+            $table->bigInteger('type_status')->unsigned();
 
             $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
             $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
+            $table->foreign('type_status')->references('id')->on('types')->onDelete('cascade');
 
             $table->timestamps();
         });

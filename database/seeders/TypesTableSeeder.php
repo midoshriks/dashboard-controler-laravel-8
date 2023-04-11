@@ -43,6 +43,8 @@ class TypesTableSeeder extends Seeder
             ["name" => 'coin',  "model" => "wallet"],
             ["name" => 'helper',  "model" => "wallet"],
             ["name" => 'bucks',  "model" => "wallet"],
+            ["name" => 'basic',  "model" => "question_status"],
+            ["name" => 'additional',  "model" => "question_status"],
 
         ];
 

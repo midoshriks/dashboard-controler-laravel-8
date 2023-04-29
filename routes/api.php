@@ -26,6 +26,22 @@ use App\Http\Controllers\Api\WalletLogApiController;
 Route::post('/register', [PassPortController::class, 'register']);
 Route::post('/login', [PassPortController::class, 'login']);
 
+//? /emailVerify
+//! update email_verified_at at user table in db by user_id
+Route::post('/emailVerify', [PassPortController::class, 'emailVerify']);
+
+//? /foregetPassword
+//! check if email in db or not ?? return random code from 5 digit + user_id 
+// Route::post('/foregetPassword', [PassPortController::class, 'forgetPassword']);
+Route::post('/otp', [PassPortController::class, 'otp']);
+
+//? /resetPassword
+//! change password of user_id !! then login
+Route::post('/resetPassword', [PassPortController::class, 'resetPassword']);
+
+//! change email of user_id !! then login
+Route::post('/resetEmail', [PassPortController::class, 'resetEmail']);
+
 Route::middleware('auth:api')->group(function () {
     // });
 

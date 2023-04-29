@@ -2,6 +2,7 @@
 // <!-- @mo2men -->
 
 use App\Models\type;
+use Illuminate\Support\Str;
 
 if (!function_exists('display')) {
     // $lang = app()->getLocale();
@@ -133,5 +134,12 @@ if (!function_exists('get_type')) {
     function get_type($model, $name)
     {
         return type::where('model', $model)->where('name', $name)->first();
+    }
+}
+
+if (!function_exists('generate_code')) {
+    function generate_code($min, $max)
+    {
+        return  mt_rand($min, $max);;
     }
 }

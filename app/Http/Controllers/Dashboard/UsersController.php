@@ -97,7 +97,10 @@ class UsersController extends Controller
         $user->gender = $request->gender;
         $user->country_id = $request->country_id;
         $user->code_membership =  Str::random(2) . mt_rand(1000000, 10000000);
+        $user->code =  generate_code(10000, 99999);
         $user->password = bcrypt($request->password);
+
+        dd($user);
 
         // create token device
         $user->device_token = $user->createToken('bucks')->accessToken;

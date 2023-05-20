@@ -33,6 +33,7 @@ class RouteServiceProvider extends ServiceProvider
 
     // @mido_shriks
     protected $dashboard_namespace = 'App\Http\Controllers\Dashboard';
+    protected $bucks_namespace = 'App\Http\Controllers\Bucks';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -44,16 +45,15 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
+            Route::middleware('web')
+            ->namespace($this->bucks_namespace)
+            ->group(base_path('routes/web.php'));
             Route::prefix('api')
                 ->middleware('api')
                 ->namespace($this->namespace)
-                ->group(base_path('routes/api.php'));
-
-            Route::middleware('web')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/web.php'));
-            // @mido_shriks
-            Route::middleware('web')
+                ->group(base_path('routes/api.php'));       
+            Route::prefix('admin')
+                ->middleware('web')
                 ->namespace($this->dashboard_namespace)
                 ->group(base_path('routes/dashboard/web.php'));
         });

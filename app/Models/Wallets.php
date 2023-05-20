@@ -44,6 +44,6 @@ class Wallets extends Model
                 $total -= $log->amount;
             }
         }
-        return $total;
+        return sprintf("%.2f",$total) + 0.001;
     }
 }

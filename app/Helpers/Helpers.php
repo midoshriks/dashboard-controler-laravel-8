@@ -2,6 +2,7 @@
 // <!-- @mo2men -->
 
 use App\Models\type;
+use App\Models\Setting;
 use Illuminate\Support\Str;
 
 if (!function_exists('display')) {
@@ -141,5 +142,15 @@ if (!function_exists('generate_code')) {
     function generate_code($min, $max)
     {
         return  mt_rand($min, $max);;
+    }
+}
+
+
+
+
+if (!function_exists('get_config_value')) {
+    function get_config_value($model, $key)
+    {
+        return  (float)Setting::where('model', $model)->where('key', $key)->first()->value;
     }
 }

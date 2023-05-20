@@ -72,13 +72,12 @@ class OrdersApiController extends Controller
             //! $order->type_id = 9; // 9 => pending | 10 => confirm
 
             // ?=======================Test Function==========================
-            $type_id = get_type('order','pending');
-            $order->type_id = $type_id->id; // 9 => pending | 10 => confirm
+            $order_pending = get_type('order','pending');
+            $order->type_id = $order_pending->id; // 9 => pending | 10 => confirm
             // ?=======================Test Function==========================
             $product = Product::where('id', $request->product_id)->first();
             $order->amount = $product->quantity;
             $order->total = $product->price;
-            // dd($order);
             $order->save();
 
             $this->orderRepository->conferm_order($order);

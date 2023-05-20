@@ -72,7 +72,7 @@
                                                     <table class="table mb-0">
                                                         <thead>
                                                             <tr>
-                                                                <th>{{ display('model') }}</th>
+                                                                {{-- <th>{{ display('model') }}</th> --}}
                                                                 <th>{{ display('key') }}</th>
                                                                 <th>{{ display('value') }}</th>
                                                                 <th>{{ display('Action') }}</th>
@@ -89,7 +89,7 @@
                                                                     @method('PUT')
 
                                                                     <tr>
-                                                                        <td>{{ $value->model }}</td>
+                                                                        {{-- <td>{{ $value->model }}</td> --}}
                                                                         <td>
                                                                             <input type="text" class="form-control" name="key"
                                                                                 value="{{ $value->key }}" disabled>

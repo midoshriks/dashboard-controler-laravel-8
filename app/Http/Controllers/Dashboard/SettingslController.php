@@ -18,9 +18,8 @@ class SettingslController extends Controller
     public function index()
     {
         $settings = Setting::all();
-        // $settings = Setting::select('model',)->groupBy('model')->get();
-        $models = Setting::groupBy('model')->select('model', DB::raw('count(*) as total'))->get();
-        // dd($settings);
+        // $models = Setting::groupBy('model')->select('model', DB::raw('count(*) as total'))->get();
+        $models = Setting::groupBy('model')->select('model', DB::raw('count(*) as total'))->where('model','bucks')->get();
         return view('dashboard.settings.index', compact('settings','models'));
     }
 

@@ -26,21 +26,11 @@ use App\Http\Controllers\Api\WalletLogApiController;
 Route::post('/register', [PassPortController::class, 'register']);
 Route::post('/login', [PassPortController::class, 'login']);
 
-//? /emailVerify
-//! update email_verified_at at user table in db by user_id
-Route::post('/emailVerify', [PassPortController::class, 'emailVerify']);
-
-//? /foregetPassword
-//! check if email in db or not ?? return random code from 5 digit + user_id 
-// Route::post('/foregetPassword', [PassPortController::class, 'forgetPassword']);
+// @change here
 Route::post('/otp', [PassPortController::class, 'otp']);
+Route::post('/resetOtpData', [PassPortController::class, 'resetOtpData']);
+// @endChange
 
-//? /resetPassword
-//! change password of user_id !! then login
-Route::post('/resetPassword', [PassPortController::class, 'resetPassword']);
-
-//! change email of user_id !! then login
-Route::post('/resetEmail', [PassPortController::class, 'resetEmail']);
 
 Route::middleware('auth:api')->group(function () {
     // });
@@ -48,33 +38,31 @@ Route::middleware('auth:api')->group(function () {
     // user logout
     Route::post('/logout', [PassPortController::class, 'logout']);
 
-    Route::group(['prefix' => 'dashboard'], function () {
-        // User  insert level
-        Route::group(['prefix' => 'user'], function () {
-            Route::post('level', [UsersApiController::class, 'insertlevel']); // insert level to user
-            Route::put('/', [UsersApiController::class, 'update']); // update user
-            // Route::put('{id}', [UsersApiController::class, 'update']); // update user
-        });
-        Route::apiResource('user', UsersApiController::class);
-
-        // Levels
-        Route::apiResource('level', LevelsApiController::class);
-
-        // Prodect coin & helpers
-        Route::apiResource('coin', ProductsApiController::class); // get coins
-        Route::apiResource('helper', HelpersApiController::class); // get helpers
-
-        // Orders
-        Route::apiResource('order', OrdersApiController::class); // order
-
-        // Wallets
-        Route::group(['prefix' => 'wallet'], function () {
-            Route::get('{id}', [WalletLogApiController::class, 'show']); // get jas an wallet
-        });
-
-        Route::resource('walletLog', WalletLogApiController::class); // create a new walletLog
-        Route::resource('pages', PagesApiController::class); // view pages in app
+    // User  insert level
+    Route::group(['prefix' => 'user'], function () {
+        Route::post('level', [UsersApiController::class, 'insertlevel']); // insert level to user
+        Route::put('/', [UsersApiController::class, 'update']); // update user
+        Route::get('/bucksValues', [UsersApiController::class, 'bucksValues']); // get user buck value
     });
+    Route::apiResource('user', UsersApiController::class);
+
+    // Levels
+    Route::apiResource('level', LevelsApiController::class);
+
+    // Prodect coin & helpers
+    Route::apiResource('coin', ProductsApiController::class); // get coins
+    Route::apiResource('helper', HelpersApiController::class); // get helpers
+
+    // Orders
+    Route::apiResource('order', OrdersApiController::class); // order
+
+    // Wallets
+    Route::group(['prefix' => 'wallet'], function () {
+        Route::get('{id}', [WalletLogApiController::class, 'show']); // get jas an wallet
+    });
+
+    Route::resource('walletLog', WalletLogApiController::class); // create a new walletLog
+    Route::resource('pages', PagesApiController::class); // view pages in app
 });
 
 

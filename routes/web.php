@@ -21,3 +21,10 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::middleware(['addAccessToken', 'auth:api'])->group(function () {
+    Route::group(['prefix' => 'user'], function () {
+        Route::resource('withdraw','WitdrawalController');
+    });
+});

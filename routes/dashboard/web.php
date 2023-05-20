@@ -1,29 +1,8 @@
 <?php
 // <!-- // @mido_shriks -->
 
-use App\Models\type;
-use App\Mail\SendMailAds;
-use App\Mail\SendMailAuth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\Dashboard\PagesController;
-use App\Http\Controllers\Dashboard\TypesController;
-use App\Http\Controllers\Dashboard\UsersController;
-use App\Http\Controllers\Dashboard\LevelsController;
-use App\Http\Controllers\Dashboard\OrdersController;
-use App\Http\Controllers\Dashboard\AnswersController;
-use App\Http\Controllers\Dashboard\HelpersController;
-use App\Http\Controllers\Dashboard\ProductsController;
-use App\Http\Controllers\Dashboard\ProfilesController;
-use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Dashboard\DeveloperController;
-use App\Http\Controllers\Dashboard\LanguagesController;
-use App\Http\Controllers\Dashboard\QuestionsController;
-use App\Http\Controllers\Dashboard\SettingslController;
-use App\Http\Controllers\Dashboard\SendMailslController;
 use App\Models\Question;
 
 // function IPtoLocation($ip)
@@ -34,25 +13,9 @@ use App\Models\Question;
 
 // welcome page Starat Login dashboard
 Route::get('/', function () {
-    // dd(IPtoLocation($_SERVER['REMOTE_ADDR']));
     return view('auth.login');
 });
 
-// Route::get('/run', function () {
-//     $run = Artisan::call('schedule:run');
-//     dd($run);
-//     return 'run backub';
-// });
-
-// Route::get('/send', function () {
-//     $name = 'mido';
-//     $title = 'mido';
-//     $body = 'body oooooooooooooooo';
-//     Mail::to('midoshriks36@gmail.com') //samirasaeed660@gmail.com // mom.enlsyd@gmail.com
-//     // ->send(new SendMailAuth($name));
-//     ->send(new SendMailAds($name,$title,$body));
-//     return "send ";
-// });
 
 
 Route::group(

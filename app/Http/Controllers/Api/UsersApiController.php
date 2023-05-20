@@ -92,6 +92,8 @@ class UsersApiController extends Controller
             'last_name' => 'required',
             'dob_date' => 'required',
             'gender' => 'required',
+            // ! error here
+            // 'phone' => 'string|exists:users,phone,'. $user->phone,
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -103,6 +105,7 @@ class UsersApiController extends Controller
             $user->last_name = $request->last_name;
             $user->dob_date = $request->dob_date;
             $user->gender = $request->gender;
+            $user->phone = $request->phone;
             // $user->country_id = $request->country_id;
             // $user->password = bcrypt($request->password);
         }
@@ -164,7 +167,7 @@ class UsersApiController extends Controller
         $Wallet_coins->type_id = type::TYPE_WALLET_BUCKS;
         $Wallet_coins->wallet_status_id = type::TYPE_WALLET_STATUS_REWARDS;
         $Wallet_coins->save();
-        
+
         $response = [
             'status' => true,
             'message' => "The Level has been Insert user successfully!",
@@ -177,6 +180,21 @@ class UsersApiController extends Controller
             )->where('id', $lastLevel->id)->first(),
             'coins' => $user->coins,
             'bucks' => $user->bucks
+        ];
+        return response()->json($response, 200);
+    }
+
+    public function bucksValues(Request $request)
+    {
+        $user = Auth::user();
+        $bucks = $user->bucks;
+        $rate = get_config_value('bucks', 'dollar');
+        $dollar = $bucks * $rate;
+        $response = [
+            'status' => true,
+            'bucks' => $bucks,
+            'rate' => $rate,
+            'dollar' => $dollar,
         ];
         return response()->json($response, 200);
     }

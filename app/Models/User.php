@@ -54,12 +54,12 @@ class User extends Authenticatable implements HasMedia
 
     public function getCoinsAttribute()
     {
-        return ($this->wallets) ? $this->wallets->balance('coin') : 0;
+        return ($this->wallets) ? (double)$this->wallets->balance('coin') : 0.00;
     }
 
     public function getBucksAttribute()
     {
-        return ($this->wallets) ? $this->wallets->balance('bucks') : 0;
+        return ($this->wallets) ? $this->wallets->balance('bucks') : 0.00;
     }
 
 

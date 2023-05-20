@@ -31,26 +31,27 @@ class PassPortController extends Controller
         $result['last_name'] = $user->last_name;
         $result['full_name'] = $user->first_name . ' ' . $user->last_name;
         $result['gender'] = $user->gender;
-        $result['dob_date'] = $user->dob_date;
+        $result['dob_date'] = date("Y-m-d", strtotime($user->dob_date));
         $result['email'] = $user->email;
         $result['phone'] = $user->phone;
         $result['country'] = $user->country->name;
         $result['photo_user'] = $user->photo_user;
-        if (!$user->email_verified_at)
+        // @change here
+        if (!$user->email_verified_at) {
+            $otp = generate_code(10000, 99999);
+            $user->otp = $otp;
+            $user->save();
             $result['otp'] = $user->otp;
-        Mail::to($user->email)->send(new MailVerifyOtp($user->otp));
-
+            Mail::to($user->email)->send(new MailVerifyOtp($user->otp));
+        }
+        // @endChange
         $level = $user->levels->last() ? $user->levels->last() : level::first();
-        // mo2men@level
         $result['level'] = $level->id;
         $result['level_name'] = $level->name;
         $result['level_photo'] = $level->photo_level;
-        // endEdit@level
         $wallet = Wallets::where('user_id', $user->id)->first();
         $result['coins'] = $wallet->balance('coin');
         $result['bucks'] = $wallet->balance('bucks');
-        // dd($wallet->walletLogs()->pluck('helper_id'));
-        // $helper_id = $wallet->walletLogs()->pluck('helper_id');
         $result['helpers'] = [];
         for ($i = 1; $i < 5; $i++) {
             $result['helpers'][$i] = $wallet->balance('helper', $i);
@@ -61,7 +62,7 @@ class PassPortController extends Controller
             'message' => $message,
             'user' => $result,
         ];
-
+        // return date("Y-m-d", strtotime($user->dob_date));
         return response()->json($response, 200);
     }
 
@@ -82,52 +83,46 @@ class PassPortController extends Controller
 
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'gender' => 'required',
-            'dob_date' => 'required|date',
-            'password' => 'required|min:3',
-        ]);
-        foreach ($validator->errors()->getMessages() as $key => $error) {
-            # code...
-            switch ($key) {
-                case 'first_name':
-                    # code...
-                    return response()->json(['status' => false, 'error' => 'FIRSTNAME_REPEAT'], 401);
-                    break;
-                case 'last_name':
-                    return response()->json(['status' => false, 'error' => 'LASTNAME_REPEAT'], 401);
-                    break;
-                case 'email':
-                    return response()->json(['status' => false, 'error' => 'EMAIL_REPEAT'], 401);
-                    break;
-                case 'phone':
-                    return response()->json(['status' => false, 'error' => 'PHONE_REPEAT'], 401);
-                    break;
-                case 'gender':
-                    return response()->json(['status' => false, 'error' => 'gender'], 401);
-                    break;
-                case 'dob_date':
-                    return response()->json(['status' => false, 'error' => 'dob_date'], 401);
-                    break;
-                case 'password':
-                    return response()->json(['status' => false, 'error' => 'password'], 401);
-                    break;
+        if ($request->password != 'facebook' && $request->password != 'google') {
+            // @change here
+            $validator = Validator::make($request->all(), [
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'email' => 'required|email|unique:users,email',
+                'phone' => 'required|unique:users,phone',
+                'gender' => 'required',
+                'dob_date' => 'required|date',
+                'password' => 'required|min:3',
+            ]);
+            // @endChange
 
-                    // default:
-                    //     # code...
-                    //     break;
+            foreach ($validator->errors()->getMessages() as $key => $error) {
+                switch ($key) {
+                    case 'first_name':
+                        return response()->json(['status' => false, 'error' => 'FIRSTNAME_REPEAT'], 401);
+                        break;
+                    case 'last_name':
+                        return response()->json(['status' => false, 'error' => 'LASTNAME_REPEAT'], 401);
+                        break;
+                    case 'email':
+                        return response()->json(['status' => false, 'message' => 'EMAIL_REPEAT', 'code' => 400]);
+                        break;
+                    case 'phone':
+                        return response()->json(['status' => false, 'error' => 'PHONE_REPEAT'], 401);
+                        break;
+                    case 'gender':
+                        return response()->json(['status' => false, 'error' => 'gender'], 401);
+                        break;
+                    case 'dob_date':
+                        return response()->json(['status' => false, 'error' => 'dob_date'], 401);
+                        break;
+                    case 'password':
+                        return response()->json(['status' => false, 'error' => 'password'], 401);
+                        break;
+                }
             }
         }
 
-        // if ($validator->fails()) {
-        //     return response()->json($validator->errors(), 404);
-        // }
-
-        // mo2men@registeration
         DB::beginTransaction();
         try {
             $input = $request->all();
@@ -140,8 +135,6 @@ class PassPortController extends Controller
             }
             $input['role_permissions'] = 'gaming';
             $input['code_membership'] = Str::random(2) . mt_rand(1000000, 10000000);
-            // ? emailVerify save code in table
-            $input['otp'] = generate_code(10000, 99999);
             // mo2men@country
             // $input['country_id'] = country::where('name', IPtoLocation($_SERVER['REMOTE_ADDR'])['country'])->first()->id;
             $input['country_id'] = 1;
@@ -153,12 +146,15 @@ class PassPortController extends Controller
             Wallets::create([
                 'user_id' => $user->id,
             ]);
+            if ($input['login_via'] != 'mail' && !$user->email_verified_at) {
+                $user->email_verified_at = now();
+                $user->save();
+            }
             DB::commit();
         } catch (\Exception $e) {
             Log::error($e);
             DB::rollback();
         }
-        // mo2men@registeration
         return $this->sendResponse($user, 'User registered seccussfully');
     }
 
@@ -187,31 +183,39 @@ class PassPortController extends Controller
     }
 
 
+    // @change here
     public function otp(Request $request)
     {
-        // user_id: 22
-        // otp: 56423
 
         //? get date user by email or user_id;
-        $user = User::where('email', $request->email)->orWhere('id', $request->user_id)->first();
-        $rules = [
-            $user->email => 'email|max:128|exists:users,email,' . $user->email,
-            // 'email' => 'required|email|max:128|exists:users,email,' . $user->email,
-        ];
+        $user = User::where('email', $request->mail)->orWhere('id', $request->user_id)->first();
 
-        // dd($user);
-
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return $validator->errors();
+        if (!$user) {
+            return response([
+                "code" => 400,
+                "message" => "error_email",
+            ]);;
         } else {
 
-            // $user = User::findOrFail($user->id);
+            $validator = Validator::make($request->all(), [
+                'email' => 'unique:users,email,' . $user->id,
+                'reset' => 'required',
+            ]);
+
+            foreach ($validator->errors()->getMessages() as $key => $error) {
+                switch ($key) {
+                    case 'email':
+                        return response()->json(['status' => false, 'message' => 'EMAIL_REPEAT', 'code' => 400]);
+                        break;
+                }
+            }
+
             $otp = generate_code(10000, 99999);
             $user->otp = $otp;
             $user->save();
             $user = User::where('email', '=', $user->email)->first();
-            $email = Mail::to($user->email)->send(new MailVerifyOtp($otp));
+
+            Mail::to($request->email ?? $user->email)->send(new MailVerifyOtp($otp));
 
             return response([
                 "code" => 200,
@@ -222,99 +226,66 @@ class PassPortController extends Controller
         }
     }
 
-    public function resetPassword(Request $request)
+    public function resetOtpData(Request $request)
     {
-        // dd($request->all());
 
-        $user = User::where('otp', $request->otp)
-            ->orWhere('id', $request->user_id)
-            ->orWhere('email', $request->email)->first();
-        if ($user->otp == $request->otp) {
+        $validator = Validator::make($request->all(), [
+            'reset' => 'required',
+        ]);
+        foreach ($validator->errors()->getMessages() as $key => $error) {
+            switch ($key) {
+                case 'reset':
+                    return response()->json(['status' => false, 'error' => 'reset'], 401);
+                    break;
+            }
+        }
+
+        $user = User::where('otp', $request->otp)->where(function ($q) use ($request) {
+            $q->where('id', $request->user_id)->orWhere('email', $request->mail);
+        })->first();
+
+        if ($user) {
+
             $validator = Validator::make($request->all(), [
-                'password' => 'required|min:3',
+                'email' => 'unique:users,email,' . $user->id,
             ]);
+
             foreach ($validator->errors()->getMessages() as $key => $error) {
-                # code...
                 switch ($key) {
-                    case 'password':
-                        return response()->json(['status' => false, 'error' => 'password'], 401);
+                    case 'email':
+                        return response()->json(['status' => false, 'message' => 'EMAIL_REPEAT', 'code' => 400]);
                         break;
-                        // default:
-                        //     # code...
-                        //     break;
                 }
             }
-            $user = User::findOrFail($user->id);
-            $user->password = bcrypt($request->password);
+
+            switch ($request->reset) {
+                case 'email':
+                    $user->email = $request->email;
+                    break;
+                case 'email_verify':
+                    $user->email_verified_at = now();
+                    break;
+
+                default:
+                    $user->password = bcrypt($request->password);
+                    break;
+            }
             $user->otp = null;
             $user->update();
-            // dd($user->password);
             return response([
                 "code" => 200,
-                "message" => "Update Password New Successfully",
+                "message" => "Update Otp data New Successfully",
                 "user_id" => $user->id,
             ]);
         } else {
             return response([
                 "code" => 400,
-                "message" => "Error Code ResetPassword",
+                "message" => "error_otp",
             ]);
         }
     }
-    public function resetEmail(Request $request)
-    {
-        $user = User::where('otp', $request->otp)
-            ->orWhere('id', $request->user_id)->first();
-            dd($request->all(), $user->id, $user->email);
-        if ($user->otp == $request->otp) {
-            $user = User::findOrFail($user->id);
-            $user->email = $request->email;
-            $user->otp = null;
-            $user->update();
-            return response([
-                "code" => 200,
-                "message" => "Update ResetEmail Now Successfully",
-                "user_id" => $user->id,
-            ]);
-        } {
-            return response([
-                "code" => 400,
-                "message" => "Error Code ResetEmail",
-            ]);
-        }
-        // dd($request->all(),$user);
+    // @endChange
 
-
-        // set email_verified_at now()
-
-    }
-
-
-    public function emailVerify(Request $request)
-    {
-        $user = User::where('email', $request->email)->first();
-        if ($user->otp == $request->otp) {
-            $user = User::findOrFail($user->id);
-            $user->email_verified_at = now();
-            $user->otp = null;
-            // dd($user->otp);
-            $user->update();
-            return response([
-                "code" => 200,
-                "message" => "Update emailVerify Now Successfully",
-                "user_id" => $user->id,
-            ]);
-        } {
-            return response([
-                "code" => 400,
-                "message" => "Error Code emailVerify",
-            ]);
-        }
-        // dd($request->all(),$user);
-
-
-        // set email_verified_at now()
-    }
 
     public function logout(Request $request)
     {

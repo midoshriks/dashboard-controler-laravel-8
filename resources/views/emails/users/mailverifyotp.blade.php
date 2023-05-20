@@ -1,10 +1,10 @@
 @component('mail::message')
-# Introduction
+# Otp Send
 
-The body of your message. {{$otp}}
+The is your {{ config('app.name') }} verification code.
 
 @component('mail::button', ['url' => ''])
-Button Text
+{{$otp}}
 @endcomponent
 
 Thanks,<br>

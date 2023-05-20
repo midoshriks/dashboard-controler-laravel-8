@@ -108,7 +108,6 @@ class LevelsApiController extends Controller
      */
     public function show(level $level)
     {
-
         $level->load([
             'questions' => function ($q) {
                 $q->orderBy('type_id', 'DESC')->inRandomOrder()->with('type')->with(['answers' => function ($answer) {
@@ -124,7 +123,9 @@ class LevelsApiController extends Controller
         $next_level = Level::where('id', '>', $level->id);
         $level['next_id'] = $next_level->min('id');
         //! $level['additions'] = Question::where('level_id', $level['next_id'])->with('answers')->get();
-        return response()->json(["level" => $level], 200);
+        $config['duration'] = get_config_value('question', 'time');
+        $config['rewards'] = get_config_value('question', 'rewards') + .00000001;
+        return response()->json(["level" => $level, 'config' => $config], 200);
     }
 
     /**

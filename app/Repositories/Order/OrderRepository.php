@@ -10,7 +10,7 @@ class OrderRepository implements OrderRepositoryInterface
 {
     public function conferm_order($order)
     {
-        $order->type_id = get_type('order','confirm');
+        $order->type_id = get_type('order','confirm')->id;
         //? $order->type_id = type::TYPE_ORDER_CONFIRM; //? id = 10
         //! $order->type_id = '10';
         $order->save();
